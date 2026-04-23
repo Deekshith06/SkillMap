@@ -1,0 +1,12 @@
+{
+  "summary": ["summary","objective","profile","about me","professional summary","career summary","personal statement","executive summary","career objective"],
+  "experience": ["experience","work experience","work history","employment","professional experience","employment history","career history","relevant experience","professional background"],
+  "education": ["education","academic","academics","qualifications","academic background","educational background","degrees","schooling","academic qualifications"],
+  "skills": ["skills","technical skills","core competencies","competencies","technologies","tools","proficiencies","areas of expertise","key skills","professional skills","skill set"],
+  "projects": ["projects","portfolio","personal projects","key projects","selected projects","project experience","academic projects"],
+  "certifications": ["certifications","certificates","licenses","professional certifications","credentials","accreditations","awards","honors","achievements"],
+  "languages": ["languages","language proficiency","language skills"],
+  "volunteer": ["volunteer","volunteering","community service","community involvement"],
+  "publications": ["publications","research","papers","presentations"],
+  "interests": ["interests","hobbies","activities","extracurricular"]
+}

@@ -1,0 +1,21 @@
+# SkillMap Backend — pinned dependencies
+# Python 3.10+
+
+flask>=3.1.0
+flask-cors>=5.0.1
+gunicorn>=23.0.0
+
+# Data & ML
+numpy>=1.26.0
+pandas>=2.2.0
+scikit-learn>=1.4.0
+sentence-transformers>=3.0.0
+joblib>=1.4.0
+
+# NLP
+spacy>=3.8.0
+nltk>=3.9.0
+
+# File extraction
+pdfminer.six>=20231228
+python-docx>=1.1.2

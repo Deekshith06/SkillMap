@@ -1,0 +1,67 @@
+{
+  "Software_Engineering": {
+    "languages": ["Python","Java","JavaScript","TypeScript","C++","C#","Go","Rust","Ruby","Swift","Kotlin","Scala","R","PHP","Perl","Bash","Shell","Dart","Lua","Haskell","Elixir","Objective-C"],
+    "frameworks": ["React","React.js","Angular","Vue","Vue.js","Svelte","Next.js","Nuxt","Gatsby","Django","Flask","FastAPI","Spring Boot","Express","Express.js","Node.js","NestJS","Ruby on Rails","Laravel","ASP.NET",".NET","Rails","jQuery","Bootstrap","Tailwind CSS","Tailwind"],
+    "cloud_devops": ["AWS","Amazon Web Services","Azure","GCP","Google Cloud","Docker","Kubernetes","K8s","Terraform","Ansible","Jenkins","GitHub Actions","GitLab CI","CircleCI","CI/CD","Continuous Integration","Continuous Deployment","Nginx","Apache","Linux","Serverless","Lambda","EC2","S3","CloudFormation","Helm","ArgoCD","Prometheus","Grafana","Datadog","New Relic"],
+    "databases": ["SQL","PostgreSQL","Postgres","MySQL","MongoDB","Redis","Elasticsearch","DynamoDB","Cassandra","SQLite","Oracle","SQL Server","Neo4j","InfluxDB","Firebase","Supabase"],
+    "architecture": ["REST API","RESTful","GraphQL","Microservices","Monolith","Event-Driven","WebSocket","gRPC","API Gateway","Load Balancing","Caching","Message Queue","RabbitMQ","Kafka","Service Mesh"],
+    "tools": ["Git","GitHub","GitLab","Bitbucket","Jira","Confluence","VS Code","IntelliJ","Webpack","Vite","Babel","Storybook","Figma","Postman"],
+    "concepts": ["Agile","Scrum","Kanban","TDD","Test-Driven Development","Unit Testing","Integration Testing","Design Patterns","SOLID","OOP","Functional Programming","System Design","Scalability","High Availability","Fault Tolerance"]
+  },
+  "Data_Science": {
+    "core": ["Machine Learning","ML","Deep Learning","Neural Networks","NLP","Natural Language Processing","Computer Vision","Artificial Intelligence","AI","Data Science","Data Analysis","Statistical Modeling","Predictive Modeling"],
+    "tools": ["Python","R","SQL","Jupyter","Pandas","NumPy","Matplotlib","Seaborn","Plotly","Scikit-learn","TensorFlow","PyTorch","Keras","XGBoost","LightGBM","Hugging Face","Transformers","OpenCV","spaCy","NLTK"],
+    "platforms": ["Apache Spark","Hadoop","Airflow","Kafka","Snowflake","BigQuery","Redshift","Databricks","AWS SageMaker","MLflow","Kubeflow","dbt","Looker","Tableau","Power BI","Google Analytics"],
+    "techniques": ["A/B Testing","Experimentation","Feature Engineering","Model Deployment","MLOps","Data Pipeline","ETL","Data Warehousing","Regression","Classification","Clustering","Recommendation Systems","Time Series","Anomaly Detection","Reinforcement Learning","Fine-tuning","RAG","Prompt Engineering","LLM","GPT","BERT","LangChain","Vector Database"],
+    "concepts": ["Data Visualization","Big Data","Data Governance","Data Quality","Hypothesis Testing","Bayesian","Cross-validation","Hyperparameter Tuning","Bias-Variance","Overfitting","Precision","Recall","F1 Score","AUC","ROC"]
+  },
+  "Healthcare": {
+    "clinical": ["Patient Care","Direct Patient Care","Bedside Care","Clinical Care","Medication Administration","Vital Signs","Patient Assessment","Treatment Planning","Care Coordination","Discharge Planning","Patient Education","Evidence-Based Practice","Infection Control","Wound Care","Triage"],
+    "systems": ["Electronic Health Records","EHR","EMR","Epic","Cerner","MEDITECH","Allscripts","Telehealth","Telemedicine","Health Information Exchange","HIE"],
+    "compliance": ["HIPAA","HIPAA Compliance","PHI","Patient Privacy","FDA Regulations","GMP","Good Manufacturing Practice","Joint Commission","CMS","OSHA","Quality Improvement","QI","Clinical Research","IRB","Informed Consent"],
+    "coding": ["ICD-10","CPT Coding","Medical Coding","Medical Billing","Revenue Cycle Management","Healthcare Analytics","Population Health","Epidemiology","Biostatistics","Clinical Trials","Drug Safety","Pharmacovigilance"],
+    "certifications": ["Registered Nurse","RN","BSN","MSN","NP","Nurse Practitioner","BLS","ACLS","PALS","CNA","CMA","CPHQ","Board Certified","Licensed Practical Nurse","LPN"]
+  },
+  "Finance": {
+    "core": ["Financial Analysis","Financial Modeling","Budgeting","Forecasting","Financial Planning","FP&A","Variance Analysis","Revenue Recognition","Month-End Close","Year-End Close","Financial Reporting","P&L Management","Cash Flow","Working Capital"],
+    "accounting": ["GAAP","US GAAP","IFRS","Generally Accepted Accounting Principles","Accounts Payable","Accounts Receivable","General Ledger","Journal Entries","Reconciliation","Audit","Internal Audit","External Audit","Tax Compliance","Tax Planning","Cost Accounting"],
+    "tools": ["Excel","Advanced Excel","VBA","Power Query","SAP","Oracle ERP","NetSuite","QuickBooks","Bloomberg Terminal","Capital IQ","FactSet","Hyperion","Anaplan","Adaptive Insights","SQL","Python"],
+    "investment": ["Valuation","DCF","Discounted Cash Flow","M&A","Mergers and Acquisitions","Due Diligence","LBO","Financial Due Diligence","Portfolio Management","Risk Management","Asset Management","Equity Research","Fixed Income","Derivatives","Hedge Fund"],
+    "certifications": ["CPA","Certified Public Accountant","CFA","Chartered Financial Analyst","CMA","Series 7","Series 63","FRM","Financial Risk Manager","CAIA","CFP"]
+  },
+  "Marketing": {
+    "digital": ["SEO","Search Engine Optimization","SEM","PPC","Pay-Per-Click","Google Ads","Facebook Ads","Meta Ads","LinkedIn Ads","Paid Search","Paid Social","Organic Search","Content Marketing","Content Strategy","Social Media Marketing","Email Marketing","Marketing Automation","Inbound Marketing"],
+    "analytics": ["Google Analytics","GA4","Adobe Analytics","Conversion Rate Optimization","CRO","A/B Testing","Attribution Modeling","Marketing Analytics","KPIs","ROI","ROAS","CPA","CPL","CTR","Customer Acquisition Cost","CAC","LTV","Lifetime Value"],
+    "tools": ["HubSpot","Marketo","Salesforce","Mailchimp","Hootsuite","Sprout Social","SEMrush","Ahrefs","Moz","Google Tag Manager","Google Search Console","Canva","Adobe Creative Suite","WordPress","Shopify"],
+    "strategy": ["Brand Management","Brand Strategy","Market Research","Competitive Analysis","Go-to-Market","GTM","Product Marketing","Growth Marketing","Performance Marketing","Demand Generation","Lead Generation","Campaign Management","Influencer Marketing","PR","Public Relations","Copywriting","UX Writing"],
+    "concepts": ["Customer Journey","Funnel Optimization","Segmentation","Personalization","Omnichannel","B2B","B2C","SaaS Marketing","ABM","Account-Based Marketing","Thought Leadership","Content Calendar","Editorial Strategy"]
+  },
+  "Project_Management": {
+    "methodologies": ["Agile","Scrum","Kanban","Waterfall","SAFe","Lean","Six Sigma","Prince2","Hybrid","Sprint Planning","Backlog Grooming","Retrospective","Daily Standup","Iteration","Release Planning"],
+    "skills": ["Project Management","Program Management","Portfolio Management","Stakeholder Management","Risk Management","Change Management","Scope Management","Budget Management","Resource Allocation","Workforce Planning","Vendor Management","Contract Management","Requirements Gathering","Business Analysis"],
+    "tools": ["Jira","Confluence","Trello","Asana","Monday.com","Microsoft Project","Smartsheet","Basecamp","Notion","Miro","Slack","Teams"],
+    "concepts": ["Cross-functional Teams","Roadmapping","OKRs","KPIs","Gantt Chart","Work Breakdown Structure","WBS","Critical Path","Milestone","Deliverable","Sprint Velocity","Burn-down Chart","Capacity Planning","RAID Log","Lessons Learned"],
+    "certifications": ["PMP","Project Management Professional","CSM","Certified ScrumMaster","SAFe Agilist","PRINCE2","CAPM","PMI-ACP","Lean Six Sigma","Green Belt","Black Belt"]
+  },
+  "Human_Resources": {
+    "core": ["Talent Acquisition","Recruiting","Staffing","Employee Relations","Employee Engagement","Performance Management","Onboarding","Offboarding","Succession Planning","Workforce Planning","Organizational Development","Training and Development","Learning and Development","L&D"],
+    "compensation": ["Compensation","Benefits Administration","Total Rewards","Payroll","FLSA","Salary Benchmarking","Equity Compensation","Stock Options","401k","Benefits Enrollment"],
+    "compliance": ["Compliance","Employment Law","EEOC","ADA","FMLA","Workers Compensation","Labor Relations","Union","Collective Bargaining","I-9","E-Verify","Background Check","Drug Screening"],
+    "tools": ["HRIS","Workday","ADP","BambooHR","SuccessFactors","UKG","Greenhouse","Lever","iCIMS","Taleo","LinkedIn Recruiter","Indeed","Applicant Tracking System","ATS"],
+    "strategy": ["Diversity and Inclusion","DEI","Employer Branding","Culture","Employee Value Proposition","EVP","HR Analytics","People Analytics","Retention","Turnover","Exit Interview","Stay Interview","Engagement Survey","Change Management"],
+    "certifications": ["SHRM-CP","SHRM-SCP","PHR","SPHR","HRCI","aPHR","GPHR","CCP","CEBS"]
+  },
+  "Design_UX": {
+    "core": ["UI Design","UX Design","User Experience","User Interface","Interaction Design","Visual Design","Product Design","Design Systems","Design Thinking","Human-Centered Design","Responsive Design","Mobile Design","Accessibility","WCAG"],
+    "research": ["User Research","Usability Testing","A/B Testing","User Interviews","Surveys","Persona Development","Journey Mapping","Information Architecture","Card Sorting","Heuristic Evaluation","Analytics"],
+    "tools": ["Figma","Sketch","Adobe XD","InVision","Framer","Principle","Zeplin","Abstract","Miro","Whimsical","Photoshop","Illustrator","After Effects"],
+    "skills": ["Wireframing","Prototyping","High-Fidelity Mockups","Design Handoff","Typography","Color Theory","Layout","Grid Systems","Motion Design","Micro-interactions","Icon Design","Illustration","Brand Identity"],
+    "concepts": ["Design Sprint","Agile UX","Lean UX","Atomic Design","Component Library","Style Guide","Cross-platform","Progressive Disclosure","Affordance","Cognitive Load"]
+  },
+  "Soft_Skills": {
+    "leadership": ["Leadership","Team Leadership","People Management","Mentoring","Coaching","Executive Presence","Decision Making","Strategic Thinking","Vision","Delegation"],
+    "communication": ["Communication","Written Communication","Verbal Communication","Presentation","Public Speaking","Storytelling","Active Listening","Negotiation","Conflict Resolution","Stakeholder Communication"],
+    "execution": ["Problem Solving","Critical Thinking","Analytical Thinking","Time Management","Prioritization","Adaptability","Creativity","Innovation","Attention to Detail","Results-Oriented"],
+    "collaboration": ["Teamwork","Collaboration","Cross-functional","Relationship Building","Influence","Empathy","Cultural Awareness","Remote Collaboration","Emotional Intelligence"]
+  }
+}
