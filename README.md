@@ -171,7 +171,7 @@ This reads `Resume.csv`, generates embeddings, runs KMeans, and saves artifacts 
 3. Configure:
    - **Root Directory:** `backend`
    - **Runtime:** Python 3
-   - **Build Command:** `pip install torch==2.2.2+cpu --extra-index-url https://download.pytorch.org/whl/cpu && pip install -r requirements.txt && python -m spacy download en_core_web_sm`
+   - **Build Command:** `pip install -r requirements-render.txt && python -m spacy download en_core_web_sm`
    - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --preload --timeout 120`
 4. Add environment variables:
    - `NUMBA_DISABLE_JIT` = `1`
