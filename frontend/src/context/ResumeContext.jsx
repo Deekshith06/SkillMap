@@ -82,7 +82,8 @@ export function ResumeProvider({ children }) {
 
     try {
       // Try backend-powered scoring (NLP + BERT)
-      const res = await fetch('http://localhost:5001/ats/score', {
+      const apiUrl = (import.meta.env.VITE_API_URL || 'http://localhost:5001').replace(/\/$/, '');
+      const res = await fetch(`${apiUrl}/ats/score`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resume_text: resumeText }),
