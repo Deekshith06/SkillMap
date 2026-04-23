@@ -34,7 +34,7 @@ import numpy as np
 import pandas as pd
 from flask import Flask, jsonify, request
 from flask_cors import CORS
-from sentence_transformers import SentenceTransformer
+# SentenceTransformer imported lazily to save memory
 from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import normalize as l2_normalize
 
@@ -90,6 +90,7 @@ def get_sentence_model():
     global _sentence_model
     if _sentence_model is None and bert_model_name:
         t0 = time.time()
+        from sentence_transformers import SentenceTransformer
         _sentence_model = SentenceTransformer(str(bert_model_name))
         logger.info("SentenceTransformer '%s' loaded in %sms", bert_model_name, round((time.time() - t0) * 1000, 1))
     return _sentence_model

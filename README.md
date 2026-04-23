@@ -159,7 +159,7 @@ This reads `Resume.csv`, generates embeddings, runs KMeans, and saves artifacts 
 
 - Backend must run on port **5001** (macOS reserves 5000 for AirPlay).
 - Set `NUMBA_DISABLE_JIT=1` to avoid JIT errors on newer Python versions.
-- For production, use Gunicorn: `gunicorn -w 2 -b 0.0.0.0:5001 backend.app:app`
+- For production, use Gunicorn: `gunicorn -w 1 --threads 2 --preload -b 0.0.0.0:5001 backend.app:app`
 - The ATS editor works standalone (client-side scoring) if the backend is unavailable.
 
 ## Deployment
@@ -172,7 +172,7 @@ This reads `Resume.csv`, generates embeddings, runs KMeans, and saves artifacts 
    - **Root Directory:** `backend`
    - **Runtime:** Python 3
    - **Build Command:** `pip install -r requirements.txt && python -m spacy download en_core_web_sm`
-   - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120`
+   - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --preload --timeout 120`
 4. Add environment variables:
    - `NUMBA_DISABLE_JIT` = `1`
    - `MODEL_DIR` = `/opt/render/project/src/models`
