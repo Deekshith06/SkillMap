@@ -89,15 +89,16 @@ _sentence_model = None
 def get_sentence_model():
     global _sentence_model
     if _sentence_model is None and bert_model_name:
-        # Render free tier (512MB limit) cannot hold PyTorch/BERT in memory
-        if os.environ.get("RENDER"):
-            logger.warning("Running on Render: SentenceTransformer disabled to stay under 512MB RAM. ATS will use fast spaCy fallback.")
-            return None
-        
         t0 = time.time()
+        import torch
+        
+        # Ultra-strict memory controls to fit PyTorch within 400MB RAM
+        torch.set_num_threads(1)
+        torch.set_num_interop_threads(1)
+        
         from sentence_transformers import SentenceTransformer
         _sentence_model = SentenceTransformer(str(bert_model_name))
-        logger.info("SentenceTransformer '%s' loaded in %sms", bert_model_name, round((time.time() - t0) * 1000, 1))
+        logger.info("SentenceTransformer '%s' loaded in %sms (Memory optimized: 1 thread)", bert_model_name, round((time.time() - t0) * 1000, 1))
     return _sentence_model
 
 # ── Data loading ─────────────────────────────────────────────────
@@ -295,6 +296,8 @@ def _embed_and_predict(
         convert_to_numpy=True,
         normalize_embeddings=True,
     )
+    import gc
+    gc.collect()
 
     # KMeans prediction
     cluster_id = int(kmeans_model.predict(embedding)[0])
@@ -692,6 +695,9 @@ def ats_score() -> tuple[dict[str, Any], int]:
             )
         else:
             embedding = None
+            
+        import gc
+        gc.collect()
     except Exception as e:
         logger.warning("BERT embedding failed: %s", e)
         embedding = None

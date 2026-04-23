@@ -170,12 +170,13 @@ This reads `Resume.csv`, generates embeddings, runs KMeans, and saves artifacts 
 2. Connect this GitHub repository
 3. Configure:
    - **Root Directory:** `backend`
-   - **Runtime:** Python 3
-   - **Build Command:** `pip install -r requirements-render.txt && python -m spacy download en_core_web_sm`
+   - **Build Command:** `pip install -r requirements.txt && python -m spacy download en_core_web_sm`
    - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT --workers 1 --threads 2 --preload --timeout 120`
 4. Add environment variables:
+   - `PYTHON_VERSION` = `3.10.14` (CRITICAL: Required for PyTorch CPU installation)
    - `NUMBA_DISABLE_JIT` = `1`
    - `MODEL_DIR` = `/opt/render/project/src/models`
+   - `PORT` = `10000`
 5. Upload `Resume.csv` and model artifacts to the service (or use persistent disk)
 
 ### Frontend (Vercel)
