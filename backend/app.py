@@ -26,7 +26,13 @@ import time
 from collections import Counter, defaultdict
 from pathlib import Path
 
-# Disable Numba JIT to avoid bytecode parsing errors on newer Python versions (e.g. 3.14)
+# Strict thread limits for low memory environments
+os.environ["OMP_NUM_THREADS"] = "1"
+os.environ["MKL_NUM_THREADS"] = "1"
+os.environ["OPENBLAS_NUM_THREADS"] = "1"
+os.environ["VECLIB_MAXIMUM_THREADS"] = "1"
+os.environ["NUMEXPR_NUM_THREADS"] = "1"
+# Disable Numba JIT to avoid bytecode parsing errors
 os.environ["NUMBA_DISABLE_JIT"] = "1"
 from typing import Any
 
@@ -94,7 +100,6 @@ def get_sentence_model():
         
         # Ultra-strict memory controls to fit PyTorch within 400MB RAM
         torch.set_num_threads(1)
-        torch.set_num_interop_threads(1)
         
         from sentence_transformers import SentenceTransformer
         _sentence_model = SentenceTransformer(str(bert_model_name))
