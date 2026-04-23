@@ -89,6 +89,11 @@ _sentence_model = None
 def get_sentence_model():
     global _sentence_model
     if _sentence_model is None and bert_model_name:
+        # Render free tier (512MB limit) cannot hold PyTorch/BERT in memory
+        if os.environ.get("RENDER"):
+            logger.warning("Running on Render: SentenceTransformer disabled to stay under 512MB RAM. ATS will use fast spaCy fallback.")
+            return None
+        
         t0 = time.time()
         from sentence_transformers import SentenceTransformer
         _sentence_model = SentenceTransformer(str(bert_model_name))
