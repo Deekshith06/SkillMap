@@ -60,17 +60,11 @@ CLUSTER_RESULTS_CSV = MODEL_DIR / "cluster_results.csv"
 
 _BOOT_TIME = time.time()
 
-# ── Model loading (fail-fast) ────────────────────────────────────
+# ── Model loading (graceful + lazy) ──────────────────────────────
 
-REQUIRED_ARTIFACTS = [
-    "bert_model_name.pkl",
-    "kmeans_model.pkl",
-    "cluster_names.pkl",
-]
-
+import joblib
 
 def _load_pickle(path: Path) -> Any:
-    """Load a pickle file. Logs duration."""
     t0 = time.time()
     with path.open("rb") as f:
         obj = pickle.load(f)
@@ -78,50 +72,53 @@ def _load_pickle(path: Path) -> Any:
     logger.info("Loaded %s in %sms", path.name, ms)
     return obj
 
+bert_model_name: str | None = None
+kmeans_model = None
+cluster_name_source = None
 
-# Validate all artifacts exist
-for _art in REQUIRED_ARTIFACTS:
-    _art_path = MODEL_DIR / _art
-    if not _art_path.exists():
-        raise FileNotFoundError(
-            f"Missing required model artifact: {_art_path}"
-        )
+try:
+    bert_model_name = joblib.load(MODEL_DIR / "bert_model_name.pkl")
+    kmeans_model = joblib.load(MODEL_DIR / "kmeans_model.pkl")
+    cluster_name_source = joblib.load(MODEL_DIR / "cluster_names.pkl")
+    logger.info("Loaded model artifacts from %s", MODEL_DIR)
+except FileNotFoundError as e:
+    logger.warning("Model artifacts not found: %s — ML endpoints will be unavailable", e)
 
-if not CLUSTER_RESULTS_CSV.exists():
-    raise FileNotFoundError(
-        f"Missing cluster results: {CLUSTER_RESULTS_CSV}"
-    )
+_sentence_model = None
 
-import joblib
-
-logger.info("Loading model artifacts from %s ...", MODEL_DIR)
-
-bert_model_name: str = joblib.load(MODEL_DIR / "bert_model_name.pkl")
-kmeans_model = joblib.load(MODEL_DIR / "kmeans_model.pkl")
-cluster_name_source = joblib.load(MODEL_DIR / "cluster_names.pkl")
-
-t0 = time.time()
-sentence_model = SentenceTransformer(str(bert_model_name))
-logger.info(
-    "SentenceTransformer '%s' loaded in %sms",
-    bert_model_name,
-    round((time.time() - t0) * 1000, 1),
-)
+def get_sentence_model():
+    global _sentence_model
+    if _sentence_model is None and bert_model_name:
+        t0 = time.time()
+        _sentence_model = SentenceTransformer(str(bert_model_name))
+        logger.info("SentenceTransformer '%s' loaded in %sms", bert_model_name, round((time.time() - t0) * 1000, 1))
+    return _sentence_model
 
 # ── Data loading ─────────────────────────────────────────────────
 
-logger.info("Loading data files ...")
+merged_df = None
 
-resume_df = pd.read_csv(RESUME_CSV, encoding="utf-8-sig", low_memory=False)
-cluster_df = pd.read_csv(CLUSTER_RESULTS_CSV, encoding="utf-8-sig")
+if RESUME_CSV.exists() and CLUSTER_RESULTS_CSV.exists():
+    logger.info("Loading data files ...")
+    try:
+        resume_df = pd.read_csv(RESUME_CSV, encoding="utf-8-sig", low_memory=False)
+        cluster_df = pd.read_csv(CLUSTER_RESULTS_CSV, encoding="utf-8-sig")
 
-resume_df["ID"] = resume_df["ID"].astype(str)
-cluster_df["ID"] = cluster_df["ID"].astype(str)
-cluster_df["cluster"] = cluster_df["cluster"].astype("int16")
-cluster_df["cluster_name"] = pd.Categorical(cluster_df["cluster_name"])
+        resume_df["ID"] = resume_df["ID"].astype(str)
+        cluster_df["ID"] = cluster_df["ID"].astype(str)
+        cluster_df["cluster"] = cluster_df["cluster"].astype("int16")
+        cluster_df["cluster_name"] = pd.Categorical(cluster_df["cluster_name"])
 
-merged_df = resume_df.merge(cluster_df, on="ID", how="inner").copy()
-merged_df["cluster"] = merged_df["cluster"].astype("int16")
+        merged_df = resume_df.merge(cluster_df, on="ID", how="inner").copy()
+        merged_df["cluster"] = merged_df["cluster"].astype("int16")
+
+        # Free raw dataframes to save memory
+        del resume_df
+        del cluster_df
+    except Exception as e:
+        logger.warning(f"Failed to load data: {e}")
+else:
+    logger.info("Resume.csv or cluster_results.csv not found — skipping data load")
 
 # ── Regex patterns for legacy skill extraction fallback ──────────
 
@@ -169,36 +166,44 @@ def _legacy_skills(text: str) -> list[str]:
 
 # ── Pre-compute cluster metadata (vectorised pandas) ─────────────
 
-logger.info("Computing cluster metadata ...")
+cluster_lookup: dict[int, dict[str, Any]] = {}
+cluster_ids: list[int] = []
+all_skills: Counter[str] = Counter()
+cluster_skill_counter: dict[int, Counter[str]] = defaultdict(Counter)
+cluster_sample_resumes: dict[int, list[dict[str, Any]]] = defaultdict(list)
 
-cluster_counts = (
-    merged_df
-    .groupby(["cluster", "cluster_name"], observed=True)
-    .size()
-    .reset_index(name="resume_count")
-    .sort_values("cluster")
-)
+if merged_df is not None:
+    logger.info("Computing cluster metadata ...")
+
+    cluster_counts = (
+        merged_df
+        .groupby(["cluster", "cluster_name"], observed=True)
+        .size()
+        .reset_index(name="resume_count")
+        .sort_values("cluster")
+    )
 
 cluster_skill_counter: dict[int, Counter[str]] = defaultdict(Counter)
 cluster_sample_resumes: dict[int, list[dict[str, Any]]] = defaultdict(list)
 
 # Build per-cluster skills and sample resumes
-for cid in merged_df["cluster"].unique():
-    subset = merged_df[merged_df["cluster"] == cid]
-    for _, row in subset.head(12).iterrows():
-        text = str(row.get("Resume_str", ""))
-        skills = _legacy_skills(text)
-        cluster_skill_counter[int(cid)].update(skills)
-        cluster_sample_resumes[int(cid)].append({
-            "id": str(row.get("ID", "")),
-            "category": row.get("Category", ""),
-            "snippet": _WS_RE.sub(" ", text[:420]).strip(),
-            "skills": skills[:10],
-        })
-    # Process remaining rows for skill counts only
-    for _, row in subset.iloc[12:].iterrows():
-        skills = _legacy_skills(str(row.get("Resume_str", "")))
-        cluster_skill_counter[int(cid)].update(skills)
+if merged_df is not None:
+    for cid in merged_df["cluster"].unique():
+        subset = merged_df[merged_df["cluster"] == cid]
+        for _, row in subset.head(12).iterrows():
+            text = str(row.get("Resume_str", ""))
+            skills = _legacy_skills(text)
+            cluster_skill_counter[int(cid)].update(skills)
+            cluster_sample_resumes[int(cid)].append({
+                "id": str(row.get("ID", "")),
+                "category": row.get("Category", ""),
+                "snippet": _WS_RE.sub(" ", text[:420]).strip(),
+                "skills": skills[:10],
+            })
+        # Process remaining rows for skill counts only
+        for _, row in subset.iloc[12:].iterrows():
+            skills = _legacy_skills(str(row.get("Resume_str", "")))
+            cluster_skill_counter[int(cid)].update(skills)
 
 
 # Build the cluster lookup dict
@@ -211,18 +216,19 @@ def _resolve_name(cid: int, fallback: str) -> str:
 
 
 cluster_lookup: dict[int, dict[str, Any]] = {}
-for _, row in cluster_counts.iterrows():
-    cid = int(row["cluster"])
-    name = _resolve_name(cid, str(row["cluster_name"]))
-    top_skills = [s for s, _ in cluster_skill_counter[cid].most_common(8)]
+if merged_df is not None:
+    for _, row in cluster_counts.iterrows():
+        cid = int(row["cluster"])
+        name = _resolve_name(cid, str(row["cluster_name"]))
+        top_skills = [s for s, _ in cluster_skill_counter[cid].most_common(8)]
 
     # Compute average confidence for this cluster
-    cluster_lookup[cid] = {
-        "id": cid,
-        "name": name,
-        "resume_count": int(row["resume_count"]),
-        "top_skills": top_skills,
-        "samples": cluster_sample_resumes.get(cid, []),
+        cluster_lookup[cid] = {
+                "id": cid,
+                "name": name,
+                "resume_count": int(row["resume_count"]),
+                "top_skills": top_skills,
+                "samples": cluster_sample_resumes.get(cid, []),
     }
 
 cluster_ids = sorted(cluster_lookup.keys())
@@ -232,10 +238,11 @@ all_skills: Counter[str] = Counter()
 for counter in cluster_skill_counter.values():
     all_skills.update(counter)
 
-logger.info(
-    "Startup complete: %d resumes, %d clusters, %d unique skills",
-    len(merged_df), len(cluster_ids), len(all_skills),
-)
+if merged_df is not None:
+    logger.info(
+        "Startup complete: %d resumes, %d clusters, %d unique skills",
+        len(merged_df), len(cluster_ids), len(all_skills),
+    )
 
 
 # ── Prediction helpers ───────────────────────────────────────────
@@ -254,7 +261,9 @@ def _embed_and_predict(
         raise ValueError("Resume text is empty after cleaning.")
 
     # Embedding + L2 normalisation
-    embedding = sentence_model.encode(
+    sentence_model = get_sentence_model()
+    if sentence_model:
+        embedding = sentence_model.encode(
         [cleaned],
         show_progress_bar=False,
         convert_to_numpy=True,
@@ -314,12 +323,12 @@ def _compute_stats() -> dict[str, Any]:
     for cid in cluster_ids:
         c = cluster_lookup[cid]
         dist.append({
-            "id": cid,
+                    "id": cid,
             "name": c["name"],
             "resume_count": c["resume_count"],
             "share": round(c["resume_count"] / total * 100, 2) if total else 0,
             "top_skills": c["top_skills"],
-        })
+            })
 
     top10 = [
         {"skill": s, "count": int(n)}
@@ -420,7 +429,7 @@ def predict() -> tuple[dict[str, Any], int]:
                 "cluster_id": cluster_id,
                 "cluster_name": cluster["name"],
                 "confidence": round(confidence, 4),
-                "top_skills": top_skills,
+                        "top_skills": top_skills,
                 "similar_resumes": similar,
             },
             t0,
@@ -449,7 +458,7 @@ def clusters() -> tuple[dict[str, Any], int]:
             "size": c["resume_count"],
             "top_skills": c["top_skills"][:5],
             "avg_confidence": round(avg_conf, 3),
-        })
+            })
 
     return _success(data, t0)
 
@@ -485,12 +494,12 @@ def bulk_predict() -> tuple[dict[str, Any], int]:
                             "index": i,
                             "filename": filename,
                             "error": err,
-                        })
+                            })
                         continue
 
                     text = extract_and_clean(file_bytes, filename)
                     cid, conf, skills, _ = _embed_and_predict(text)
-                    cname = cluster_lookup.get(cid, {}).get("name", "Unknown")
+                    cname = cluster_lookup.get(cid, {    }).get("name", "Unknown")
                     by_cluster[cname] += 1
 
                     results.append({
@@ -500,13 +509,13 @@ def bulk_predict() -> tuple[dict[str, Any], int]:
                         "cluster_name": cname,
                         "confidence": round(conf, 4),
                         "top_skills": skills,
-                    })
+                        })
                 except Exception as exc:
                     results.append({
                         "index": i,
                         "filename": file.filename or f"file_{i}",
                         "error": str(exc),
-                    })
+                        })
 
         else:
             # JSON body
@@ -522,11 +531,11 @@ def bulk_predict() -> tuple[dict[str, Any], int]:
             for i, text in enumerate(resumes):
                 text = str(text).strip()
                 if not text:
-                    results.append({"index": i, "error": "Empty resume text."})
+                    results.append({"index": i, "error": "Empty resume text."    })
                     continue
                 try:
                     cid, conf, skills, _ = _embed_and_predict(text)
-                    cname = cluster_lookup.get(cid, {}).get("name", "Unknown")
+                    cname = cluster_lookup.get(cid, {    }).get("name", "Unknown")
                     by_cluster[cname] += 1
 
                     results.append({
@@ -535,9 +544,9 @@ def bulk_predict() -> tuple[dict[str, Any], int]:
                         "cluster_name": cname,
                         "confidence": round(conf, 4),
                         "top_skills": skills,
-                    })
+                        })
                 except Exception as exc:
-                    results.append({"index": i, "error": str(exc)})
+                    results.append({"index": i, "error": str(exc)    })
 
         _invalidate_stats_cache()
 
@@ -645,12 +654,16 @@ def ats_score() -> tuple[dict[str, Any], int]:
 
     try:
         # Generate BERT embedding for semantic domain matching
-        embedding = sentence_model.encode(
-            [clean_text(resume_text)],
-            show_progress_bar=False,
-            convert_to_numpy=True,
-            normalize_embeddings=True,
-        )
+        sentence_model = get_sentence_model()
+        if sentence_model:
+            embedding = sentence_model.encode(
+                [clean_text(resume_text)],
+                show_progress_bar=False,
+                convert_to_numpy=True,
+                normalize_embeddings=True,
+            )
+        else:
+            embedding = None
     except Exception as e:
         logger.warning("BERT embedding failed: %s", e)
         embedding = None
@@ -661,7 +674,7 @@ def ats_score() -> tuple[dict[str, Any], int]:
         job_description=job_description,
         spacy_skills=spacy_skills,
         embedding=embedding,
-        sentence_model=sentence_model,
+        sentence_model=get_sentence_model(),
     )
 
     return _success(result, t0)
