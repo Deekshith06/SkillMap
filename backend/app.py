@@ -268,8 +268,28 @@ def _embed_and_predict(
 
     # Embedding + L2 normalisation
     sentence_model = get_sentence_model()
-    if sentence_model:
-        embedding = sentence_model.encode(
+    if not sentence_model or not kmeans_model:
+        # LOW-MEMORY FALLBACK (Rule-based NLP)
+        from ats_scorer import detect_domains_nlp
+        spacy_skills = extract_skill_names(cleaned, max_skills=15)
+        if not spacy_skills:
+            spacy_skills = _legacy_skills(cleaned)[:15]
+            
+        domains = detect_domains_nlp(cleaned, spacy_skills)
+        c_name = domains[0]["domain"] if domains else "Unknown Sector"
+        conf = (domains[0]["confidence"] / 100.0) if domains else 0.45
+        
+        # Determine the closest cluster name or use a fallback ID
+        target_cid = 0
+        for cid, cdata in cluster_lookup.items():
+            if c_name.lower() in str(cdata.get("name", "")).lower():
+                target_cid = cid
+                break
+                
+        return target_cid, float(conf), spacy_skills[:15], []
+
+    # Standard ML Pipeline
+    embedding = sentence_model.encode(
         [cleaned],
         show_progress_bar=False,
         convert_to_numpy=True,
@@ -293,6 +313,8 @@ def _embed_and_predict(
 
     # Similar resumes from the same cluster
     similar = cluster_sample_resumes.get(cluster_id, [])[:5]
+    
+    return cluster_id, confidence, top_skills, similar
 
     return cluster_id, confidence, top_skills, similar
 
