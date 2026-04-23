@@ -162,6 +162,61 @@ This reads `Resume.csv`, generates embeddings, runs KMeans, and saves artifacts 
 - For production, use Gunicorn: `gunicorn -w 2 -b 0.0.0.0:5001 backend.app:app`
 - The ATS editor works standalone (client-side scoring) if the backend is unavailable.
 
+## Deployment
+
+### Backend (Render)
+
+1. Create a new **Web Service** on [Render](https://render.com)
+2. Connect this GitHub repository
+3. Configure:
+   - **Root Directory:** `backend`
+   - **Runtime:** Python 3
+   - **Build Command:** `pip install -r requirements.txt && python -m spacy download en_core_web_sm`
+   - **Start Command:** `gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --timeout 120`
+4. Add environment variables:
+   - `NUMBA_DISABLE_JIT` = `1`
+   - `MODEL_DIR` = `/opt/render/project/src/models`
+5. Upload `Resume.csv` and model artifacts to the service (or use persistent disk)
+
+### Frontend (Vercel)
+
+1. Create a new project on [Vercel](https://vercel.com)
+2. Connect this repository
+3. Configure:
+   - **Root Directory:** `frontend`
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+4. Add environment variable:
+   - `VITE_API_URL` = `https://your-backend.onrender.com`
+5. Deploy
+
+### Frontend (Netlify — alternative)
+
+1. Create a new site on [Netlify](https://netlify.com)
+2. Connect this repository
+3. Configure:
+   - **Base directory:** `frontend`
+   - **Build command:** `npm run build`
+   - **Publish directory:** `frontend/dist`
+4. Add environment variable:
+   - `VITE_API_URL` = `https://your-backend.onrender.com`
+
+> **Note:** Update the API base URL in `frontend/src/api/client.js` and `frontend/src/context/ResumeContext.jsx` to use `import.meta.env.VITE_API_URL` for production deployments.
+
 ## Data
 
-`Resume.csv` (54 MB) is excluded from git due to GitHub's file size limit. Download it from the original dataset source and place it in the project root before running `train.py`.
+`Resume.csv` (54 MB) is excluded from git due to GitHub's file size limit.
+
+📥 **Download the dataset from Kaggle:**
+[**Resume Dataset** by Gaurav Dutta](https://www.kaggle.com/datasets/gauravduttakiit/resume-dataset)
+
+After downloading, place `Resume.csv` in the project root:
+
+```text
+SkillMap/
+├── Resume.csv    ← place here
+├── backend/
+├── frontend/
+└── models/
+```
