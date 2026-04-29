@@ -1,0 +1,258 @@
+:root {
+  /* backgrounds */
+  --bg-page:     #F7EFE6;   /* warm cream — entire page background */
+  --bg-card:     #FFFFFF;   /* white — all card surfaces */
+  --bg-input:    #FFFFFF;   /* form inputs */
+  --bg-tag:      #FFF1E9;   /* skill chip / badge fill */
+  --bg-icon:     #FFF1E9;   /* stat icon container */
+  --bg-upload:   #F7EFE6;   /* drag-drop zone fill */
+
+  /* orange brand */
+  --orange:      #E85C04;   /* primary CTA, active states, progress fills */
+  --orange-hover:#C94E03;   /* button hover darken */
+  --orange-mid:  #F47B50;   /* secondary accents, chart segments */
+  --orange-pale: #F9A07A;   /* lighter chart / donut segments */
+  --orange-lt:   #FFF1E9;   /* tag background, icon bg, hover bg */
+
+  /* text */
+  --text-primary:  #1C1908;  /* headings, body, labels */
+  --text-secondary:#7A6E65;  /* subtitles, metadata, placeholder */
+  --text-orange:   #854F0B;  /* text on orange-lt tags */
+  --text-success:  #22a05a;  /* "Healthy" status */
+
+  /* borders */
+  --border:        #EDE5DC;  /* default card/input border */
+  --border-strong: #DDD5CC;  /* upload zone dashes, stronger dividers */
+  --border-orange: #FBDACC;  /* tag/chip border on orange-lt bg */
+
+  /* radius */
+  --r-sm:  6px;    /* buttons, tags, small elements */
+  --r-md:  8px;    /* inputs, badges, rows */
+  --r-lg:  12px;   /* cards, panels, dropzones */
+  --r-xl:  16px;   /* hero stat cards */
+  --r-pill: 9999px;
+
+  /* Focus */
+  --focus-ring: 0 0 0 3px rgba(232, 92, 4, 0.15);
+
+  /* typography */
+  --font: 'Sora', system-ui, -apple-system, sans-serif;
+  --text-xs:   11px;
+  --text-sm:   12px;
+  --text-base: 13px;
+  --text-md:   14px;
+  --text-lg:   16px;
+  --text-xl:   22px;
+  --text-2xl:  26px;
+  --text-hero: 38px;
+
+  /* spacing (8px grid) */
+  --sp-1: 4px;   --sp-2: 8px;   --sp-3: 12px;
+  --sp-4: 16px;  --sp-5: 20px;  --sp-6: 24px;
+  --sp-8: 32px;  --sp-10:40px;  --sp-12:48px;
+
+  /* elevation — flat design, no drop shadows */
+  --shadow-none: none;
+  --focus-ring: 0 0 0 2px #E85C04;
+}
+
+body {
+    background: var(--bg-page);
+    min-height: 100vh;
+    font-family: var(--font);
+    color: var(--text-primary);
+    margin: 0;
+    padding: 0;
+}
+
+@media (prefers-reduced-motion: reduce) { 
+    * { animation-duration: 0.01ms !important; } 
+}
+
+/* Button variants */
+.btn-primary {
+    background: var(--orange) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--r-md) !important;
+    padding: 11px 22px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: background 0.15s !important;
+}
+
+.btn-primary:hover {
+    background: var(--orange-hover) !important;
+}
+
+.btn-primary:active {
+    transform: scale(0.98) !important;
+}
+
+.btn-primary[disabled] {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+}
+
+.btn-outline {
+    background: #fff !important;
+    color: var(--orange) !important;
+    border: 1.5px solid var(--orange) !important;
+    border-radius: var(--r-md) !important;
+    padding: 10px 22px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+}
+
+.btn-outline:hover {
+    background: var(--bg-tag) !important;
+}
+
+.btn-secondary {
+    background: #fff !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-strong) !important;
+    border-radius: var(--r-md) !important;
+    padding: 11px 18px !important;
+    font-size: 14px !important;
+    cursor: pointer !important;
+}
+
+.btn-secondary:hover {
+    background: var(--bg-page) !important;
+}
+
+.btn-full {
+    width: 100% !important;
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+}
+
+.btn-icon {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 6px !important;
+    align-items: center !important;
+    border-radius: var(--r-sm) !important;
+    padding: 6px 12px !important;
+}
+
+.jd-btn {
+    flex: 1 !important;
+    background: #fff !important;
+    color: var(--text-secondary) !important;
+    border: 1.5px solid var(--border-strong) !important;
+    border-radius: var(--r-md) !important;
+    padding: 8px !important;
+    font-size: 12.5px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+}
+
+.jd-btn.active-tab {
+    border-color: var(--orange) !important;
+    color: var(--orange) !important;
+    background: var(--bg-tag) !important;
+}
+
+*:focus-visible {
+    outline: none !important;
+    box-shadow: var(--focus-ring) !important;
+}
+
+.upload-zone {
+    border: 1.5px dashed var(--border-strong);
+    border-radius: var(--r-lg);
+    background: var(--bg-page);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.upload-zone:hover {
+    border-color: var(--orange);
+    background: rgba(255, 241, 233, 0.3);
+}
+
+.file-chip-close {
+    opacity: 1;
+    transition: opacity 0.2s;
+    cursor: pointer;
+}
+
+.file-chip-close:hover {
+    opacity: 0.7;
+}
+
+.card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: var(--shadow-none);
+}
+
+.table-row {
+    transition: background 0.15s;
+}
+
+.table-row:hover {
+    background: var(--bg-page);
+}
+
+.nav-link {
+    transition: background 0.15s, color 0.15s !important;
+}
+.nav-link:hover {
+    background: var(--bg-page) !important;
+    color: var(--text-primary) !important;
+}
+
+.similar-card {
+    transition: border-color 0.15s;
+}
+.similar-card:hover {
+    border-color: var(--orange-mid) !important;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.btn-loading {
+    background: var(--orange) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--r-md) !important;
+    padding: 11px 22px !important;
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    cursor: not-allowed !important;
+    opacity: 0.8 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.spinner {
+    animation: spin 0.7s linear infinite;
+}
+
+/* Base custom chart bars */
+.chart-bar-track {
+    height: 5px;
+    background: #EDE5DC;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.chart-bar-fill {
+    height: 5px;
+    background: var(--orange);
+    border-radius: 4px;
+}

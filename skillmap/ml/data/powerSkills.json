@@ -1,0 +1,62 @@
+{
+  "Computer_Science_CSE": {
+    "Core":          ["python", "java", "c++", "c", "c#", "data structures", "algorithms", "oop", "database management", "sql", "mysql", "postgresql", "operating systems", "computer networks"],
+    "AI_ML":         ["machine learning", "deep learning", "nlp", "computer vision", "tensorflow", "pytorch", "scikit-learn", "pandas", "numpy", "data science"],
+    "Cybersecurity": ["network security", "cryptography", "ethical hacking", "penetration testing", "firewalls", "owasp"],
+    "Web_Dev":       ["react", "reactjs", "node.js", "nodejs", "express", "mongodb", "javascript", "html", "css", "tailwind", "php", "django", "flask", "aws", "docker"]
+  },
+  "Electronics_Communication_ECE": {
+    "Core":          ["circuit design", "signals and systems", "digital electronics", "microprocessors", "dsp", "communication systems", "embedded systems"],
+    "VLSI":          ["vlsi design", "verilog", "vhdl", "asic", "fpga", "cmos", "cadence", "synopsys"],
+    "IoT":           ["iot", "arduino", "raspberry pi", "sensors", "wireless communication"]
+  },
+  "Electrical_Engineering_EEE": {
+    "Core":          ["power systems", "control systems", "electrical machines", "network analysis", "electromagnetics"],
+    "Power_Electronics":["power electronics", "inverters", "converters", "motor drives", "smart grid", "renewable energy"],
+    "Automation":    ["plc", "scada", "industrial automation", "instrumentation"]
+  },
+  "Mechanical_Engineering": {
+    "Design":        ["autocad", "solidworks", "catia", "ansys", "cfd", "fea", "3d modeling", "cad", "cam", "machine design"],
+    "Manufacturing": ["cnc", "gd&t", "lean manufacturing", "six sigma", "kaizen", "dfma", "tolerance analysis", "material science"],
+    "Thermodynamics":["thermodynamics", "fluid mechanics", "heat transfer", "hvac", "turbomachinery", "ic engines"]
+  },
+  "Healthcare": {
+    "Clinical":      ["patient care", "clinical trials", "ehr", "emr", "icd-10", "cpt codes", "hipaa", "nursing", "medical coding"],
+    "Tech":          ["medical devices", "radiology", "pathology", "surgery", "diagnostics", "telemedicine", "health informatics"]
+  },
+  "Finance": {
+    "Accounting":    ["gaap", "ifrs", "financial statements", "accounts payable", "accounts receivable", "auditing", "tax", "balance sheet"],
+    "Analysis":      ["financial modeling", "valuation", "dcf", "irr", "npv", "excel", "bloomberg", "equity research", "investment banking"],
+    "Risk":          ["risk management", "compliance", "aml", "kyc", "basel", "credit risk", "portfolio management"]
+  },
+  "Marketing": {
+    "Digital":       ["seo", "sem", "google ads", "facebook ads", "social media", "content marketing", "email marketing", "crm", "hubspot", "salesforce"],
+    "Analytics":     ["google analytics", "a/b testing", "conversion rate", "roi", "kpi", "market research", "brand strategy"]
+  },
+  "Project_Management": {
+    "Methodologies": ["pmp", "agile", "scrum", "kanban", "waterfall", "prince2", "six sigma", "lean"],
+    "Tools":         ["jira", "confluence", "ms project", "asana", "trello", "monday.com", "stakeholder management", "risk management", "budget management"]
+  },
+  "Human_Resources": {
+    "Core":          ["recruitment", "talent acquisition", "onboarding", "performance management", "payroll", "hris", "employee relations", "compensation"],
+    "Tools":         ["workday", "sap hr", "bamboohr", "greenhouse", "lever", "linkedin recruiter"]
+  },
+  "Design_UX": {
+    "Design":        ["figma", "sketch", "adobe xd", "photoshop", "illustrator", "invision", "wireframing", "prototyping"],
+    "UX":            ["user research", "usability testing", "user personas", "information architecture", "accessibility", "design systems", "hci"]
+  },
+  "Education": {
+    "Core":          ["curriculum development", "lesson planning", "classroom management", "assessment", "e-learning", "lms", "instructional design", "pedagogy"],
+    "Tools":         ["google classroom", "canvas", "blackboard", "moodle", "zoom", "microsoft teams"]
+  },
+  "Culinary": {
+    "Core":          ["food preparation", "culinary arts", "kitchen management", "menu planning", "haccp", "food safety", "pastry", "baking", "garde manger"],
+    "Operations":    ["inventory management", "cost control", "food costing", "restaurant operations", "catering"]
+  },
+  "Soft_Skills": {
+    "Communication": ["communication", "presentation", "public speaking", "writing", "negotiation"],
+    "Leadership":    ["leadership", "team management", "mentoring", "coaching", "decision making"],
+    "Collaboration": ["teamwork", "collaboration", "cross-functional", "stakeholder", "interpersonal"],
+    "Problem_Solving":["problem solving", "critical thinking", "analytical", "creativity", "innovation"]
+  }
+}
