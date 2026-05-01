@@ -1,0 +1,5 @@
+{
+  "n_clusters": 14,
+  "noise_count": 69,
+  "silhouette_score": 0.849405
+}
