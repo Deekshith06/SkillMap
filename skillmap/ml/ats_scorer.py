@@ -47,8 +47,22 @@ ALL_SKILLS = list(set(s.lower() for s in _deep_flatten(POWER_SKILLS)))
 ACTION_VERBS_SET = set(v.lower() for v in ACTION_VERBS_LIST)
 WEAK_VERBS = {
     "helped", "worked", "did", "made", "was", "had", "got", "went",
-    "used", "tried", "handled", "assisted", "participated",
     "responsible", "involved",
+}
+
+SKILL_SYNONYMS: dict[str, str] = {
+    "js": "javascript",
+    "reactjs": "react",
+    "nodejs": "node.js",
+    "aws": "amazon web services",
+    "gcp": "google cloud platform",
+    "ml": "machine learning",
+    "ai": "artificial intelligence",
+    "nlp": "natural language processing",
+    "ux": "user experience",
+    "ui": "user interface",
+    "hr": "human resources",
+    "jd": "job description",
 }
 
 _REGEX_CACHE: dict[str, re.Pattern] = {}
@@ -62,12 +76,25 @@ def _word_regex(term: str) -> re.Pattern:
 
 
 def _match_skill(skill: str, text_lower: str, word_tokens: set[str]) -> bool:
+    # Check exact match
     if " " in skill:
-        return bool(_word_regex(skill).search(text_lower))
+        if bool(_word_regex(skill).search(text_lower)):
+            return True
     elif len(skill) <= 2:
-        return skill in word_tokens
+        if skill in word_tokens:
+            return True
     else:
-        return bool(_word_regex(skill).search(text_lower))
+        if bool(_word_regex(skill).search(text_lower)):
+            return True
+            
+    # Check synonyms
+    for syn, canonical in SKILL_SYNONYMS.items():
+        if skill == canonical and syn in word_tokens:
+            return True
+        if skill == syn and canonical in text_lower:
+            return True
+            
+    return False
 
 
 def _tokenize(text: str) -> set[str]:
@@ -215,6 +242,12 @@ DOMAIN_LABELS = {
     "Design_UX": "Design & UX",
     "Education": "Education & Teaching",
     "Culinary": "Culinary & Chef",
+    "Legal": "Legal & Law",
+    "Logistics_Supply_Chain": "Logistics & Supply Chain",
+    "Sales": "Sales & Business Development",
+    "Aerospace_Engineering": "Aerospace Engineering",
+    "Biomedical_Engineering": "Biomedical Engineering",
+    "Industrial_Engineering": "Industrial Engineering",
 }
 
 
@@ -278,13 +311,106 @@ def detect_domains_nlp(
             scores = {
                 "VLSI Engineer": len({"vlsi design", "verilog", "vhdl", "asic", "fpga"}.intersection(s_set)),
                 "IoT Specialist": len({"iot", "arduino", "raspberry pi", "sensors"}.intersection(s_set)),
-                "DSP Engineer": len({"dsp", "signals and systems"}.intersection(s_set))
+                "Embedded Systems Developer": len({"microprocessors", "embedded systems", "dsp", "c"}.intersection(s_set)),
             }
             best_match = max(scores.items(), key=lambda x: x[1])
-            if best_match[1] > 0:
-                sub_domain = best_match[0]
-            else:
-                sub_domain = "ECE Engineer"
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Electronics Engineer"
+
+        # Civil Sub-domains
+        elif domain_key == "Civil_Engineering":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Structural Engineer": len({"structural analysis", "staad.pro", "revit", "etabs"}.intersection(s_set)),
+                "Project Manager (Civil)": len({"construction management", "project estimation", "ms project"}.intersection(s_set)),
+                "BIM Specialist": len({"bim", "revit", "civil 3d"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Civil Engineer"
+
+        # Legal Sub-domains
+        elif domain_key == "Legal":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Corporate Lawyer": len({"corporate law", "contract law", "compliance", "due diligence"}.intersection(s_set)),
+                "IP Attorney": len({"intellectual property", "patents", "trademarks"}.intersection(s_set)),
+                "Litigation Specialist": len({"litigation", "legal research", "case analysis"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Legal Professional"
+        # Chemical Engineering Sub-domains
+        elif domain_key == "Chemical_Engineering":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Process Engineer": len({"process control", "unit operations", "distillation"}.intersection(s_set)),
+                "Safety Engineer": len({"safety engineering", "hazop"}.intersection(s_set)),
+                "Simulation Specialist": len({"aspen plus", "aspen hysys", "matlab"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Chemical Engineer"
+
+        # Logistics & Supply Chain Sub-domains
+        elif domain_key == "Logistics_Supply_Chain":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Supply Chain Manager": len({"supply chain management", "strategic sourcing", "demand forecasting"}.intersection(s_set)),
+                "Logistics Coordinator": len({"logistics", "warehousing", "distribution"}.intersection(s_set)),
+                "Procurement Specialist": len({"procurement", "vendor management", "sap scm"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Logistics Professional"
+
+        # Sales Sub-domains
+        elif domain_key == "Sales":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Business Development Manager": len({"business development", "lead generation", "sales strategy"}.intersection(s_set)),
+                "Account Executive": len({"account management", "relationship building", "negotiation"}.intersection(s_set)),
+                "Sales Specialist": len({"closings", "prospecting", "salesforce"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Sales Professional"
+
+        # Aerospace Engineering Sub-domains
+        elif domain_key == "Aerospace_Engineering":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Aerodynamics Engineer": len({"aerodynamics", "propulsion", "flight mechanics"}.intersection(s_set)),
+                "Avionics Specialist": len({"avionics", "orbital mechanics"}.intersection(s_set)),
+                "Structural Dynamics Engineer": len({"structural mechanics", "ansys", "catia"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Aerospace Engineer"
+
+        # Biomedical Engineering Sub-domains
+        elif domain_key == "Biomedical_Engineering":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Medical Device Engineer": len({"medical devices", "biosensors", "biomaterials"}.intersection(s_set)),
+                "Rehabilitation Engineer": len({"rehabilitation engineering", "biomechanics"}.intersection(s_set)),
+                "Imaging Specialist": len({"medical imaging", "mimics", "labview"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Biomedical Engineer"
+
+        # Industrial Engineering Sub-domains
+        elif domain_key == "Industrial_Engineering":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Operations Analyst": len({"operations research", "production planning", "supply chain optimization"}.intersection(s_set)),
+                "Quality Engineer": len({"quality control", "six sigma", "minitab"}.intersection(s_set)),
+                "Ergonomics Specialist": len({"ergonomics", "facilities design", "arena"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Industrial Engineer"
                 
         # EEE Sub-domains
         elif domain_key == "Electrical_Engineering_EEE":
@@ -327,7 +453,7 @@ def detect_domains_nlp(
     return results[:5]
 
 
-def generate_suggestions(cats: dict[str, dict[str, Any]]) -> list[dict[str, Any]]:
+def generate_suggestions(cats: dict[str, dict[str, Any]], domains: list[dict] | None = None) -> list[dict[str, Any]]:
     suggestions: list[dict[str, Any]] = []
     _id = 0
 
@@ -343,44 +469,71 @@ def generate_suggestions(cats: dict[str, dict[str, Any]]) -> list[dict[str, Any]
     struct = cats["structure"]; ach = cats["achievements"]
     av = cats["actionVerbs"]; ln = cats["length"]
 
+    domain_key = domains[0]["key"] if domains else "General"
+
+    # 1. Keywords / Skills to Improve
     if kw["score"] < 15:
-        add("critical", "keywords", "Add more relevant skills",
-            f"Only {len(kw['matched'])} skills detected. Add: {', '.join(kw['missing'][:5])}.", "skills")
+        add("critical", "keywords", "Skills to Improve: Core Skills",
+            f"Only {len(kw['matched'])} skills detected. Focus on adding: {', '.join(kw['missing'][:5])}.", "skills")
     elif kw["score"] < 24:
-        add("important", "keywords", "Expand your skillset",
-            f"Missing key terms: {', '.join(kw['missing'][:4])}.", "skills")
+        add("important", "keywords", "Skills to Improve: Competitive Edge",
+            f"To better match the industry benchmark, add: {', '.join(kw['missing'][:4])}.", "skills")
 
-    for issue in fmt.get("issues", [])[:3]:
-        add("critical" if fmt["score"] < 10 else "important", "formatting", "Fix formatting issue", issue)
+    # 2. Formatting
+    for issue in fmt.get("issues", [])[:2]:
+        add("critical" if fmt["score"] < 10 else "important", "formatting", "Formatting Optimization", issue)
 
+    # 3. Contact Info (Redundancy Check)
     d = contact.get("details", {})
-    if not d.get("email"): add("critical", "contact", "Add email address", "ATS requires a valid email.")
-    if not d.get("phone"): add("critical", "contact", "Add phone number", "Include a phone number.")
-    if not d.get("linkedin"): add("important", "contact", "Add LinkedIn profile", "Recruiters verify via LinkedIn.")
+    if not d.get("email"): add("critical", "contact", "Missing Contact: Email", "Include a professional email address for ATS parsers.")
+    if not d.get("phone"): add("critical", "contact", "Missing Contact: Phone", "A phone number is essential for recruiter outreach.")
+    if not d.get("linkedin") and domain_key in ["Computer_Science_CSE", "Marketing", "Sales", "Design_UX"]: 
+        add("nice", "contact", "Social Proof: LinkedIn", "For your domain, a LinkedIn profile significantly improves credibility.")
 
+    # 4. Structure
     for m in struct.get("missing", []):
-        add("critical", "structure", f"Add {m} section", f'A "{m}" section is expected by ATS parsers.')
+        add("critical", "structure", f"Missing Section: {m.title()}", f'A dedicated "{m.title()}" section is required for optimal ATS parsing.')
 
+    # 5. Achievements (Contextual)
     if ach["count"] == 0:
-        add("critical", "achievements", "Quantify your impact",
-            'Add numbers: e.g., "Increased revenue by 35%".', "experience",
-            {"before": "Managed the sales team",
-             "after": "Managed a 12-person sales team, driving $2.4M in revenue (+35% YoY)"})
-    elif ach["count"] < 3:
-        add("important", "achievements", "Add more metrics",
-            f"Only {ach['count']} quantified achievement(s). Aim for 5+.", "experience")
+        detail = 'Quantify your impact. Metrics (%, $, #) are the most important factor for high ATS scores.'
+        if domain_key == "Sales":
+            detail += ' E.g., "Exceeded sales targets by 25% ($2M+ revenue)".'
+        elif domain_key == "Computer_Science_CSE":
+            detail += ' E.g., "Reduced server latency by 40% via query optimization".'
+            
+        add("critical", "achievements", "Impact Quantification", detail, "experience",
+             {"before": "Responsible for managing project timelines.",
+              "after": "Spearheaded project delivery 15% ahead of schedule by optimizing resource allocation and using Agile Scrum methodologies."})
+    elif ach["count"] < 4:
+        add("important", "achievements", "Strengthen Metrics",
+            f"Detected {ach['count']} metrics. Aim for at least 5 quantified bullet points across your experience.", "experience")
 
+    # 6. Action Verbs
     if av.get("weak"):
-        weak_str = '", "'.join(av["weak"][:3])
-        add("important", "actionVerbs", "Replace weak verbs",
-            f'Avoid: "{weak_str}". Use "Spearheaded", "Optimized", "Delivered".', "experience")
+        weak_str = '", "'.join(av["weak"][:2])
+        add("important", "actionVerbs", "Dynamic Action Verbs",
+            f'Replace passive terms like "{weak_str}" with high-impact verbs like "Orchestrated" or "Engineered".', "experience")
 
+    # 7. Domain-Specific Templates
+    if domain_key == "Healthcare":
+        add("important", "keywords", "Healthcare Compliance", "Ensure FHIR or HL7 standards are mentioned if relevant to your clinical tech role.")
+    elif domain_key == "Finance":
+        add("important", "keywords", "FinTech Exposure", "Mention experience with RegTech or FinTech APIs to align with modern finance roles.")
+    elif domain_key == "Computer_Science_CSE":
+        add("important", "keywords", "System Architecture", "Include experience with design tokens or design systems if applying for frontend-heavy roles.")
+        add("nice", "keywords", "Open Source", "Include a link to your GitHub profile or mention open-source contributions to demonstrate coding active-ness.")
+    elif domain_key == "Data_Science":
+        add("important", "keywords", "ML Deployment", "Mention experience with model deployment and monitoring (MLOps) using tools like MLflow or Kubeflow.")
+        add("important", "keywords", "Big Data", "Highlight experience with big data technologies like Spark or Hadoop if targeting enterprise data roles.")
+
+    # 8. Length
     wc = ln.get("wordCount", 0)
-    if wc < 250: add("critical", "length", "Resume is too short", "Fewer than 250 words.")
-    elif wc > 1200: add("important", "length", "Consider shortening", "Over 1,200 words.")
+    if wc < 250: add("critical", "length", "Content Depth", "Your resume is too brief. Expand on your responsibilities and technical projects.")
+    elif wc > 1200: add("important", "length", "Conciseness", "Resume exceeds 1,200 words. Aim for a max of 2 pages (approx. 900-1000 words).")
 
     suggestions.sort(key=lambda s: {"critical": 0, "important": 1, "nice": 2}.get(s["priority"], 2))
-    return suggestions[:12]
+    return suggestions[:10]
 
 
 _SCORE_CACHE: OrderedDict[str, dict] = OrderedDict()
@@ -421,7 +574,7 @@ def score_resume(
         "actionVerbs": action_verbs, "length": length,
     }
     total = min(100, sum(c["score"] for c in categories.values()))
-    suggestions = generate_suggestions(categories)
+    suggestions = generate_suggestions(categories, domains)
 
     result = {
         "total": total, "categories": categories,

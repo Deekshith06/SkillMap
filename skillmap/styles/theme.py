@@ -4,29 +4,39 @@ Color palette: Dr. White · Festive Ferret · Kiri Mist · Voldemort · Black Sa
 """
 
 # ── Brand Palette (Cocoa & Amber Theme) ────────────────────────────────────
-PRIMARY = "#ff771c"
-PRIMARY_HOVER = "#e66815"
-PRIMARY_LIGHT = "rgba(255, 119, 28, 0.12)"
+PRIMARY = "#FF7A59"
+PRIMARY_HOVER = "#E66D4F"
+PRIMARY_LIGHT = "rgba(255, 122, 89, 0.12)"
 SECONDARY = "#546877"
-SECONDARY_LIGHT = "rgba(84, 104, 119, 0.15)"
-DARK = "#161311"
-BG = "#f5ede0"
+SECONDARY_LIGHT = "rgba(84, 104, 119, 0.10)"
+DARK = "#1A1614"
+BG = "#FFFBF7"
 SURFACE = "#ffffff"
-SURFACE_ALT = "#fafafa"
-SURFACE_HOVER = "#fafafa"
-SURFACE_BORDER = "rgba(22, 19, 17, 0.08)"
-BORDER = "rgba(22, 19, 17, 0.08)"
-BORDER_STRONG = "rgba(22, 19, 17, 0.15)"
+SURFACE_ALT = "#fdfdfd"
+SURFACE_HOVER = "#FFF8F4"
+SURFACE_BORDER = "rgba(26, 22, 20, 0.06)"
+BORDER = "rgba(26, 22, 20, 0.06)"
+BORDER_STRONG = "rgba(26, 22, 20, 0.12)"
 ERROR = "#c75146"
 SUCCESS = "#6b8f71"
 WARNING = "#e8913a"
 TEXT_PRIMARY = DARK
 TEXT_SECONDARY = SECONDARY
-TEXT_MUTED = "rgba(22, 19, 17, 0.6)"
+TEXT_MUTED = "rgba(26, 22, 20, 0.5)"
 
 BRAND = PRIMARY
 BRAND_DARK = DARK
 ACCENT = PRIMARY
+
+# ── Architecture Palette (Figma Spec) ────────────────────────────────────────
+ARCH_ORANGE_600 = "#E07340"
+ARCH_ORANGE_50  = "#FAF0E8"
+ARCH_ORANGE_100 = "#EDD4C0"
+ARCH_NEUTRAL_900 = "#1C1917"
+ARCH_NEUTRAL_500 = "#6B6460"
+ARCH_NEUTRAL_300 = "#E4DDD8"
+ARCH_NEUTRAL_200 = "#C8BDB6"
+ARCH_NEUTRAL_50  = "#F8F5F2"
 
 # ── Gradients ─────────────────────────────────────────────────────────────────
 GRAD_HEADER = f"{BG}"
@@ -36,7 +46,7 @@ GRAD_SIDEBAR_HOVER = f"linear-gradient(90deg, rgba(255,119,28,0.1) 0%, transpare
 # ── Typography ────────────────────────────────────────────────────────────────
 FONT_SANS  = "'DM Sans', sans-serif"
 FONT_HEADING = "'Syne', sans-serif"
-FONT_MONO  = "'JetBrains Mono', 'Fira Code', monospace"
+FONT_MONO  = "'DM Mono', 'JetBrains Mono', monospace"
 
 # Sizes
 TEXT_H1      = "1.75rem"   # 28px
@@ -73,10 +83,10 @@ RADIUS_XL   = "16px"
 RADIUS_PILL = "9999px"
 
 # ── Shadows ───────────────────────────────────────────────────────────────────
-SHADOW_SM    = "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)"
-SHADOW_MD    = "0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04)"
-SHADOW_LG    = "0 8px 24px rgba(0,0,0,0.10), 0 4px 8px rgba(0,0,0,0.06)"
-SHADOW_BRAND = "0 4px 12px rgba(45,19,95,0.20)"
+SHADOW_SM    = "0 2px 8px rgba(26, 22, 20, 0.04)"
+SHADOW_MD    = "0 4px 16px rgba(26, 22, 20, 0.08)"
+SHADOW_LG    = "0 12px 32px rgba(26, 22, 20, 0.12)"
+SHADOW_BRAND = "0 4px 12px rgba(255, 122, 89, 0.20)"
 
 # ── Transitions ───────────────────────────────────────────────────────────────
 TRANSITION_FAST = "all 150ms cubic-bezier(0.4,0,0.2,1)"
@@ -115,8 +125,8 @@ CONTENT_PADDING = SPACE_6
 def card_style(**extra) -> dict:
     return {
         "background_color": SURFACE,
-        "border": f"1px solid {BORDER}",
-        "border_radius": RADIUS_XL,
+        "border": f"1px solid {BORDER_STRONG}",
+        "border_radius": RADIUS_LG,
         "padding": "24px",
         "box_shadow": SHADOW_SM,
         "transition": TRANSITION_BASE,

@@ -134,6 +134,23 @@ if _ESCO_SKILLS_PATH.exists():
     except (json.JSONDecodeError, TypeError):
         pass  # Fallback to hardcoded set
 
+# Also load from powerSkills.json for consistency with the ATS scorer
+_POWER_SKILLS_DATA_PATH = Path(__file__).parent / "data" / "powerSkills.json"
+if _POWER_SKILLS_DATA_PATH.exists():
+    try:
+        with _POWER_SKILLS_DATA_PATH.open("r", encoding="utf-8") as _f:
+            _power_data = json.load(_f)
+            def _flatten_values(obj):
+                res = []
+                if isinstance(obj, dict):
+                    for v in obj.values(): res.extend(_flatten_values(v))
+                elif isinstance(obj, list):
+                    for i in obj: res.append(str(i).lower())
+                return res
+            _CORE_SKILLS.update(_flatten_values(_power_data))
+    except Exception:
+        pass
+
 _SKILL_SET = frozenset(_CORE_SKILLS)
 
 # ── Stopwords for filtering ──────────────────────────────────────

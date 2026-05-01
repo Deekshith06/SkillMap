@@ -70,18 +70,24 @@ def stats_card(
     return rx.box(
         rx.vstack(
             rx.hstack(
-                rx.text(icon, font_size="1.3rem"),
-                rx.text(
-                    value,
-                    font_size="1.75rem",
-                    font_weight=t.W_BOLD,
-                    color=value_color,
-                    font_family=t.FONT_HEADING,
-                    letter_spacing="-0.02em",
-                    line_height="1",
+                rx.center(
+                    rx.icon(icon, size=18),
+                    width="36px", height="36px", border_radius="8px",
+                    background_color=t.PRIMARY_LIGHT, color=t.PRIMARY,
+                    margin_bottom="8px"
                 ),
+                rx.spacer(),
                 align="center",
-                spacing="2",
+                width="100%",
+            ),
+            rx.text(
+                value,
+                font_size="1.75rem",
+                font_weight=t.W_BOLD,
+                color=value_color,
+                font_family=t.FONT_HEADING,
+                letter_spacing="-0.02em",
+                line_height="1",
             ),
             rx.text(
                 label,
@@ -281,28 +287,48 @@ def meta_row(label: str, value: str) -> rx.Component:
 # Skeleton loader card
 # ─────────────────────────────────────────────────────────────────────────────
 
+def skeleton_bar(width: str = "100%", height: str = "12px", margin_bottom: str = "0", margin_top: str = "0", **kwargs) -> rx.Component:
+    return rx.box(
+        width=width,
+        height=height,
+        background_color=t.SECONDARY_LIGHT,
+        border_radius=t.RADIUS_PILL,
+        margin_bottom=margin_bottom,
+        margin_top=margin_top,
+        animation="pulse 1.5s ease-in-out infinite",
+        opacity="0.6",
+        **kwargs
+    )
+
+
 def skeleton_card(height: str = "120px") -> rx.Component:
     return rx.box(
-        rx.box(
-            height="12px",
-            width="60%",
-            background_color=t.BORDER,
-            border_radius=t.RADIUS_SM,
-            margin_bottom=t.SPACE_2,
-            opacity="0.6",
+        rx.vstack(
+            skeleton_bar(width="40%", height="16px", margin_bottom=t.SPACE_4),
+            skeleton_bar(width="90%", height="12px", margin_bottom=t.SPACE_2),
+            skeleton_bar(width="75%", height="12px", margin_bottom=t.SPACE_2),
+            align_items="start",
+            width="100%",
         ),
-        rx.box(
-            height="32px",
-            width="40%",
-            background_color=t.BORDER,
-            border_radius=t.RADIUS_SM,
-            opacity="0.5",
-        ),
-        background_color=t.BORDER,
-        border_radius=t.RADIUS_LG,
-        padding=t.SPACE_4,
+        **t.card_style(),
         height=height,
-        animation="pulse 1.5s ease-in-out infinite",
+    )
+
+
+def error_alert(message: str) -> rx.Component:
+    return rx.box(
+        rx.hstack(
+            rx.icon("circle-alert", color=t.ERROR, size=20, flex_shrink="0"),
+            rx.text(message, color=t.ERROR, font_size="0.85rem", font_weight="600"),
+            spacing="3",
+            align="center",
+        ),
+        background_color=t.ERROR_LIGHT,
+        border=f"1px solid rgba(199, 81, 70, 0.2)",
+        border_radius=t.RADIUS_MD,
+        padding=f"{t.SPACE_3} {t.SPACE_4}",
+        margin_top=t.SPACE_4,
+        width="100%",
     )
 
 
@@ -313,7 +339,7 @@ def skeleton_card(height: str = "120px") -> rx.Component:
 def divider() -> rx.Component:
     return rx.box(
         height="1px",
-        background_color=t.BORDER,
+        background_color=t.BORDER_STRONG,
         width="100%",
         margin=f"{t.SPACE_4} 0",
     )

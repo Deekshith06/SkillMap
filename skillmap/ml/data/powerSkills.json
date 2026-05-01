@@ -1,62 +1,612 @@
 {
   "Computer_Science_CSE": {
-    "Core":          ["python", "java", "c++", "c", "c#", "data structures", "algorithms", "oop", "database management", "sql", "mysql", "postgresql", "operating systems", "computer networks"],
-    "AI_ML":         ["machine learning", "deep learning", "nlp", "computer vision", "tensorflow", "pytorch", "scikit-learn", "pandas", "numpy", "data science"],
-    "Cybersecurity": ["network security", "cryptography", "ethical hacking", "penetration testing", "firewalls", "owasp"],
-    "Web_Dev":       ["react", "reactjs", "node.js", "nodejs", "express", "mongodb", "javascript", "html", "css", "tailwind", "php", "django", "flask", "aws", "docker"]
+    "Core": [
+      "python",
+      "java",
+      "c++",
+      "c",
+      "c#",
+      "data structures",
+      "algorithms",
+      "oop",
+      "database management",
+      "sql",
+      "mysql",
+      "postgresql",
+      "operating systems",
+      "computer networks"
+    ],
+    "AI_ML": [
+      "machine learning",
+      "deep learning",
+      "nlp",
+      "computer vision",
+      "tensorflow",
+      "pytorch",
+      "scikit-learn",
+      "pandas",
+      "numpy",
+      "data science",
+      "llm operations",
+      "llmops",
+      "vector databases",
+      "pinecone",
+      "weaviate",
+      "chromadb",
+      "milvus",
+      "langchain",
+      "llamaindex",
+      "prompt engineering"
+    ],
+    "Cybersecurity": [
+      "network security",
+      "cryptography",
+      "ethical hacking",
+      "penetration testing",
+      "firewalls",
+      "owasp"
+    ],
+    "Web_Dev": [
+      "react",
+      "reactjs",
+      "node.js",
+      "nodejs",
+      "express",
+      "mongodb",
+      "javascript",
+      "html",
+      "css",
+      "tailwind",
+      "php",
+      "django",
+      "flask",
+      "aws",
+      "docker"
+    ],
+    "Degrees": [
+      "b.tech cse",
+      "bca",
+      "be cse",
+      "bs cs",
+      "m.tech cse",
+      "mca",
+      "ms cs",
+      "b.tech ds",
+      "b.tech ai"
+    ],
+    "Emerging": [
+      "rust",
+      "webassembly",
+      "graphql",
+      "serverless",
+      "cloudflare workers",
+      "vercel",
+      "mlops",
+      "weights & biases",
+      "clearml",
+      "web3",
+      "blockchain"
+    ]
   },
   "Electronics_Communication_ECE": {
-    "Core":          ["circuit design", "signals and systems", "digital electronics", "microprocessors", "dsp", "communication systems", "embedded systems"],
-    "VLSI":          ["vlsi design", "verilog", "vhdl", "asic", "fpga", "cmos", "cadence", "synopsys"],
-    "IoT":           ["iot", "arduino", "raspberry pi", "sensors", "wireless communication"]
+    "Core": [
+      "circuit design",
+      "signals and systems",
+      "digital electronics",
+      "microprocessors",
+      "dsp",
+      "communication systems",
+      "embedded systems"
+    ],
+    "VLSI": [
+      "vlsi design",
+      "verilog",
+      "vhdl",
+      "asic",
+      "fpga",
+      "cmos",
+      "cadence",
+      "synopsys"
+    ],
+    "IoT": [
+      "iot",
+      "arduino",
+      "raspberry pi",
+      "sensors",
+      "wireless communication"
+    ],
+    "Degrees": [
+      "b.tech ece",
+      "be ece",
+      "m.tech ece",
+      "ms ece"
+    ]
   },
   "Electrical_Engineering_EEE": {
-    "Core":          ["power systems", "control systems", "electrical machines", "network analysis", "electromagnetics"],
-    "Power_Electronics":["power electronics", "inverters", "converters", "motor drives", "smart grid", "renewable energy"],
-    "Automation":    ["plc", "scada", "industrial automation", "instrumentation"]
+    "Core": [
+      "power systems",
+      "control systems",
+      "electrical machines",
+      "network analysis",
+      "electromagnetics"
+    ],
+    "Power_Electronics": [
+      "power electronics",
+      "inverters",
+      "converters",
+      "motor drives",
+      "smart grid",
+      "renewable energy"
+    ],
+    "Automation": [
+      "plc",
+      "scada",
+      "industrial automation",
+      "instrumentation"
+    ],
+    "Degrees": [
+      "b.tech eee",
+      "be eee",
+      "m.tech eee",
+      "ms eee"
+    ]
   },
   "Mechanical_Engineering": {
-    "Design":        ["autocad", "solidworks", "catia", "ansys", "cfd", "fea", "3d modeling", "cad", "cam", "machine design"],
-    "Manufacturing": ["cnc", "gd&t", "lean manufacturing", "six sigma", "kaizen", "dfma", "tolerance analysis", "material science"],
-    "Thermodynamics":["thermodynamics", "fluid mechanics", "heat transfer", "hvac", "turbomachinery", "ic engines"]
+    "Design": [
+      "autocad",
+      "solidworks",
+      "catia",
+      "ansys",
+      "cfd",
+      "fea",
+      "3d modeling",
+      "cad",
+      "cam",
+      "machine design"
+    ],
+    "Manufacturing": [
+      "cnc",
+      "gd&t",
+      "lean manufacturing",
+      "six sigma",
+      "kaizen",
+      "dfma",
+      "tolerance analysis",
+      "material science"
+    ],
+    "Thermodynamics": [
+      "thermodynamics",
+      "fluid mechanics",
+      "heat transfer",
+      "hvac",
+      "turbomachinery",
+      "ic engines"
+    ],
+    "Degrees": [
+      "b.tech mechanical",
+      "be mechanical",
+      "m.tech mechanical",
+      "ms mechanical"
+    ]
   },
   "Healthcare": {
-    "Clinical":      ["patient care", "clinical trials", "ehr", "emr", "icd-10", "cpt codes", "hipaa", "nursing", "medical coding"],
-    "Tech":          ["medical devices", "radiology", "pathology", "surgery", "diagnostics", "telemedicine", "health informatics"]
+    "Clinical": [
+      "patient care",
+      "clinical trials",
+      "ehr",
+      "emr",
+      "icd-10",
+      "cpt codes",
+      "hipaa",
+      "nursing",
+      "medical coding"
+    ],
+    "Tech": [
+      "medical devices",
+      "radiology",
+      "pathology",
+      "surgery",
+      "diagnostics",
+      "telemedicine",
+      "health informatics",
+      "fhir",
+      "hl7",
+      "telehealth platforms",
+      "healthcare ai",
+      "clinical decision support"
+    ]
   },
   "Finance": {
-    "Accounting":    ["gaap", "ifrs", "financial statements", "accounts payable", "accounts receivable", "auditing", "tax", "balance sheet"],
-    "Analysis":      ["financial modeling", "valuation", "dcf", "irr", "npv", "excel", "bloomberg", "equity research", "investment banking"],
-    "Risk":          ["risk management", "compliance", "aml", "kyc", "basel", "credit risk", "portfolio management"]
+    "Accounting": [
+      "gaap",
+      "ifrs",
+      "financial statements",
+      "accounts payable",
+      "accounts receivable",
+      "auditing",
+      "tax",
+      "balance sheet"
+    ],
+    "Analysis": [
+      "financial modeling",
+      "valuation",
+      "dcf",
+      "irr",
+      "npv",
+      "excel",
+      "bloomberg",
+      "equity research",
+      "investment banking"
+    ],
+    "Risk": [
+      "risk management",
+      "compliance",
+      "aml",
+      "kyc",
+      "basel",
+      "credit risk",
+      "portfolio management",
+      "defi",
+      "fintech apis",
+      "algorithmic trading",
+      "regtech"
+    ]
   },
   "Marketing": {
-    "Digital":       ["seo", "sem", "google ads", "facebook ads", "social media", "content marketing", "email marketing", "crm", "hubspot", "salesforce"],
-    "Analytics":     ["google analytics", "a/b testing", "conversion rate", "roi", "kpi", "market research", "brand strategy"]
+    "Digital": [
+      "seo",
+      "sem",
+      "google ads",
+      "facebook ads",
+      "social media",
+      "content marketing",
+      "email marketing",
+      "crm",
+      "hubspot",
+      "salesforce"
+    ],
+    "Analytics": [
+      "google analytics",
+      "a/b testing",
+      "conversion rate",
+      "roi",
+      "kpi",
+      "market research",
+      "brand strategy",
+      "marketo",
+      "customer data platforms",
+      "mixpanel",
+      "amplitude"
+    ]
   },
   "Project_Management": {
-    "Methodologies": ["pmp", "agile", "scrum", "kanban", "waterfall", "prince2", "six sigma", "lean"],
-    "Tools":         ["jira", "confluence", "ms project", "asana", "trello", "monday.com", "stakeholder management", "risk management", "budget management"]
+    "Methodologies": [
+      "pmp",
+      "agile",
+      "scrum",
+      "kanban",
+      "waterfall",
+      "prince2",
+      "six sigma",
+      "lean"
+    ],
+    "Tools": [
+      "jira",
+      "confluence",
+      "ms project",
+      "asana",
+      "trello",
+      "monday.com",
+      "stakeholder management",
+      "risk management",
+      "budget management",
+      "safe",
+      "less",
+      "okr frameworks",
+      "hybrid methodologies"
+    ]
   },
   "Human_Resources": {
-    "Core":          ["recruitment", "talent acquisition", "onboarding", "performance management", "payroll", "hris", "employee relations", "compensation"],
-    "Tools":         ["workday", "sap hr", "bamboohr", "greenhouse", "lever", "linkedin recruiter"]
+    "Core": [
+      "recruitment",
+      "talent acquisition",
+      "onboarding",
+      "performance management",
+      "payroll",
+      "hris",
+      "employee relations",
+      "compensation"
+    ],
+    "Tools": [
+      "workday",
+      "sap hr",
+      "bamboohr",
+      "greenhouse",
+      "lever",
+      "linkedin recruiter",
+      "hr analytics",
+      "dei metrics",
+      "remote work management"
+    ]
   },
   "Design_UX": {
-    "Design":        ["figma", "sketch", "adobe xd", "photoshop", "illustrator", "invision", "wireframing", "prototyping"],
-    "UX":            ["user research", "usability testing", "user personas", "information architecture", "accessibility", "design systems", "hci"]
+    "Design": [
+      "figma",
+      "sketch",
+      "adobe xd",
+      "photoshop",
+      "illustrator",
+      "invision",
+      "wireframing",
+      "prototyping"
+    ],
+    "UX": [
+      "user research",
+      "usability testing",
+      "user personas",
+      "information architecture",
+      "accessibility",
+      "design systems",
+      "hci",
+      "design tokens",
+      "usertesting",
+      "hotjar"
+    ]
   },
   "Education": {
-    "Core":          ["curriculum development", "lesson planning", "classroom management", "assessment", "e-learning", "lms", "instructional design", "pedagogy"],
-    "Tools":         ["google classroom", "canvas", "blackboard", "moodle", "zoom", "microsoft teams"]
+    "Core": [
+      "curriculum development",
+      "lesson planning",
+      "classroom management",
+      "assessment",
+      "e-learning",
+      "lms",
+      "instructional design",
+      "pedagogy"
+    ],
+    "Tools": [
+      "google classroom",
+      "canvas",
+      "blackboard",
+      "moodle",
+      "zoom",
+      "microsoft teams"
+    ]
   },
   "Culinary": {
-    "Core":          ["food preparation", "culinary arts", "kitchen management", "menu planning", "haccp", "food safety", "pastry", "baking", "garde manger"],
-    "Operations":    ["inventory management", "cost control", "food costing", "restaurant operations", "catering"]
+    "Core": [
+      "food preparation",
+      "culinary arts",
+      "kitchen management",
+      "menu planning",
+      "haccp",
+      "food safety",
+      "pastry",
+      "baking",
+      "garde manger"
+    ],
+    "Operations": [
+      "inventory management",
+      "cost control",
+      "food costing",
+      "restaurant operations",
+      "catering"
+    ]
   },
   "Soft_Skills": {
-    "Communication": ["communication", "presentation", "public speaking", "writing", "negotiation"],
-    "Leadership":    ["leadership", "team management", "mentoring", "coaching", "decision making"],
-    "Collaboration": ["teamwork", "collaboration", "cross-functional", "stakeholder", "interpersonal"],
-    "Problem_Solving":["problem solving", "critical thinking", "analytical", "creativity", "innovation"]
+    "Communication": [
+      "communication",
+      "presentation",
+      "public speaking",
+      "writing",
+      "negotiation"
+    ],
+    "Leadership": [
+      "leadership",
+      "team management",
+      "mentoring",
+      "coaching",
+      "decision making"
+    ],
+    "Collaboration": [
+      "teamwork",
+      "collaboration",
+      "cross-functional",
+      "stakeholder",
+      "interpersonal"
+    ],
+    "Problem_Solving": [
+      "problem solving",
+      "critical thinking",
+      "analytical",
+      "creativity",
+      "innovation"
+    ]
+  },
+  "Civil_Engineering": {
+    "Core": [
+      "fluid mechanics",
+      "geotechnical engineering",
+      "structural analysis",
+      "surveying",
+      "transportation engineering"
+    ],
+    "Design": [
+      "autocad",
+      "bim",
+      "civil 3d",
+      "etabs",
+      "revit",
+      "sap2000",
+      "staad.pro"
+    ],
+    "Construction": [
+      "construction management",
+      "ms project",
+      "project estimation",
+      "safety management",
+      "site supervision"
+    ]
+  },
+  "Chemical_Engineering": {
+    "Core": [
+      "chemical kinetics",
+      "fluid dynamics",
+      "heat transfer",
+      "mass transfer",
+      "thermodynamics"
+    ],
+    "Simulation": [
+      "ansys fluent",
+      "aspen hysys",
+      "aspen plus",
+      "comsol",
+      "matlab"
+    ],
+    "Process": [
+      "distillation",
+      "hazop",
+      "process control",
+      "safety engineering",
+      "unit operations"
+    ]
+  },
+  "Legal": {
+    "Core": [
+      "compliance",
+      "contract law",
+      "corporate law",
+      "intellectual property",
+      "legal research",
+      "litigation"
+    ],
+    "Skills": [
+      "arbitration",
+      "case analysis",
+      "due diligence",
+      "legal writing",
+      "mediation",
+      "regulatory affairs"
+    ],
+    "Tools": [
+      "clio",
+      "legalzoom",
+      "lexisnexis",
+      "westlaw"
+    ]
+  },
+  "Logistics_Supply_Chain": {
+    "Core": [
+      "distribution",
+      "inventory management",
+      "logistics",
+      "procurement",
+      "supply chain management",
+      "warehousing"
+    ],
+    "Operations": [
+      "demand forecasting",
+      "erp",
+      "lean",
+      "six sigma",
+      "strategic sourcing",
+      "vendor management"
+    ],
+    "Tools": [
+      "oracle scm",
+      "sap scm",
+      "tms",
+      "wms"
+    ]
+  },
+  "Sales": {
+    "Core": [
+      "account management",
+      "business development",
+      "closings",
+      "lead generation",
+      "negotiation",
+      "sales strategy"
+    ],
+    "Skills": [
+      "cold calling",
+      "market expansion",
+      "prospecting",
+      "relationship building",
+      "sales forecasting"
+    ],
+    "Tools": [
+      "hubspot",
+      "pipedrive",
+      "salesforce",
+      "zoho crm"
+    ]
+  },
+  "Aerospace_Engineering": {
+    "Core": [
+      "aerodynamics",
+      "avionics",
+      "flight mechanics",
+      "orbital mechanics",
+      "propulsion",
+      "structural mechanics"
+    ],
+    "Tools": [
+      "ansys",
+      "catia",
+      "matlab",
+      "solidworks",
+      "stk"
+    ],
+    "Degrees": [
+      "b.tech aerospace",
+      "be aerospace",
+      "m.tech aerospace",
+      "ms aerospace"
+    ]
+  },
+  "Biomedical_Engineering": {
+    "Core": [
+      "biomaterials",
+      "biomechanics",
+      "biosensors",
+      "medical imaging",
+      "rehabilitation engineering",
+      "tissue engineering"
+    ],
+    "Tools": [
+      "comsol",
+      "labview",
+      "matlab",
+      "mimics"
+    ],
+    "Degrees": [
+      "b.tech biomedical",
+      "be biomedical",
+      "m.tech biomedical",
+      "ms biomedical"
+    ]
+  },
+  "Industrial_Engineering": {
+    "Core": [
+      "ergonomics",
+      "facilities design",
+      "operations research",
+      "production planning",
+      "quality control",
+      "supply chain optimization"
+    ],
+    "Tools": [
+      "arena",
+      "flexsim",
+      "minitab",
+      "sap erp"
+    ],
+    "Degrees": [
+      "b.tech industrial",
+      "be industrial",
+      "m.tech industrial",
+      "ms industrial"
+    ]
   }
 }

@@ -60,6 +60,16 @@ class ATSState(AppState):
         return self.ats_result.get("categories", {})
 
     @rx.var
+    def detected_domain(self) -> str:
+        domains = self.ats_result.get("domains", [])
+        return domains[0].get("domain", "General") if domains else "General"
+
+    @rx.var
+    def detected_sub_domain(self) -> str:
+        domains = self.ats_result.get("domains", [])
+        return domains[0].get("sub_domain", "") if domains else ""
+
+    @rx.var
     def ats_suggestions(self) -> list[ATSSuggestion]:
         raw = self.ats_result.get("suggestions", [])
         return [
@@ -154,8 +164,9 @@ class ATSState(AppState):
             self.ats_error = str(e)
         finally:
             self.ats_loading = False
-            if self.resume_text.strip():
-                return ATSState.score_resume()
+        
+        if self.resume_text.strip():
+            return ATSState.score_resume()
 
     async def handle_jd_upload(self, files: list[rx.UploadFile]):
         if not files:

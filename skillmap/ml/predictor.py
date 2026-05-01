@@ -163,7 +163,6 @@ def _load_data() -> None:
     cluster_df["resume_id"] = cluster_df["resume_id"].astype(str)
     cluster_df["cluster_id"] = cluster_df["cluster_id"].astype("int16")
 
-    global merged_df
     merged_df = resume_df.merge(cluster_df, on="resume_id", how="inner").copy()
     merged_df["cluster_id"] = merged_df["cluster_id"].astype("int16")
 

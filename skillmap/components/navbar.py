@@ -92,7 +92,7 @@ def navbar() -> rx.Component:
         position="sticky",
         top="0",
         z_index="100",
-        background="rgba(245, 237, 224, 0.85)",
-        backdrop_filter="blur(12px)",
-        border_bottom=f"1px solid {t.BORDER}",
+        background="rgba(255, 251, 247, 0.85)",
+        backdrop_filter="blur(16px)",
+        border_bottom=f"1px solid {t.BORDER_STRONG}",
     )

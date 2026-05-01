@@ -128,8 +128,9 @@ class AnalyzeState(AppState):
             self.step = "upload"
         finally:
             self.analyzing = False
-            if self.resume_text.strip():
-                return AnalyzeState.predict_cluster()
+        
+        if self.resume_text.strip():
+            return AnalyzeState.predict_cluster()
 
     async def handle_jd_upload(self, files: list[rx.UploadFile]):
         if not files:

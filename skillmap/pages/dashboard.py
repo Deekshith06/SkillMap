@@ -156,6 +156,219 @@ def skill_dist_item(item: dict) -> rx.Component:
         width="100%", spacing="2", margin_bottom="16px"
     )
 
+# ── Architecture Visualization Components ─────────────────────────────────────
+
+def arch_label(text: str) -> rx.Component:
+    return rx.text(
+        text,
+        font_size="10px",
+        font_weight="500",
+        font_family=t.FONT_MONO,
+        color=t.ARCH_ORANGE_600,
+        letter_spacing="0.12em",
+        margin_bottom="14px",
+        text_align="center",
+        width="100%",
+        text_transform="uppercase",
+    )
+
+def arch_box(path: str, name: str) -> rx.Component:
+    return rx.box(
+        rx.vstack(
+            rx.text(path, font_size="13px", font_weight="500", color=t.ARCH_NEUTRAL_900, font_family=t.FONT_MONO),
+            rx.text(name, font_size="11px", color=t.ARCH_NEUTRAL_500, font_weight="400"),
+            spacing="1",
+            align_items="start",
+        ),
+        padding="14px",
+        border=f"1px solid {t.ARCH_NEUTRAL_300}",
+        border_radius="8px",
+        background_color="white",
+        width="100%",
+        _hover={
+            "border_color": t.ARCH_NEUTRAL_200,
+            "box_shadow": "0 2px 8px rgba(0,0,0,0.06)",
+        },
+        transition=t.TRANSITION_BASE,
+    )
+
+def arch_endpoint(method: str, path: str) -> rx.Component:
+    return rx.box(
+        rx.vstack(
+            rx.text(method, font_size="10px", font_weight="500", color=t.ARCH_ORANGE_600, font_family=t.FONT_MONO, text_transform="uppercase"),
+            rx.text(path, font_size="12px", font_weight="400", color=t.ARCH_NEUTRAL_900, font_family=t.FONT_MONO),
+            spacing="1",
+            align_items="start",
+        ),
+        padding="10px 14px",
+        border=f"1px solid {t.ARCH_NEUTRAL_300}",
+        border_radius="7px",
+        background_color=t.ARCH_NEUTRAL_50,
+        flex="1",
+        _hover={"border_color": t.ARCH_ORANGE_100},
+        transition=t.TRANSITION_BASE,
+    )
+
+def arch_list_item(text: str) -> rx.Component:
+    return rx.hstack(
+        rx.box(width="3px", height="3px", border_radius="50%", background_color=t.ARCH_ORANGE_600, opacity="0.6", margin_top="7px"),
+        rx.text(text, font_size="11.5px", color=t.ARCH_NEUTRAL_500, font_weight="400", font_family=t.FONT_MONO),
+        spacing="3",
+        align_items="start",
+    )
+
+def arch_connector() -> rx.Component:
+    return rx.center(
+        rx.vstack(
+            rx.box(width="1.5px", height="20px", background_color=t.ARCH_NEUTRAL_300),
+            rx.icon("chevron-down", size=14, color=t.ARCH_NEUTRAL_300, margin_top="-6px"),
+            spacing="0", align_items="center"
+        ),
+        width="100%",
+        padding="8px 0",
+    )
+
+def technical_architecture() -> rx.Component:
+    return rx.box(
+        rx.vstack(
+            # 1. Header Row
+            rx.hstack(
+                rx.vstack(
+                    rx.heading("Technical Architecture", font_size="20px", font_weight="700", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900),
+                    rx.text("End-to-end intelligence pipeline and infrastructure", color=t.ARCH_NEUTRAL_500, font_size="12px", font_family=t.FONT_MONO),
+                    spacing="1", align_items="start",
+                ),
+                rx.spacer(),
+                rx.box(
+                    rx.text("Phase 4 Production", font_size="11px", font_weight="500", font_family=t.FONT_MONO, color=t.ARCH_ORANGE_600),
+                    background_color=t.ARCH_ORANGE_50,
+                    border=f"1px solid {t.ARCH_ORANGE_100}",
+                    padding="4px 10px",
+                    border_radius="4px",
+                ),
+                width="100%", align_items="center", margin_bottom="32px",
+            ),
+            
+            # 2. REFLEX FRONTEND Section
+            rx.box(
+                rx.vstack(
+                    arch_label("REFLEX FRONTEND"),
+                    rx.grid(
+                        arch_box("/", "· Dashboard"),
+                        arch_box("/analyze", "· Analyze"),
+                        arch_box("/bulk", "· Bulk Upload"),
+                        arch_box("/ats", "· ATS Editor"),
+                        columns="4", spacing="3", width="100%"
+                    ),
+                    # State box
+                    rx.box(
+                        rx.vstack(
+                            rx.text("Reflex State (rx.State subclasses)", font_size="13px", font_weight="600", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900),
+                            rx.hstack(
+                                rx.text("AppState", font_size="11px", color=t.ARCH_NEUTRAL_500, font_family=t.FONT_MONO),
+                                rx.text("—", color=t.ARCH_NEUTRAL_300),
+                                rx.text("AnalyzeState", font_size="11px", color=t.ARCH_NEUTRAL_500, font_family=t.FONT_MONO),
+                                rx.text("—", color=t.ARCH_NEUTRAL_300),
+                                rx.text("BulkState", font_size="11px", color=t.ARCH_NEUTRAL_500, font_family=t.FONT_MONO),
+                                rx.text("—", color=t.ARCH_NEUTRAL_300),
+                                rx.text("ATSState", font_size="11px", color=t.ARCH_NEUTRAL_500, font_family=t.FONT_MONO),
+                                spacing="2",
+                            ),
+                            spacing="1", align_items="start",
+                        ),
+                        width="100%", padding="12px 16px", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="8px", margin_top="12px", background_color="white"
+                    ),
+                    width="100%",
+                ),
+                width="100%", padding="20px", border_radius="12px", background_color=t.ARCH_ORANGE_50, border=f"1px solid {t.ARCH_ORANGE_100}",
+            ),
+            
+            arch_connector(),
+
+            # 4. FASTAPI SERVICE LAYER Section
+            rx.box(
+                rx.vstack(
+                    arch_label("FASTAPI SERVICE LAYER"),
+                    rx.grid(
+                        arch_endpoint("POST", "/resume/upload"),
+                        arch_endpoint("GET", "/resume/{id}/score"),
+                        arch_endpoint("POST", "/cluster"),
+                        columns="3", spacing="3", width="100%"
+                    ),
+                    width="100%",
+                ),
+                width="100%", padding="20px", border_radius="10px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}",
+            ),
+
+            arch_connector(),
+
+            # 5. ENGINE BOXES
+            rx.grid(
+                # Ingestion
+                rx.box(
+                    rx.text("INGESTION LAYER", font_size="11px", font_weight="700", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900, border_bottom=f"1px solid {t.ARCH_NEUTRAL_300}", padding_bottom="8px", margin_bottom="12px"),
+                    rx.vstack(
+                        arch_list_item("PDF/DOCX/TXT Parser"),
+                        arch_list_item("Section Detector"),
+                        arch_list_item("Text Normalizer"),
+                        spacing="3", align_items="start"
+                    ),
+                    padding="16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="10px",
+                    _hover={"border_color": t.ARCH_NEUTRAL_200}, transition=t.TRANSITION_BASE,
+                ),
+                # ATS Engine
+                rx.box(
+                    rx.text("ATS ENGINE", font_size="11px", font_weight="700", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900, border_bottom=f"1px solid {t.ARCH_NEUTRAL_300}", padding_bottom="8px", margin_bottom="12px"),
+                    rx.vstack(
+                        arch_list_item("KeywordScorer (TF-IDF)"),
+                        arch_list_item("Format Checker"),
+                        arch_list_item("Section Scorer"),
+                        spacing="3", align_items="start"
+                    ),
+                    padding="16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="10px",
+                    _hover={"border_color": t.ARCH_NEUTRAL_200}, transition=t.TRANSITION_BASE,
+                ),
+                # Skill Engine
+                rx.box(
+                    rx.text("SKILL ENGINE", font_size="11px", font_weight="700", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900, border_bottom=f"1px solid {t.ARCH_NEUTRAL_300}", padding_bottom="8px", margin_bottom="12px"),
+                    rx.vstack(
+                        arch_list_item("NER Extractor (spaCy)"),
+                        arch_list_item("Skill Embedder"),
+                        arch_list_item("UMAP-HDBSCAN"),
+                        spacing="3", align_items="start"
+                    ),
+                    padding="16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="10px",
+                    _hover={"border_color": t.ARCH_NEUTRAL_200}, transition=t.TRANSITION_BASE,
+                ),
+                columns="3", spacing="3", width="100%", margin_bottom="8px"
+            ),
+
+            arch_connector(),
+
+            # 6. ML INFRASTRUCTURE Section
+            rx.box(
+                rx.vstack(
+                    arch_label("ML INFRASTRUCTURE"),
+                    rx.hstack(
+                        rx.box(rx.text("DVC Data Versioning", font_size="12px", font_family=t.FONT_MONO, color=t.ARCH_NEUTRAL_500), padding="8px 16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="6px", _hover={"border_color": t.ARCH_ORANGE_100, "color": t.ARCH_ORANGE_600}),
+                        rx.box(rx.text("MLFlow Tracking", font_size="12px", font_family=t.FONT_MONO, color=t.ARCH_NEUTRAL_500), padding="8px 16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="6px", _hover={"border_color": t.ARCH_ORANGE_100, "color": t.ARCH_ORANGE_600}),
+                        rx.box(rx.text("Feature Store", font_size="12px", font_family=t.FONT_MONO, color=t.ARCH_NEUTRAL_500), padding="8px 16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="6px", _hover={"border_color": t.ARCH_ORANGE_100, "color": t.ARCH_ORANGE_600}),
+                        spacing="3", width="100%", justify_content="center", flex_wrap="wrap"
+                    ),
+                    width="100%",
+                ),
+                width="100%", padding="20px", border_radius="12px", background_color=t.ARCH_ORANGE_50, border=f"1px solid {t.ARCH_ORANGE_100}",
+            ),
+
+            spacing="0", width="100%",
+        ),
+        background_color="white",
+        border_radius="16px",
+        padding="40px",
+        width="100%",
+        box_shadow=t.SHADOW_MD,
+    )
+
 def dashboard_mixed_content() -> rx.Component:
     return rx.vstack(
         # Top Row: Distribution Cards
@@ -217,131 +430,8 @@ def dashboard_mixed_content() -> rx.Component:
         ),
         
         # 3. System Architecture (Full Fidelity Diagram)
-        rx.box(
-            rx.vstack(
-                rx.hstack(
-                    rx.vstack(
-                        rx.heading("Technical Architecture", size="5", font_family=t.FONT_HEADING, color=t.DARK),
-                        rx.text("End-to-end intelligence pipeline and infrastructure", color=t.SECONDARY, font_size="0.9rem"),
-                        spacing="1", align_items="start",
-                    ),
-                    rx.spacer(),
-                    rx.badge("Phase 4 Production", variant="surface", color_scheme="orange"),
-                    width="100%", align_items="center", margin_bottom=t.SPACE_8,
-                ),
-                
-                # Full Diagram Container
-                rx.vstack(
-                    # 1. Reflex Frontend
-                    rx.box(
-                        rx.vstack(
-                            rx.text("REFLEX FRONTEND", font_size="0.75rem", font_weight="800", color=t.PRIMARY, margin_bottom="12px"),
-                            rx.grid(
-                                rx.box(rx.text("/", font_size="0.7rem", font_weight="700"), rx.text("Dashboard", font_size="0.65rem"), padding="8px", border=f"1px solid {t.BORDER}", border_radius="4px", text_align="center", background_color="white"),
-                                rx.box(rx.text("/analyze", font_size="0.7rem", font_weight="700"), rx.text("Analyze", font_size="0.65rem"), padding="8px", border=f"1px solid {t.BORDER}", border_radius="4px", text_align="center", background_color="white"),
-                                rx.box(rx.text("/bulk", font_size="0.7rem", font_weight="700"), rx.text("Bulk Upload", font_size="0.65rem"), padding="8px", border=f"1px solid {t.BORDER}", border_radius="4px", text_align="center", background_color="white"),
-                                rx.box(rx.text("/ats", font_size="0.7rem", font_weight="700"), rx.text("ATS Editor", font_size="0.65rem"), padding="8px", border=f"1px solid {t.BORDER}", border_radius="4px", text_align="center", background_color="white"),
-                                columns="4", spacing="2", width="100%"
-                            ),
-                            # Reflex State
-                            rx.box(
-                                rx.vstack(
-                                    rx.text("Reflex State (rx.State subclasses)", font_size="0.7rem", font_weight="700", color=t.DARK),
-                                    rx.text("AppState — AnalyzeState — BulkState — ATSState", font_size="0.7rem", color=t.SECONDARY),
-                                    spacing="1", align_items="center"
-                                ),
-                                width="95%", padding="10px", border=f"1px dashed {t.BORDER}", border_radius="4px", margin_top="12px", background_color="white"
-                            ),
-                            align_items="center", width="100%"
-                        ),
-                        width="100%", padding="20px", border=f"2px solid {t.PRIMARY_LIGHT}", border_radius=t.RADIUS_LG, background_color=t.SURFACE_HOVER
-                    ),
-                    
-                    rx.icon("arrow-down", color=t.BORDER, size=24),
-                    
-                    # 2. FastAPI Service Layer
-                    rx.box(
-                        rx.vstack(
-                            rx.text("FASTAPI SERVICE LAYER", font_size="0.75rem", font_weight="800", color=t.PRIMARY, margin_bottom="8px"),
-                            rx.hstack(
-                                rx.text("POST /resume/upload", font_size="0.7rem", font_weight="600"),
-                                rx.text("|", color=t.BORDER),
-                                rx.text("GET /resume/{id}/score", font_size="0.7rem", font_weight="600"),
-                                rx.text("|", color=t.BORDER),
-                                rx.text("POST /cluster", font_size="0.7rem", font_weight="600"),
-                                spacing="4"
-                            ),
-                            align_items="center", width="100%"
-                        ),
-                        width="100%", padding="15px", border=f"2px solid {t.BORDER}", border_radius=t.RADIUS_LG, background_color="white"
-                    ),
-                    
-                    rx.icon("arrow-down", color=t.BORDER, size=24),
-                    
-                    # 3. Processing Engines (3-column)
-                    rx.grid(
-                        # Ingestion
-                        rx.box(
-                            rx.vstack(
-                                rx.text("INGESTION LAYER", font_size="0.7rem", font_weight="800", color=t.DARK),
-                                rx.divider(),
-                                rx.text("PDF/DOCX/TXT Parser", font_size="0.65rem"),
-                                rx.text("Section Detector", font_size="0.65rem"),
-                                rx.text("Text Normalizer", font_size="0.65rem"),
-                                align_items="start", spacing="1"
-                            ),
-                            padding="15px", border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_LG, background_color="white"
-                        ),
-                        # ATS Engine
-                        rx.box(
-                            rx.vstack(
-                                rx.text("ATS ENGINE", font_size="0.7rem", font_weight="800", color=t.DARK),
-                                rx.divider(),
-                                rx.text("KeywordScorer (TF-IDF)", font_size="0.65rem"),
-                                rx.text("Format Checker", font_size="0.65rem"),
-                                rx.text("Section Scorer", font_size="0.65rem"),
-                                align_items="start", spacing="1"
-                            ),
-                            padding="15px", border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_LG, background_color="white"
-                        ),
-                        # Skill Engine
-                        rx.box(
-                            rx.vstack(
-                                rx.text("SKILL ENGINE", font_size="0.7rem", font_weight="800", color=t.DARK),
-                                rx.divider(),
-                                rx.text("NER Extractor (spaCy)", font_size="0.65rem"),
-                                rx.text("Skill Embedder", font_size="0.65rem"),
-                                rx.text("UMAP-HDBSCAN", font_size="0.65rem"),
-                                align_items="start", spacing="1"
-                            ),
-                            padding="15px", border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_LG, background_color="white"
-                        ),
-                        columns="3", spacing="4", width="100%"
-                    ),
-                    
-                    rx.icon("arrow-down", color=t.BORDER, size=24),
-                    
-                    # 4. ML Infrastructure
-                    rx.box(
-                        rx.vstack(
-                            rx.text("ML INFRASTRUCTURE", font_size="0.75rem", font_weight="800", color=t.PRIMARY, margin_bottom="8px"),
-                            rx.hstack(
-                                rx.box(rx.text("DVC Data Versioning", font_size="0.65rem"), padding="6px 12px", border=f"1px solid {t.BORDER}", border_radius="4px"),
-                                rx.box(rx.text("MLFlow Tracking", font_size="0.65rem"), padding="6px 12px", border=f"1px solid {t.BORDER}", border_radius="4px"),
-                                rx.box(rx.text("Feature Store", font_size="0.65rem"), padding="6px 12px", border=f"1px solid {t.BORDER}", border_radius="4px"),
-                                spacing="3"
-                            ),
-                            align_items="center", width="100%"
-                        ),
-                        width="100%", padding="15px", border=f"2px solid {t.BORDER}", border_radius=t.RADIUS_LG, background_color=t.BG
-                    ),
-                    
-                    width="100%", spacing="0", align_items="center"
-                ),
-                width="100%"
-            ),
-            **t.card_style(), width="100%"
-        ),
+        technical_architecture(),
+        
         width="100%"
     )
 

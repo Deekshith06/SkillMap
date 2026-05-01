@@ -4,6 +4,7 @@ from skillmap.state.analyze_state import AnalyzeState
 from skillmap.components.file_upload import file_drop_zone
 from skillmap.components.skill_badge import skill_badge, skill_pill_primary, skill_pill_muted
 from skillmap.components.charts import radar_chart
+from skillmap.components.ui import skeleton_bar, error_alert
 from skillmap.styles import theme as t
 
 
@@ -23,7 +24,7 @@ def input_panel() -> rx.Component:
                 rx.text(AnalyzeState.resume_filename, font_size="0.85rem", font_weight="600", color=t.DARK),
                 rx.spacer(),
                 rx.button(rx.icon("x", size=14), on_click=AnalyzeState.clear_resume_file, background="transparent", color=t.SECONDARY, cursor="pointer", padding="0"),
-                padding=t.SPACE_3, background_color="rgba(255, 119, 28, 0.05)", border=f"1px solid rgba(255, 119, 28, 0.2)", border_radius=t.RADIUS_MD, width="100%", align_items="center", height="64px"
+                padding=t.SPACE_3, background_color=t.PRIMARY_LIGHT, border=f"1px solid {t.PRIMARY}", border_radius=t.RADIUS_MD, width="100%", align_items="center", height="64px"
             ),
             rx.upload(
                 rx.hstack(
@@ -83,7 +84,7 @@ def input_panel() -> rx.Component:
                     rx.text(AnalyzeState.jd_filename, font_size="0.85rem", font_weight="600", color=t.DARK),
                     rx.spacer(),
                     rx.button(rx.icon("x", size=14), on_click=AnalyzeState.clear_jd_file, background="transparent", color=t.SECONDARY, cursor="pointer", padding="0"),
-                    padding=t.SPACE_3, background_color="rgba(255, 119, 28, 0.05)", border=f"1px solid rgba(255, 119, 28, 0.2)", border_radius=t.RADIUS_MD, width="100%", align_items="center", height="64px"
+                    padding=t.SPACE_3, background_color=t.PRIMARY_LIGHT, border=f"1px solid {t.PRIMARY}", border_radius=t.RADIUS_MD, width="100%", align_items="center", height="64px"
                 ),
                 rx.upload(
                     rx.hstack(
@@ -108,36 +109,10 @@ def input_panel() -> rx.Component:
             ),
         ),
 
-        # Actions
-        rx.hstack(
-            rx.button(
-                rx.text(rx.cond(AnalyzeState.analyzing, "Analyzing...", "Analyze Resume")),
-                on_click=AnalyzeState.predict_cluster,
-                disabled=rx.cond(AnalyzeState.resume_text.strip() == "", True, AnalyzeState.analyzing),
-                **t.btn_primary(
-                    flex="1", padding="0.8rem", font_size="1rem",
-                    background_color=rx.cond(AnalyzeState.resume_text.strip() == "", "rgba(255,119,28,0.5)", t.PRIMARY),
-                    _disabled={"opacity": "1", "cursor": "not-allowed"}
-                ),
-            ),
-            rx.button(
-                rx.text("Reset"),
-                on_click=AnalyzeState.reset_analyze,
-                **t.btn_ghost(flex="0 0 auto", padding="0.8rem 1.5rem", border=f"1px solid {t.BORDER}")
-            ),
-            spacing="3", margin_top=t.SPACE_6, width="100%", align_items="center",
-        ),
-
         # Error
         rx.cond(
             AnalyzeState.analyze_error != "",
-            rx.box(
-                rx.text(AnalyzeState.analyze_error, color=t.ERROR, font_size="0.9rem"),
-                background_color=t.ERROR_LIGHT,
-                border_radius=t.RADIUS_MD,
-                padding=t.SPACE_3,
-                margin_top=t.SPACE_4,
-            ),
+            error_alert(AnalyzeState.analyze_error),
             rx.box(),
         ),
 
@@ -165,179 +140,283 @@ def skill_progress_bar(item: dict) -> rx.Component:
     )
 
 def result_panel() -> rx.Component:
-    analyze_skeleton = rx.vstack(
-        # Skeleton Card 1
-        rx.box(
-            rx.hstack(
-                rx.vstack(
-                    rx.heading("Cluster Result", size="5", font_family=t.FONT_HEADING, color=t.DARK),
-                    rx.text("AI ML Data Analyst", color=t.SECONDARY, font_size="0.9rem", opacity="0"),
-                    spacing="2", align_items="start",
-                ),
-                rx.spacer(),
-                rx.box(
-                    rx.text("0%", font_family=t.FONT_HEADING, font_size="2rem", font_weight="800", color=t.SECONDARY),
-                    rx.text("Match Score", font_size="0.7rem", text_transform="uppercase", color=t.SECONDARY),
-                    display="flex", flex_direction="column", align_items="center", justify_content="center",
-                    width="100px", height="100px", border_radius="50%", border=f"4px solid {t.SECONDARY_LIGHT}", flex_shrink="0",
-                ),
-                justify="between", align="start", width="100%", margin_bottom=t.SPACE_6,
-            ),
-            rx.box(
-                rx.text("Detected Skills", font_size="0.9rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_3),
-                rx.box(height="32px", width="80%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_MD),
-                width="100%",
-            ),
-            **t.card_style(), margin_bottom="1rem", width="100%", min_height="280px"
-        ),
-
-        # Skeleton Card 2
-        rx.box(
-            rx.text("Skill Dimensions", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
-            rx.hstack(
-                rx.box(height="280px", width="280px", background_color=t.SECONDARY_LIGHT, border_radius="50%", flex="1"),
-                rx.vstack(
-                    rx.box(height="24px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                    rx.box(height="24px", width="80%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                    rx.box(height="24px", width="90%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                    rx.box(height="24px", width="70%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                    width="100%", spacing="4", flex="1", justify="center"
-                ),
-                width="100%", spacing="6", align_items="center",
-            ),
-            **t.card_style(), margin_bottom="1rem", width="100%", min_height="380px"
-        ),
-
-        # Skeleton Card 3
-        rx.box(
-            rx.text("Similar Resumes", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
+    def skeleton_metric_box():
+        return rx.box(
             rx.vstack(
-                rx.box(height="85px", width="100%", background_color=t.SURFACE_HOVER, border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_MD),
-                rx.box(height="85px", width="100%", background_color=t.SURFACE_HOVER, border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_MD),
-                rx.box(height="85px", width="100%", background_color=t.SURFACE_HOVER, border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_MD),
-                width="100%", spacing="3"
+                rx.text("Metric", font_size="0.75rem", font_weight="600", color=t.ARCH_NEUTRAL_500),
+                rx.heading("0%", size="7", color=t.ARCH_NEUTRAL_300),
+                spacing="1", align_items="start"
             ),
-            **t.card_style(), width="100%", min_height="380px"
+            **t.card_style(), flex="1", opacity="0.6"
+        )
+
+    loading_skeleton_view = rx.vstack(
+        # 1. Top Row: Metrics
+        rx.hstack(
+            skeleton_metric_box(),
+            skeleton_metric_box(),
+            skeleton_metric_box(),
+            width="100%", spacing="4", margin_bottom="1rem"
         ),
-        width="100%", opacity="0.5", pointer_events="none",
+        # 2. Skeleton Unified Domain Box
+        rx.box(
+            rx.hstack(
+                rx.vstack(
+                    rx.hstack(
+                        rx.box(width="34px", height="34px", background_color=t.SECONDARY_LIGHT, border_radius="8px", animation="pulse 1.5s ease-in-out infinite"),
+                        rx.vstack(
+                            skeleton_bar(width="100px", height="12px"),
+                            skeleton_bar(width="200px", height="24px"),
+                            spacing="1", align_items="start"
+                        ),
+                        spacing="3", align_items="center"
+                    ),
+                    skeleton_bar(width="180px", height="16px", margin_top="12px"),
+                    skeleton_bar(width="220px", height="14px", margin_top="8px"),
+                    align_items="start", flex="1"
+                ),
+                rx.vstack(
+                    rx.text("Primary Insight", font_size="0.85rem", font_weight="700", color=t.ARCH_NEUTRAL_300, text_align="center", width="100%"),
+                    rx.box(width="56px", height="56px", background_color=t.SECONDARY_LIGHT, border_radius="12px", animation="pulse 1.5s ease-in-out infinite", margin_top="4px"),
+                    spacing="1", align_items="center", min_width="120px"
+                ),
+                align_items="center", width="100%"
+            ),
+            **t.card_style(), margin_bottom="1rem", opacity="0.6"
+        ),
+        # 3. Skeleton Detected Skills
+        rx.box(
+            rx.vstack(
+                rx.text("Detected Skills", font_size="0.9rem", font_weight="700", color=t.ARCH_NEUTRAL_300, margin_bottom="12px"),
+                rx.flex(
+                    rx.foreach(list(range(12)), lambda _: skeleton_bar(width="80px", height="28px")),
+                    flex_wrap="wrap", gap="8px"
+                ),
+                width="100%", align_items="start"
+            ),
+            **t.card_style(), margin_bottom="1rem", opacity="0.6"
+        ),
+        # 4. Skeleton Skill Dimensions
+        rx.box(
+            rx.vstack(
+                rx.text("Skill Dimensions", font_size="0.9rem", font_weight="700", color=t.ARCH_NEUTRAL_300, margin_bottom="12px"),
+                rx.hstack(
+                    rx.box(width="240px", height="240px", background_color=t.SECONDARY_LIGHT, border_radius="50%", animation="pulse 1.5s ease-in-out infinite", flex_shrink="0"),
+                    rx.vstack(
+                        rx.foreach(list(range(5)), lambda _: rx.vstack(
+                            rx.hstack(skeleton_bar(width="100px", height="8px"), rx.spacer(), skeleton_bar(width="30px", height="8px"), width="100%"),
+                            skeleton_bar(width="100%", height="6px"),
+                            width="100%", spacing="2"
+                        )),
+                        flex="1", width="100%", spacing="4"
+                    ),
+                    width="100%", spacing="8", align_items="center"
+                ),
+                width="100%", align_items="start"
+            ),
+            **t.card_style(), margin_bottom="1rem", opacity="0.6"
+        ),
+        # 5. Similar Resumes Skeleton
+        rx.box(
+            rx.vstack(
+                rx.text("Similar Resumes", font_size="0.9rem", font_weight="700", color=t.ARCH_NEUTRAL_300, margin_bottom="12px"),
+                rx.foreach(list(range(2)), lambda _: rx.box(
+                    skeleton_bar(width="140px", height="12px", margin_bottom="8px"),
+                    skeleton_bar(width="100%", height="10px"),
+                    skeleton_bar(width="85%", height="10px", margin_top="4px"),
+                    padding="16px", border_radius="8px", border=f"1px solid {t.ARCH_NEUTRAL_300}", width="100%", margin_bottom="8px"
+                )),
+                spacing="2", width="100%"
+            ),
+            **t.card_style(), width="100%", opacity="0.6"
+        ),
+        width="100%", spacing="0"
     )
 
-    analyze_overlay = rx.box(
-        analyze_skeleton,
+    initial_overlay = rx.box(
+        # Background Skeleton (Blurred)
         rx.box(
-            rx.vstack(
-                rx.box(rx.icon("scan-face", color=t.PRIMARY, size=24), background_color=t.PRIMARY_LIGHT, padding="12px", border_radius="12px", margin_bottom="12px"),
-                rx.heading("Analysis Pending", size="5", color=t.DARK),
-                rx.text("Upload your resume and enter a JD to generate an AI-powered match.", color=t.SECONDARY, text_align="center", max_width="250px"),
-                align_items="center", background_color=t.SURFACE, padding=t.SPACE_8, border_radius=t.RADIUS_LG, box_shadow=t.SHADOW_LG,
-            ),
-            position="absolute", top="0", left="0", right="0", bottom="0", display="flex", align_items="center", justify_content="center", z_index="10"
+            loading_skeleton_view,
+            width="100%", height="100%",
+            opacity="0.5", filter="blur(1px)"
         ),
-        position="relative", width="100%"
+        # Center Card (Absolute Overlay)
+        rx.center(
+            rx.vstack(
+                rx.box(
+                    rx.icon("scan-face", color=t.PRIMARY, size=32),
+                    background_color=t.PRIMARY_LIGHT, padding="20px", border_radius="16px",
+                    margin_bottom="12px"
+                ),
+                rx.heading("Ready for Analysis", size="6", font_weight="800", color=t.DARK),
+                rx.text(
+                    "Upload a resume to extract skills and find matching job domains.",
+                    color=t.SECONDARY, text_align="center", max_width="320px", font_size="0.95rem",
+                    line_height="1.5"
+                ),
+                align_items="center", background_color=t.SURFACE, padding="40px",
+                border_radius=t.RADIUS_LG, box_shadow=t.SHADOW_LG,
+                border=f"1px solid {t.BORDER}",
+            ),
+            position="absolute",
+            top="0", left="0",
+            width="100%", height="100%",
+            z_index="10"
+        ),
+        position="relative",
+        width="100%", height="100%", min_height="800px"
     )
 
     return rx.box(
         rx.cond(
-            AnalyzeState.has_result,
-            rx.vstack(
-                # Card 1: Header + Detected Skills
-                rx.box(
+                AnalyzeState.analyzing,
+                loading_skeleton_view,
+                rx.cond(
+                    AnalyzeState.has_result,
+                    rx.vstack(
+                    # Top Row: Metrics
                     rx.hstack(
-                        rx.vstack(
-                            rx.heading(AnalyzeState.result_domain, size="5", font_family=t.FONT_HEADING, color=t.DARK),
-                            rx.text(AnalyzeState.result_cluster_name, color=t.SECONDARY, font_size="0.9rem"),
-                            spacing="2", align_items="start",
-                        ),
-                        rx.spacer(),
-                        rx.cond(
-                            AnalyzeState.result_has_match,
-                            rx.box(
-                                rx.text(AnalyzeState.match_score_str, font_family=t.FONT_HEADING, font_size="2rem", font_weight="800", color=t.PRIMARY),
-                                rx.text("Match Score", font_size="0.7rem", text_transform="uppercase", color=t.SECONDARY),
-                                display="flex", flex_direction="column", align_items="center", justify_content="center",
-                                width="100px", height="100px", border_radius="50%", border=f"4px solid {t.PRIMARY}", flex_shrink="0",
+                        rx.box(
+                            rx.vstack(
+                                rx.text("Match Confidence", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                                rx.heading(AnalyzeState.result_confidence_pct, size="7", color=t.PRIMARY),
+                                spacing="1", align_items="start"
                             ),
-                            rx.box(
-                                rx.text(AnalyzeState.result_confidence_pct, font_family=t.FONT_HEADING, font_size="2rem", font_weight="800", color=t.PRIMARY),
-                                rx.text("Confidence", font_size="0.7rem", text_transform="uppercase", color=t.SECONDARY),
-                                display="flex", flex_direction="column", align_items="center", justify_content="center",
-                                width="100px", height="100px", border_radius="50%", border=f"4px solid {t.PRIMARY}", flex_shrink="0",
-                            )
+                            **t.card_style(), flex="1"
                         ),
-                        justify="between", align="start", width="100%", margin_bottom=t.SPACE_6,
+                        rx.box(
+                            rx.vstack(
+                                rx.text("Skills Detected", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                                rx.heading(AnalyzeState.result_top_skills.length().to(str), size="7", color=t.DARK),
+                                spacing="1", align_items="start"
+                            ),
+                            **t.card_style(), flex="1"
+                        ),
+                        rx.box(
+                            rx.vstack(
+                                rx.text("Match Quality", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                                rx.heading(rx.cond(AnalyzeState.result_has_match, AnalyzeState.match_score_str + "%", "N/A"), size="7", color=rx.cond(AnalyzeState.result_has_match, t.SUCCESS, t.ARCH_NEUTRAL_300)),
+                                spacing="1", align_items="start"
+                            ),
+                            **t.card_style(), flex="1"
+                        ),
+                        width="100%", spacing="4", margin_bottom="1rem"
                     ),
+
+                    # Card 1: Unified Domain Display Box
                     rx.box(
-                        rx.text("Detected Skills", font_size="0.9rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_3),
+                        rx.hstack(
+                            rx.vstack(
+                                rx.hstack(
+                                    rx.box(rx.icon("briefcase", size=18, color=t.PRIMARY), background_color=t.PRIMARY_LIGHT, padding="8px", border_radius="8px"),
+                                    rx.vstack(
+                                        rx.text("Detected Domain", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase", letter_spacing="0.05em"),
+                                        rx.heading(AnalyzeState.result_domain, size="6", color=t.DARK, margin_top="-4px"),
+                                        spacing="0", align_items="start"
+                                    ),
+                                    spacing="3", align_items="center"
+                                ),
+                                rx.text(
+                                    AnalyzeState.result_cluster_name,
+                                    font_size="0.9rem", color=t.SECONDARY, font_weight="500", margin_top="12px"
+                                ),
+                                rx.hstack(
+                                    rx.icon("gauge", size=14, color=t.SUCCESS),
+                                    rx.text("Confidence Score: ", font_size="0.85rem", color=t.SECONDARY),
+                                    rx.text(
+                                        AnalyzeState.result_confidence_pct,
+                                        font_size="0.85rem", font_weight="700", color=t.PRIMARY
+                                    ),
+                                    spacing="2", align_items="center", margin_top="8px"
+                                ),
+                                align_items="start", flex="1"
+                            ),
+                            rx.vstack(
+                                rx.text("Primary Insight", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_align="right", width="100%", text_transform="uppercase", letter_spacing="0.05em"),
+                                rx.box(
+                                    rx.icon("sparkles", size=24, color=t.PRIMARY),
+                                    padding="10px", background_color=t.PRIMARY_LIGHT, border_radius="10px", margin_top="4px"
+                                ),
+                                spacing="1", align_items="end", min_width="120px"
+                            ),
+                            align_items="center", width="100%", justify_content="space-between"
+                        ),
+                        **t.card_style(), margin_bottom="1rem", width="100%",
+                        background=f"linear-gradient(135deg, {t.SURFACE} 0%, {t.SURFACE_HOVER} 100%)"
+                    ),
+
+                    # Card: Detected Skills (New dedicated box)
+                    rx.box(
+                        rx.text("Detected Skills", font_size="0.95rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_4),
                         rx.flex(rx.foreach(AnalyzeState.result_top_skills, skill_pill_primary), flex_wrap="wrap", gap=t.SPACE_2),
-                        width="100%",
-                    ),
-                    **t.card_style(), margin_bottom="1rem", width="100%", min_height="280px"
-                ),
-
-                # Card 2: Skill Dimensions
-                rx.cond(
-                    AnalyzeState.radar_data.length() > 2,
-                    rx.box(
-                        rx.text("Skill Dimensions", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
-                        rx.hstack(
-                            rx.box(radar_chart(AnalyzeState.radar_data, height=280), flex="1"),
-                            rx.vstack(rx.foreach(AnalyzeState.radar_data, skill_progress_bar), flex="1", justify="center"),
-                            width="100%", spacing="6", align_items="center",
-                        ),
-                        **t.card_style(), margin_bottom="1rem", width="100%", min_height="380px"
-                    ),
-                    rx.box(),
-                ),
-
-                # Card: JD Match Details (New feature)
-                rx.cond(
-                    AnalyzeState.result_has_match,
-                    rx.box(
-                        rx.text("JD Match Analysis", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
-                        rx.hstack(
-                            rx.vstack(
-                                rx.text("✓ Matched Keywords", font_weight="700", font_size="0.85rem", color=t.DARK),
-                                rx.flex(rx.foreach(AnalyzeState.matched_keywords, skill_pill_primary), flex_wrap="wrap", gap=t.SPACE_2),
-                                align_items="start", spacing="2", width="100%"
-                            ),
-                            rx.vstack(
-                                rx.text("✗ Missing Keywords", font_weight="700", font_size="0.85rem", color=t.DARK),
-                                rx.flex(rx.foreach(AnalyzeState.missing_keywords, skill_pill_muted), flex_wrap="wrap", gap=t.SPACE_2),
-                                align_items="start", spacing="2", width="100%"
-                            ),
-                            spacing="6", align_items="start", width="100%"
-                        ),
                         **t.card_style(), margin_bottom="1rem", width="100%"
                     ),
-                    rx.box()
-                ),
 
-                # Card 3: Similar Resumes
-                rx.cond(
-                    AnalyzeState.result_similar_resumes.length() > 0,
-                    rx.box(
-                        rx.text("Similar Resumes", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
-                        rx.vstack(
-                            rx.foreach(
-                                AnalyzeState.result_similar_resumes,
-                                lambda r: rx.box(
-                                    rx.text(r["category"], font_size="0.9rem", font_weight="700", color=t.PRIMARY, margin_bottom="6px"),
-                                    rx.text(r["snippet"].to(str)[:150] + "...", font_size="0.85rem", color=t.DARK, line_height="1.5"),
-                                    border=f"1px solid rgba(255, 119, 28, 0.2)",
-                                    border_radius=t.RADIUS_MD,
-                                    padding=t.SPACE_4, margin_bottom=t.SPACE_3, width="100%",
-                                    background_color=t.SURFACE,
-                                )
+                    # Card 2: Skill Dimensions
+                    rx.cond(
+                        AnalyzeState.radar_data.length() > 2,
+                        rx.box(
+                            rx.text("Skill Dimensions", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
+                            rx.hstack(
+                                rx.box(radar_chart(AnalyzeState.radar_data, height=280), flex="1"),
+                                rx.vstack(rx.foreach(AnalyzeState.radar_data, skill_progress_bar), flex="1", justify="center"),
+                                width="100%", spacing="6", align_items="center",
                             ),
-                            width="100%", spacing="0",
+                            **t.card_style(), margin_bottom="1rem", width="100%", min_height="380px"
                         ),
-                        **t.card_style(), width="100%", min_height="380px"
+                        rx.box(),
                     ),
-                    rx.box(),
+
+                    # Card: JD Match Details
+                    rx.cond(
+                        AnalyzeState.result_has_match,
+                        rx.box(
+                            rx.text("JD Match Analysis", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
+                            rx.hstack(
+                                rx.vstack(
+                                    rx.text("✓ Matched Keywords", font_weight="700", font_size="0.85rem", color=t.DARK),
+                                    rx.flex(rx.foreach(AnalyzeState.matched_keywords, skill_pill_primary), flex_wrap="wrap", gap=t.SPACE_2),
+                                    align_items="start", spacing="2", width="100%"
+                                ),
+                                rx.vstack(
+                                    rx.text("✗ Skills to Improve", font_weight="700", font_size="0.85rem", color=t.DARK),
+                                    rx.flex(rx.foreach(AnalyzeState.missing_keywords, skill_pill_muted), flex_wrap="wrap", gap=t.SPACE_2),
+                                    align_items="start", spacing="2", width="100%"
+                                ),
+                                spacing="6", align_items="start", width="100%"
+                            ),
+                            **t.card_style(), margin_bottom="1rem", width="100%"
+                        ),
+                        rx.box()
+                    ),
+
+                    # Card 3: Similar Resumes
+                    rx.cond(
+                        AnalyzeState.result_similar_resumes.length() > 0,
+                        rx.box(
+                            rx.text("Similar Resumes", font_size="1rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_6),
+                            rx.vstack(
+                                rx.foreach(
+                                    AnalyzeState.result_similar_resumes,
+                                    lambda r: rx.box(
+                                        rx.text(r["category"], font_size="0.9rem", font_weight="700", color=t.PRIMARY, margin_bottom="6px"),
+                                        rx.text(r["snippet"].to(str)[:150] + "...", font_size="0.85rem", color=t.DARK, line_height="1.5"),
+                                        border=f"1px solid rgba(255, 119, 28, 0.2)",
+                                        border_radius=t.RADIUS_MD,
+                                        padding=t.SPACE_4, margin_bottom=t.SPACE_3, width="100%",
+                                        background_color=t.SURFACE,
+                                    )
+                                ),
+                                width="100%", spacing="0",
+                            ),
+                            **t.card_style(), width="100%", min_height="380px"
+                        ),
+                        rx.box(),
+                    ),
+                    width="100%", align_items="stretch", spacing="0"
                 ),
-                width="100%",
-            ),
-            analyze_overlay,
+                initial_overlay,
+            )
         ),
         width="100%",
     )

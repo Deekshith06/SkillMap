@@ -2,6 +2,7 @@
 import reflex as rx
 from skillmap.state.ats_state import ATSState
 from skillmap.components.skill_badge import skill_pill_primary, skill_pill_muted
+from skillmap.components.ui import skeleton_bar, error_alert
 from skillmap.styles import theme as t
 
 
@@ -182,13 +183,7 @@ def upload_card() -> rx.Component:
         # Error
         rx.cond(
             ATSState.ats_error != "",
-            rx.box(
-                rx.text(ATSState.ats_error, color=t.ERROR, font_size="0.9rem"),
-                background_color=t.ERROR_LIGHT,
-                border_radius=t.RADIUS_MD,
-                padding=t.SPACE_3,
-                margin_top=t.SPACE_4,
-            ),
+            error_alert(ATSState.ats_error),
             rx.box(),
         ),
 
@@ -202,72 +197,146 @@ def upload_card() -> rx.Component:
 
 # ── Results panel (shown after scoring) ──────────────────────────────────────
 
+# ── Results panel (shown after scoring) ──────────────────────────────────────
+
+def score_color(score) -> str:
+    return rx.cond(
+        score >= 90, t.SUCCESS,
+        rx.cond(
+            score >= 75, t.PRIMARY,
+            rx.cond(
+                score >= 50, "#E67E22", # Orange
+                t.ERROR
+            )
+        )
+    )
+
 def results_panel() -> rx.Component:
     return rx.vstack(
-        # Top 3 Metrics Row
+        # Top Row: Metrics
         rx.hstack(
             rx.box(
-                rx.text("ATS Score", font_size="0.85rem", font_weight="600", color=t.SECONDARY),
-                rx.text(ATSState.ats_total_score.to_string() + "%", font_size="1.8rem", font_family=t.FONT_HEADING, font_weight="800", color=t.PRIMARY, line_height="1.2"),
-                **t.card_style(), flex="1",
+                rx.vstack(
+                    rx.text("ATS Score", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                    rx.heading(ATSState.ats_total_score.to_string() + "%", size="7", color=score_color(ATSState.ats_total_score)),
+                    spacing="1", align_items="start"
+                ),
+                **t.card_style(), flex="1"
             ),
             rx.box(
-                rx.text("Keywords", font_size="0.85rem", font_weight="600", color=t.SECONDARY),
-                rx.text(ATSState.cat_keywords_pct.to_string() + "%", font_size="1.8rem", font_family=t.FONT_HEADING, font_weight="800", color=t.DARK, line_height="1.2"),
-                **t.card_style(), flex="1",
+                rx.vstack(
+                    rx.text("Keywords Matched", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                    rx.heading(ATSState.ats_matched_kw.length().to(str), size="7", color=t.DARK),
+                    spacing="1", align_items="start"
+                ),
+                **t.card_style(), flex="1"
             ),
             rx.box(
-                rx.text("Formatting", font_size="0.85rem", font_weight="600", color=t.SECONDARY),
-                rx.text(ATSState.cat_formatting_pct.to_string() + "%", font_size="1.8rem", font_family=t.FONT_HEADING, font_weight="800", color=t.DARK, line_height="1.2"),
-                **t.card_style(), flex="1",
+                rx.vstack(
+                    rx.text("Primary Domain", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                    rx.heading(ATSState.detected_domain, size="7", color=t.PRIMARY, font_size="1.2rem", overflow="hidden", text_overflow="ellipsis", white_space="nowrap"),
+                    spacing="1", align_items="start"
+                ),
+                **t.card_style(), flex="1"
             ),
-            spacing="4", width="100%", margin_bottom="1rem",
+            width="100%", spacing="4", margin_bottom="1rem"
         ),
 
-        # Sub-scores
-        rx.box(
-            rx.vstack(
-                rx.text("Score Breakdown", font_weight="700", font_size="0.95rem", color=t.DARK),
-                sub_score_bar("Keywords", ATSState.cat_keywords),
-                sub_score_bar("Formatting", ATSState.cat_formatting),
-                sub_score_bar("Contact Info", ATSState.cat_contact),
-                sub_score_bar("Structure", ATSState.cat_structure),
-                sub_score_bar("Achievements", ATSState.cat_achievements),
-                sub_score_bar("Action Verbs", ATSState.cat_action_verbs),
-                sub_score_bar("Length", ATSState.cat_length),
-                spacing="4", width="100%",
-            ),
-            **t.card_style(), margin_bottom="1rem", width="100%",
-        ),
-
-        # Keyword matches / gaps
+        # Unified Domain Display Box
         rx.box(
             rx.hstack(
                 rx.vstack(
-                    rx.text("✓ Matched Keywords", font_weight="700", font_size="0.85rem", color=t.SUCCESS),
-                    rx.flex(
-                        rx.foreach(ATSState.ats_matched_kw, skill_pill_primary),
-                        flex_wrap="wrap", gap="6px",
+                    rx.hstack(
+                        rx.box(rx.icon("briefcase", size=18, color=t.PRIMARY), background_color=t.PRIMARY_LIGHT, padding="8px", border_radius="8px"),
+                        rx.vstack(
+                            rx.text("Primary Domain", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase", letter_spacing="0.05em"),
+                            rx.heading(ATSState.detected_domain, size="6", color=t.DARK, margin_top="-4px"),
+                            spacing="0", align_items="start"
+                        ),
+                        spacing="3", align_items="center"
                     ),
-                    align_items="start", spacing="2",
+                    rx.text(
+                        rx.cond(ATSState.detected_sub_domain != "", ATSState.detected_sub_domain, "General Professional"),
+                        font_size="0.9rem", color=t.SECONDARY, font_weight="500", margin_top="12px"
+                    ),
+                    rx.hstack(
+                        rx.icon("gauge", size=14, color=t.SUCCESS),
+                        rx.text("ATS Compatibility: ", font_size="0.85rem", color=t.SECONDARY),
+                        rx.text(
+                            rx.cond(ATSState.ats_total_score >= 85, "Excellent", 
+                                rx.cond(ATSState.ats_total_score >= 70, "Good", "Needs Improvement")),
+                            font_size="0.85rem", font_weight="700", color=score_color(ATSState.ats_total_score)
+                        ),
+                        spacing="2", align_items="center", margin_top="8px"
+                    ),
+                    align_items="start", flex="1"
                 ),
                 rx.vstack(
-                    rx.text("✗ Missing Keywords", font_weight="700", font_size="0.85rem", color=t.ERROR),
-                    rx.flex(
-                        rx.foreach(ATSState.ats_missing_kw, skill_pill_muted),
-                        flex_wrap="wrap", gap="6px",
+                    rx.text("Primary Insight", font_size="0.75rem", font_weight="700", color=t.SECONDARY, text_align="right", width="100%", text_transform="uppercase", letter_spacing="0.05em"),
+                    rx.box(
+                        rx.icon("sparkles", size=24, color=t.PRIMARY),
+                        padding="10px", background_color=t.PRIMARY_LIGHT, border_radius="10px", margin_top="4px"
                     ),
-                    align_items="start", spacing="2",
+                    spacing="1", align_items="end", min_width="120px"
                 ),
-                spacing="6", align_items="start", width="100%",
+                align_items="center", width="100%", justify_content="space-between"
             ),
             **t.card_style(), margin_bottom="1rem", width="100%",
+            background=f"linear-gradient(135deg, {t.SURFACE} 0%, {t.SURFACE_HOVER} 100%)"
+        ),
+
+        # Two Columns for Sub-scores and Matched/Missing
+        rx.hstack(
+            # Left: Sub-scores
+            rx.box(
+                rx.vstack(
+                    rx.text("Score Breakdown", font_weight="700", font_size="0.95rem", color=t.DARK, margin_bottom="0.5rem"),
+                    sub_score_bar("Keywords", ATSState.cat_keywords),
+                    sub_score_bar("Formatting", ATSState.cat_formatting),
+                    sub_score_bar("Contact Info", ATSState.cat_contact),
+                    sub_score_bar("Structure", ATSState.cat_structure),
+                    sub_score_bar("Achievements", ATSState.cat_achievements),
+                    sub_score_bar("Action Verbs", ATSState.cat_action_verbs),
+                    sub_score_bar("Length", ATSState.cat_length),
+                    spacing="4", width="100%",
+                ),
+                **t.card_style(), width="45%",
+            ),
+            # Right: Keyword matches / gaps
+            rx.box(
+                rx.vstack(
+                    rx.vstack(
+                        rx.hstack(rx.icon("circle-check", size=16, color=t.SUCCESS), rx.text("Matched Keywords", font_weight="700", font_size="0.9rem", color=t.SUCCESS), spacing="2"),
+                        rx.flex(
+                            rx.foreach(ATSState.ats_matched_kw, skill_pill_primary),
+                            flex_wrap="wrap", gap="6px",
+                        ),
+                        align_items="start", spacing="3", width="100%",
+                    ),
+                    rx.box(height="1rem"),
+                    rx.vstack(
+                        rx.hstack(rx.icon("trending-up", size=16, color=t.PRIMARY), rx.text("Skills to Improve", font_weight="700", font_size="0.9rem", color=t.PRIMARY), spacing="2"),
+                        rx.flex(
+                            rx.foreach(ATSState.ats_missing_kw, skill_pill_muted),
+                            flex_wrap="wrap", gap="6px",
+                        ),
+                        align_items="start", spacing="3", width="100%",
+                    ),
+                    align_items="start", spacing="2", width="100%",
+                ),
+                **t.card_style(), flex="1",
+            ),
+            spacing="4", width="100%", margin_bottom="1rem", align_items="stretch"
         ),
 
         # Suggestions
         rx.box(
             rx.vstack(
-                rx.text("Suggestions", font_weight="700", font_size="0.95rem", color=t.DARK),
+                rx.hstack(
+                    rx.icon("sparkles", size=18, color=t.PRIMARY),
+                    rx.text("AI-Powered Suggestions", font_weight="700", font_size="1rem", color=t.DARK),
+                    spacing="2", align_items="center", margin_bottom="0.5rem"
+                ),
                 rx.foreach(ATSState.ats_suggestions, suggestion_card),
                 spacing="2", width="100%",
             ),
@@ -281,93 +350,142 @@ def results_panel() -> rx.Component:
 # ── Page ──────────────────────────────────────────────────────────────────────
 
 def ats_editor_page() -> rx.Component:
+    def skeleton_metric_box():
+        return rx.box(
+            rx.vstack(
+                rx.text("Metric", font_size="0.75rem", font_weight="600", color=t.ARCH_NEUTRAL_500),
+                rx.heading("0%", size="7", color=t.ARCH_NEUTRAL_300),
+                spacing="1", align_items="start"
+            ),
+            **t.card_style(), flex="1", opacity="0.6"
+        )
+
+    ats_loading_skeleton_view = rx.vstack(
+        # 1. Top Row: Metrics
+        rx.hstack(
+            skeleton_metric_box(),
+            skeleton_metric_box(),
+            skeleton_metric_box(),
+            width="100%", spacing="4", margin_bottom="1rem"
+        ),
+        # 2. Unified Domain Box (Full width)
+        rx.box(
+            rx.hstack(
+                rx.vstack(
+                    rx.hstack(
+                        rx.box(width="34px", height="34px", background_color=t.SECONDARY_LIGHT, border_radius="8px", animation="pulse 1.5s ease-in-out infinite"),
+                        rx.vstack(
+                            skeleton_bar(width="100px", height="12px"),
+                            skeleton_bar(width="200px", height="24px"),
+                            spacing="1", align_items="start"
+                        ),
+                        spacing="3", align_items="center"
+                    ),
+                    skeleton_bar(width="180px", height="16px", margin_top="12px"),
+                    skeleton_bar(width="220px", height="14px", margin_top="8px"),
+                    align_items="start", flex="1"
+                ),
+                rx.vstack(
+                    skeleton_bar(width="80px", height="12px"),
+                    rx.box(width="80px", height="80px", background_color=t.SECONDARY_LIGHT, border_radius="50%", animation="pulse 1.5s ease-in-out infinite"),
+                    spacing="2", align_items="center", min_width="120px"
+                ),
+                align_items="center", width="100%"
+            ),
+            **t.card_style(), margin_bottom="1rem", opacity="0.6"
+        ),
+
+        # 3. Two Columns (Breakdown & Keywords)
+        rx.hstack(
+            # Left: Score Breakdown
+            rx.box(
+                rx.vstack(
+                    rx.text("Score Breakdown", font_size="0.9rem", font_weight="700", color=t.ARCH_NEUTRAL_300, margin_bottom="12px"),
+                    rx.foreach(list(range(7)), lambda _: rx.vstack(
+                        rx.hstack(skeleton_bar(width="80px", height="8px"), rx.spacer(), skeleton_bar(width="30px", height="8px"), width="100%"),
+                        skeleton_bar(width="100%", height="6px"),
+                        spacing="2", width="100%"
+                    )),
+                    spacing="4", width="100%"
+                ),
+                **t.card_style(), width="45%", opacity="0.6"
+            ),
+            # Right: Matched Skills
+            rx.box(
+                rx.vstack(
+                    rx.text("Matched Skills", font_size="0.9rem", font_weight="700", color=t.ARCH_NEUTRAL_300, margin_bottom="12px"),
+                    rx.flex(
+                        rx.foreach(list(range(12)), lambda _: skeleton_bar(width="80px", height="24px")),
+                        flex_wrap="wrap", gap="8px"
+                    ),
+                    width="100%", align_items="start"
+                ),
+                **t.card_style(), flex="1", opacity="0.6"
+            ),
+            width="100%", spacing="4", margin_bottom="1rem", align_items="stretch"
+        ),
+
+        # 4. Suggestions Card
+        rx.box(
+            rx.vstack(
+                rx.text("Improvement Suggestions", font_size="0.9rem", font_weight="700", color=t.ARCH_NEUTRAL_300, margin_bottom="12px"),
+                rx.foreach(list(range(3)), lambda _: rx.box(
+                    skeleton_bar(width="100%", height="14px"),
+                    padding="16px", border_radius="8px", background_color=t.ARCH_NEUTRAL_50, width="100%", margin_bottom="8px"
+                )),
+                spacing="2", width="100%"
+            ),
+            **t.card_style(), width="100%", opacity="0.6"
+        ),
+        width="100%", spacing="0"
+    )
+
+    ats_initial_overlay = rx.box(
+        # Background Skeleton (Blurred)
+        rx.box(
+            ats_loading_skeleton_view,
+            width="100%", height="100%",
+            opacity="0.5", filter="blur(1px)"
+        ),
+        # Center Card (Absolute Overlay)
+        rx.center(
+            rx.vstack(
+                rx.box(
+                    rx.icon("file-search", color=t.PRIMARY, size=32),
+                    background_color=t.PRIMARY_LIGHT, padding="20px", border_radius="16px",
+                    margin_bottom="12px"
+                ),
+                rx.heading("Analysis Pending", size="6", font_weight="800", color=t.DARK),
+                rx.text(
+                    "Upload your resume and enter a JD to generate an ATS optimization report.",
+                    color=t.SECONDARY, text_align="center", max_width="320px", font_size="0.95rem",
+                    line_height="1.5"
+                ),
+                align_items="center", background_color=t.SURFACE, padding="40px",
+                border_radius=t.RADIUS_LG, box_shadow=t.SHADOW_LG,
+                border=f"1px solid {t.BORDER}",
+            ),
+            position="absolute",
+            top="0", left="0",
+            width="100%", height="100%",
+            z_index="10"
+        ),
+        position="relative",
+        width="100%", height="100%", min_height="800px"
+    )
+
     return rx.box(
         rx.hstack(
-            rx.box(
-                upload_card(),
-                width="32%",
-                min_width="380px",
-                flex_shrink="0",
-            ),
+            rx.box(upload_card(), width="32%", min_width="380px", flex_shrink="0"),
             rx.box(
                 rx.cond(
-                    ATSState.has_ats_result,
-                    rx.box(
+                    ATSState.ats_loading,
+                    ats_loading_skeleton_view,
+                    rx.cond(
+                        ATSState.has_ats_result,
                         results_panel(),
-                        width="100%",
-                    ),
-                    rx.box(
-                        # Empty state / Analysis Pending overlay
-                        rx.vstack(
-                            # Skeleton Top 3 Metrics
-                            rx.hstack(
-                                rx.box(rx.text("ATS Score", font_size="0.85rem", font_weight="600", color=t.SECONDARY), rx.text("0%", font_size="1.8rem", font_family=t.FONT_HEADING, font_weight="800", color=t.SECONDARY_LIGHT, line_height="1.2"), **t.card_style(), flex="1"),
-                                rx.box(rx.text("Keywords", font_size="0.85rem", font_weight="600", color=t.SECONDARY), rx.text("0%", font_size="1.8rem", font_family=t.FONT_HEADING, font_weight="800", color=t.SECONDARY_LIGHT, line_height="1.2"), **t.card_style(), flex="1"),
-                                rx.box(rx.text("Formatting", font_size="0.85rem", font_weight="600", color=t.SECONDARY), rx.text("0%", font_size="1.8rem", font_family=t.FONT_HEADING, font_weight="800", color=t.SECONDARY_LIGHT, line_height="1.2"), **t.card_style(), flex="1"),
-                                spacing="4", width="100%", margin_bottom="1rem"
-                            ),
-                            # Skeleton Score Breakdown
-                            rx.box(
-                                rx.vstack(
-                                    rx.text("Score Breakdown", font_weight="700", font_size="0.95rem", color=t.DARK),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    rx.box(height="22px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_PILL),
-                                    spacing="4", width="100%"
-                                ),
-                                **t.card_style(), margin_bottom="1rem", width="100%"
-                            ),
-                            # Skeleton Keywords Matches
-                            rx.box(
-                                rx.hstack(
-                                    rx.vstack(
-                                        rx.text("✓ Matched Keywords", font_weight="700", font_size="0.85rem", color=t.DARK),
-                                        rx.box(height="60px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_MD),
-                                        align_items="start", spacing="2", width="100%"
-                                    ),
-                                    rx.vstack(
-                                        rx.text("✗ Missing Keywords", font_weight="700", font_size="0.85rem", color=t.DARK),
-                                        rx.box(height="60px", width="100%", background_color=t.SECONDARY_LIGHT, border_radius=t.RADIUS_MD),
-                                        align_items="start", spacing="2", width="100%"
-                                    ),
-                                    spacing="6", align_items="start", width="100%"
-                                ),
-                                **t.card_style(), margin_bottom="1rem", width="100%"
-                            ),
-                            # Skeleton Suggestions
-                            rx.box(
-                                rx.vstack(
-                                    rx.text("Suggestions", font_weight="700", font_size="0.95rem", color=t.DARK),
-                                    rx.box(height="80px", width="100%", background_color=t.SURFACE_HOVER, border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_MD),
-                                    rx.box(height="80px", width="100%", background_color=t.SURFACE_HOVER, border=f"1px solid {t.BORDER}", border_radius=t.RADIUS_MD),
-                                    spacing="2", width="100%"
-                                ),
-                                **t.card_style(), width="100%"
-                            ),
-                            width="100%", opacity="0.4", pointer_events="none",
-                        ),
-                        # Modal overlay
-                        rx.box(
-                            rx.vstack(
-                                rx.box(rx.icon("file-search", color=t.PRIMARY, size=24), background_color=t.PRIMARY_LIGHT, padding="12px", border_radius="12px", margin_bottom="12px"),
-                                rx.heading("Analysis Pending", size="5", color=t.DARK),
-                                rx.text("Upload your resume and enter a JD to generate an ATS optimization report.", color=t.SECONDARY, text_align="center", max_width="250px"),
-                                align_items="center",
-                                background_color=t.SURFACE,
-                                padding=t.SPACE_8,
-                                border_radius=t.RADIUS_LG,
-                                box_shadow=t.SHADOW_LG,
-                            ),
-                            position="absolute", top="0", left="0", right="0", bottom="0",
-                            display="flex", align_items="center", justify_content="center",
-                            z_index="10"
-                        ),
-                        position="relative", width="100%"
-                    ),
+                        ats_initial_overlay,
+                    )
                 ),
                 width="68%",
                 padding_left=t.SPACE_6,
