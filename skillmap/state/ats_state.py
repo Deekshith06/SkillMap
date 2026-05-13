@@ -166,7 +166,9 @@ class ATSState(AppState):
             self.ats_loading = False
         
         if self.resume_text.strip():
-            return ATSState.score_resume()
+            yield ATSState.score_resume()
+            import asyncio
+            await asyncio.sleep(0.1)
 
     async def handle_jd_upload(self, files: list[rx.UploadFile]):
         if not files:

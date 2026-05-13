@@ -176,7 +176,7 @@ class BulkState(AppState):
         for i, f in enumerate(self.bulk_files):
             try:
                 from skillmap.ml.predictor import embed_and_predict, cluster_lookup
-                cid, conf, skills, _, domains = embed_and_predict(f["text"])
+                cid, conf, skills, _, domains, _ = embed_and_predict(f["text"])
                 cname = cluster_lookup.get(cid, {}).get("name", "Unknown")
 
                 match_score = None

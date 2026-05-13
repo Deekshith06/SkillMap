@@ -11,59 +11,11 @@ class InsightsState(AppState):
     def cluster_dist(self) -> list[dict]:
         raw = self.stats.get("cluster_distribution", [])
         
-        DOMAIN_MAPPING = {
-            "React": "Computer Science & IT",
-            "Javascript": "Computer Science & IT",
-            "Python": "Computer Science & IT",
-            "Node": "Computer Science & IT",
-            "Mern": "Computer Science & IT",
-            "Java": "Computer Science & IT",
-            "Html": "Computer Science & IT",
-            "Autocad": "Mechanical Engineering",
-            "Solidworks": "Mechanical Engineering",
-            "Thermodynamics": "Mechanical Engineering",
-            "Catia": "Mechanical Engineering",
-            "Mechanical": "Mechanical Engineering",
-            "Ece": "Electrical & Electronics",
-            "Eee": "Electrical & Electronics",
-            "Circuit": "Electrical & Electronics",
-            "Embedded": "Electrical & Electronics",
-            "Pandas": "Data Science & AI",
-            "Numpy": "Data Science & AI",
-            "Pytorch": "Data Science & AI",
-            "Tensorflow": "Data Science & AI",
-            "Problem Solving": "General Professionals",
-            "Communication": "General Professionals",
-            "Curriculum": "Education & Management"
-        }
-
-        # Merge duplicates by name (strip to ensure matches)
+        # Merge duplicates by exact name
         merged: dict[str, dict] = {}
         for c in raw:
             name = c.get("name", "Unknown").strip()
-            top_skills = c.get("top_skills", [])
-            
-            # 1. Try to find a domain mapping for the current name or top skill
-            best_domain = None
-            
-            # Check current name
-            for skill_key, domain in DOMAIN_MAPPING.items():
-                if skill_key.lower() in name.lower():
-                    best_domain = domain
-                    break
-            
-            # If not found, check top skills
-            if not best_domain and top_skills:
-                for skill in top_skills:
-                    skill_title = skill.title()
-                    if skill_title in DOMAIN_MAPPING:
-                        best_domain = DOMAIN_MAPPING[skill_title]
-                        break
-            
-            # 2. Update name to domain if found
-            if best_domain:
-                name = best_domain
-            elif name.startswith("Cluster ") or name == "Unknown":
+            if name.startswith("Cluster ") or name == "Unknown" or name == "Noise":
                 name = "General Professionals"
 
             if name not in merged:
@@ -71,9 +23,9 @@ class InsightsState(AppState):
                 merged[name]["name"] = name
             else:
                 merged[name]["resume_count"] += c.get("resume_count", 0)
-                # Keep the best skills if merging
+                # Keep unique top skills
                 existing_skills = set(merged[name].get("top_skills", []))
-                for s in top_skills:
+                for s in c.get("top_skills", []):
                     if s not in existing_skills:
                         merged[name].setdefault("top_skills", []).append(s)
         
@@ -91,12 +43,30 @@ class InsightsState(AppState):
 
     @rx.var
     def total_clusters_count(self) -> int:
-        return len(self.cluster_dist)
+        return int(self.model_metrics.get("n_clusters", len(self.cluster_dist)))
+
+    @rx.var
+    def taxonomy_cluster_count(self) -> str:
+        return "29"
 
     @rx.var
     def total_skills_count(self) -> int:
         data = self.stats.get("skill_distribution") or self.stats.get("top_skills") or []
         return len(data)
+
+    @rx.var
+    def model_metrics(self) -> dict:
+        return self.stats.get("metrics", {})
+
+    @rx.var
+    def silhouette_score(self) -> str:
+        score = self.model_metrics.get("silhouette_score", 0.0)
+        return f"{score:.4f}" if score else "N/A"
+
+    @rx.var
+    def noise_count(self) -> str:
+        noise = self.model_metrics.get("noise_count", 0)
+        return str(noise)
 
     @rx.var
     def skill_dist(self) -> list[dict]:

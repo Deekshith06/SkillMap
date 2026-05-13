@@ -1,5 +1,5 @@
 {
-  "n_clusters": 14,
-  "noise_count": 69,
-  "silhouette_score": 0.849405
+  "n_clusters": 7,
+  "noise_count": 0,
+  "silhouette_score": 0.918577
 }

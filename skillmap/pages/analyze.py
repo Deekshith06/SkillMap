@@ -352,6 +352,68 @@ def result_panel() -> rx.Component:
                         **t.card_style(), margin_bottom="1rem", width="100%"
                     ),
 
+                    # New Phase 1 & 3: Seniority & Behavioral
+                    rx.box(
+                        rx.hstack(
+                            rx.box(
+                                rx.text("Seniority Level", font_size="0.95rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_2),
+                                rx.badge(AnalyzeState.result_seniority, color_scheme="purple", size="2", variant="solid", border_radius="4px"),
+                                flex="1"
+                            ),
+                            rx.box(
+                                rx.text("Behavioral Traits", font_size="0.95rem", font_weight="700", color=t.DARK, margin_bottom=t.SPACE_2),
+                                rx.flex(rx.foreach(AnalyzeState.result_behavioral, skill_pill_primary), flex_wrap="wrap", gap=t.SPACE_2),
+                                flex="2"
+                            ),
+                            width="100%", spacing="6", align_items="start"
+                        ),
+                        **t.card_style(), margin_bottom="1rem", width="100%"
+                    ),
+
+                    # New Phase 2: Skill Adjacency
+                    rx.cond(
+                        AnalyzeState.result_adjacent.length() > 0,
+                        rx.box(
+                            rx.hstack(
+                                rx.icon("git-merge", size=20, color=t.PRIMARY),
+                                rx.text("Skill Adjacency (Easily Learnable)", font_size="0.95rem", font_weight="700", color=t.DARK),
+                                align_items="center", margin_bottom=t.SPACE_4, spacing="2"
+                            ),
+                            rx.flex(rx.foreach(AnalyzeState.result_adjacent, skill_pill_muted), flex_wrap="wrap", gap=t.SPACE_2),
+                            **t.card_style(), margin_bottom="1rem", width="100%"
+                        ),
+                        rx.box()
+                    ),
+
+                    # New Phase 4: Career Trajectory
+                    rx.cond(
+                        AnalyzeState.result_trajectory.length() > 0,
+                        rx.box(
+                            rx.hstack(
+                                rx.icon("trending-up", size=20, color=t.SUCCESS),
+                                rx.text("Predicted Career Trajectory", font_size="0.95rem", font_weight="700", color=t.DARK),
+                                align_items="center", margin_bottom=t.SPACE_4, spacing="2"
+                            ),
+                            rx.vstack(
+                                rx.foreach(
+                                    AnalyzeState.result_trajectory,
+                                    lambda role, i: rx.hstack(
+                                        rx.box(
+                                            rx.text(i + 1, font_size="0.75rem", font_weight="800", color="white"),
+                                            background_color=t.PRIMARY, border_radius="50%", width="20px", height="20px", display="flex", align_items="center", justify_content="center"
+                                        ),
+                                        rx.text(role, font_weight="600", color=t.DARK, font_size="0.9rem"),
+                                        spacing="3", align_items="center",
+                                        padding="10px", border=f"1px solid {t.BORDER}", border_radius="6px", width="100%"
+                                    )
+                                ),
+                                spacing="2", width="100%"
+                            ),
+                            **t.card_style(), margin_bottom="1rem", width="100%"
+                        ),
+                        rx.box()
+                    ),
+
                     # Card 2: Skill Dimensions
                     rx.cond(
                         AnalyzeState.radar_data.length() > 2,

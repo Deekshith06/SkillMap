@@ -81,6 +81,22 @@ class AnalyzeState(AppState):
         return self.result.get("similar_resumes", [])[:5]
 
     @rx.var
+    def result_seniority(self) -> str:
+        return self.result.get("seniority", "Mid-level")
+
+    @rx.var
+    def result_behavioral(self) -> list[str]:
+        return self.result.get("behavioral", [])
+
+    @rx.var
+    def result_adjacent(self) -> list[str]:
+        return self.result.get("adjacent", [])
+
+    @rx.var
+    def result_trajectory(self) -> list[str]:
+        return self.result.get("trajectory", [])
+
+    @rx.var
     def radar_data(self) -> list[dict]:
         skills = self.result.get("top_skills", [])[:8]
         return [{"domain": skill, "confidence": 95 - (i * 4)} for i, skill in enumerate(skills)]
@@ -130,7 +146,9 @@ class AnalyzeState(AppState):
             self.analyzing = False
         
         if self.resume_text.strip():
-            return AnalyzeState.predict_cluster()
+            yield AnalyzeState.predict_cluster()
+            import asyncio
+            await asyncio.sleep(0.1)
 
     async def handle_jd_upload(self, files: list[rx.UploadFile]):
         if not files:
@@ -160,8 +178,10 @@ class AnalyzeState(AppState):
             self.step = "embedding"
         try:
             from skillmap.ml.predictor import embed_and_predict, cluster_lookup
-            cid, conf, skills, similar, domains = embed_and_predict(self.resume_text)
+            from skillmap.ml.graph_engine import get_career_trajectory
+            cid, conf, skills, similar, domains, advanced_insights = embed_and_predict(self.resume_text)
             cluster = cluster_lookup.get(cid, {"name": "Unknown", "id": cid})
+            trajectory = get_career_trajectory(cluster["name"], advanced_insights.get("seniority", "Mid-level"))
             result = {
                 "cluster_id": cid,
                 "cluster_name": cluster["name"],
@@ -169,6 +189,10 @@ class AnalyzeState(AppState):
                 "top_skills": skills,
                 "similar_resumes": similar,
                 "domains": domains,
+                "seniority": advanced_insights.get("seniority", "Mid-level"),
+                "behavioral": advanced_insights.get("behavioral", []),
+                "adjacent": advanced_insights.get("adjacent", []),
+                "trajectory": trajectory,
             }
             entry = {
                 "score": round(conf * 100),

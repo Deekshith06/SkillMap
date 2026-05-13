@@ -61,14 +61,25 @@ def project_overview() -> rx.Component:
             margin_bottom=t.SPACE_6,
         ),
         rx.text(
-            "Map talent by skill signals using transformer embeddings and UMAP clustering.",
+            "Map talent using multi-dimensional embeddings, HDBSCAN clustering, and Graph Adjacency algorithms across 12+ enterprise domains.",
             font_size="1.1rem",
             color=t.SECONDARY,
             font_family=t.FONT_BODY,
             max_width="680px",
             line_height="1.6",
             text_align="center",
-            margin_bottom=t.SPACE_8,
+            margin_bottom=t.SPACE_4,
+        ),
+        rx.box(
+            rx.hstack(
+                rx.icon("zap", color=t.WARNING, size=18),
+                rx.text(
+                    "v2.0 Expansion Live: 8 new clustering domains, Seniority/Soft-Skill Extraction, and Career Trajectory Mapping.",
+                    font_size="0.85rem", color=t.DARK, font_weight="600"
+                ),
+                align_items="center", spacing="2"
+            ),
+            padding="10px 20px", background_color="#FEF3C7", border="1px solid #F59E0B", border_radius="8px", margin_bottom=t.SPACE_8
         ),
         rx.hstack(
             rx.button(
@@ -328,17 +339,17 @@ def technical_architecture() -> rx.Component:
                     padding="16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="10px",
                     _hover={"border_color": t.ARCH_NEUTRAL_200}, transition=t.TRANSITION_BASE,
                 ),
-                # Skill Engine
+                # Intelligence Engine
                 rx.box(
-                    rx.text("SKILL ENGINE", font_size="11px", font_weight="700", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900, border_bottom=f"1px solid {t.ARCH_NEUTRAL_300}", padding_bottom="8px", margin_bottom="12px"),
+                    rx.text("INTELLIGENCE ENGINE", font_size="11px", font_weight="700", font_family=t.FONT_HEADING, color=t.ARCH_NEUTRAL_900, border_bottom=f"1px solid {t.ARCH_NEUTRAL_300}", padding_bottom="8px", margin_bottom="12px"),
                     rx.vstack(
-                        arch_list_item("NER Extractor (spaCy)"),
-                        arch_list_item("Skill Embedder"),
-                        arch_list_item("UMAP-HDBSCAN"),
+                        arch_list_item("Multi-Dimensional Embedder"),
+                        arch_list_item("UMAP-HDBSCAN Clustering"),
+                        arch_list_item("Graph Adjacency Engine"),
                         spacing="3", align_items="start"
                     ),
-                    padding="16px", background_color="white", border=f"1px solid {t.ARCH_NEUTRAL_300}", border_radius="10px",
-                    _hover={"border_color": t.ARCH_NEUTRAL_200}, transition=t.TRANSITION_BASE,
+                    padding="16px", background_color="#FFFBEB", border=f"1px solid #FCD34D", border_radius="10px",
+                    _hover={"border_color": "#F59E0B"}, transition=t.TRANSITION_BASE,
                 ),
                 columns="3", spacing="3", width="100%", margin_bottom="8px"
             ),
@@ -423,7 +434,38 @@ def dashboard_mixed_content() -> rx.Component:
                 ),
                 **t.card_style(), height="100%", display="flex", flex_direction="column"
             ),
-            grid_template_columns=rx.breakpoints(initial="1fr", sm="1fr 1.8fr"), 
+            
+            # 3. Model Evaluation Metrics
+            rx.box(
+                rx.vstack(
+                    rx.heading("Model Evaluation", size="5", font_family=t.FONT_HEADING, color=t.DARK),
+                    rx.text("Clustering performance metrics", color=t.SECONDARY, font_size="0.8rem"),
+                    spacing="1", align_items="start", margin_bottom=t.SPACE_4,
+                ),
+                rx.vstack(
+                    rx.box(
+                        rx.text("Silhouette Score", font_size="0.85rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                        rx.heading(InsightsState.silhouette_score, size="7", color=t.PRIMARY, margin_top="4px"),
+                        rx.text("Measures cluster density and separation (closer to 1 is better).", font_size="0.75rem", color=t.SECONDARY, margin_top="8px", line_height="1.4"),
+                        padding="16px", background_color=t.PRIMARY_LIGHT, border_radius="10px", width="100%", margin_bottom="12px"
+                    ),
+                    rx.box(
+                        rx.text("Noise Count (Unclustered)", font_size="0.85rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                        rx.heading(InsightsState.noise_count, size="7", color=t.DARK, margin_top="4px"),
+                        rx.text("Number of resumes that could not be assigned to any domain.", font_size="0.75rem", color=t.SECONDARY, margin_top="8px", line_height="1.4"),
+                        padding="16px", background_color=t.SURFACE, border=f"1px solid {t.BORDER}", border_radius="10px", width="100%", margin_bottom="12px"
+                    ),
+                    rx.box(
+                        rx.text("Knowledge Graph Taxonomy", font_size="0.85rem", font_weight="700", color=t.SECONDARY, text_transform="uppercase"),
+                        rx.heading(InsightsState.taxonomy_cluster_count + " Domains", size="7", color=t.DARK, margin_top="4px"),
+                        rx.text("Total enterprise clusters the system is mathematically configured to detect and map.", font_size="0.75rem", color=t.SECONDARY, margin_top="8px", line_height="1.4"),
+                        padding="16px", background_color=t.SURFACE, border=f"1px solid {t.BORDER}", border_radius="10px", width="100%"
+                    ),
+                    width="100%", spacing="0"
+                ),
+                **t.card_style(), height="100%", display="flex", flex_direction="column"
+            ),
+            grid_template_columns=rx.breakpoints(initial="1fr", sm="1fr 1fr", lg="1.2fr 1fr 1fr"), 
             spacing="4", 
             width="100%",
             margin_bottom=t.SPACE_6,

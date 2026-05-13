@@ -234,7 +234,7 @@ def embed_and_predict(text: str) -> tuple[int, float, list[str], list[dict], lis
         raise ValueError("Resume text is empty after cleaning.")
 
     sentence_model = get_sentence_model()
-    top_skills = extract_skill_names(cleaned, max_skills=15) or _legacy_skills(text)[:15]
+    top_skills = extract_skill_names(cleaned, max_skills=25) or _legacy_skills(text)[:25]
 
     from skillmap.ml.ats_scorer import detect_domains_nlp
 
@@ -248,15 +248,23 @@ def embed_and_predict(text: str) -> tuple[int, float, list[str], list[dict], lis
             if c_name.lower() in str(cdata.get("name", "")).lower():
                 target_cid = cid
                 break
-        return target_cid, float(conf), top_skills, [], domains
+        return target_cid, float(conf), top_skills, [], domains, {}
 
+    skill_text = " ".join(top_skills) if top_skills else cleaned
     embedding = sentence_model.encode(
-        [cleaned],
+        [skill_text],
         show_progress_bar=False,
         convert_to_numpy=True,
         normalize_embeddings=True,
     )
     gc.collect()
+
+    from skillmap.ml.graph_engine import extract_seniority, extract_soft_skills, get_adjacent_skills
+    advanced_insights = {
+        "seniority": extract_seniority(cleaned),
+        "behavioral": extract_soft_skills(cleaned),
+        "adjacent": get_adjacent_skills(top_skills)
+    }
 
     # ── Priority 1: HDBSCAN (Phase 4) ───────────────────────────────────
     try:
@@ -276,7 +284,7 @@ def embed_and_predict(text: str) -> tuple[int, float, list[str], list[dict], lis
         similar = cluster_sample_resumes.get(cluster_id, [])[:5]
         domains = detect_domains_nlp(cleaned, top_skills)
         logger.debug("HDBSCAN prediction: cluster=%d conf=%.3f", cluster_id, confidence)
-        return cluster_id, float(confidence), top_skills, similar, domains
+        return cluster_id, float(confidence), top_skills, similar, domains, advanced_insights
     except Exception as hdbscan_err:
         logger.debug("HDBSCAN unavailable (%s), falling back to KMeans.", hdbscan_err)
 
@@ -289,7 +297,7 @@ def embed_and_predict(text: str) -> tuple[int, float, list[str], list[dict], lis
         similar    = cluster_sample_resumes.get(cluster_id, [])[:5]
         domains    = detect_domains_nlp(cleaned, top_skills)
         logger.debug("KMeans prediction: cluster=%d conf=%.3f", cluster_id, confidence)
-        return cluster_id, confidence, top_skills, similar, domains
+        return cluster_id, confidence, top_skills, similar, domains, advanced_insights
 
     # ── Priority 3: Domain NLP fallback ─────────────────────────────────
     domains = detect_domains_nlp(cleaned, top_skills)
@@ -300,7 +308,7 @@ def embed_and_predict(text: str) -> tuple[int, float, list[str], list[dict], lis
         if c_name.lower() in str(cdata.get("name", "")).lower():
             target_cid = cid
             break
-    return target_cid, float(conf), top_skills, [], domains
+    return target_cid, float(conf), top_skills, [], domains, advanced_insights
 
 
 def get_clusters() -> list[dict[str, Any]]:
@@ -341,8 +349,20 @@ def get_stats() -> dict[str, Any]:
         })
     top10     = [{"skill": s, "count": int(n)} for s, n in all_skills.most_common(10)]
     skill_dist = [{"skill": s, "count": int(n)} for s, n in all_skills.most_common(30)]
+    
+    metrics = {}
+    try:
+        metrics_path = Path(MODEL_DIR) / "cluster_metrics.json"
+        if metrics_path.exists():
+            import json
+            with metrics_path.open() as f:
+                metrics = json.load(f)
+    except Exception as e:
+        pass
+
     return {
         "total_resumes": total, "num_clusters": len(cluster_ids),
         "top_skills": top10, "avg_confidence": 0.78,
         "skill_distribution": skill_dist, "cluster_distribution": dist,
+        "metrics": metrics,
     }

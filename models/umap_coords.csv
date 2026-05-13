@@ -1,263 +1,281 @@
-x,y,cluster,cluster_name,category
-27.994693756103516,16.31106185913086,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.600537896156311,9.041014671325684,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.65545654296875,17.840744018554688,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.812707901000977,17.679197311401367,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.4709559679031372,8.911396980285645,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.311467170715332,10.48145866394043,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-10.696361541748047,17.54149627685547,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.3885530233383179,8.829060554504395,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-28.014562606811523,16.3309268951416,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.30152416229248,10.491312026977539,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.494449496269226,8.934860229492188,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-10.689760208129883,17.54213523864746,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.36424732208252,10.428677558898926,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.4776623249053955,8.918191909790039,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.728964805603027,17.760629653930664,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-27.920089721679688,16.236461639404297,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.769287109375,17.720848083496094,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.5082191228866577,8.948625564575195,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.513441801071167,8.954004287719727,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.350262641906738,10.442535400390625,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-27.852787017822266,16.169160842895508,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.408858299255371,10.384064674377441,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-10.758828163146973,17.478368759155273,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-10.693992614746094,17.541072845458984,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.355785369873047,10.43709659576416,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-10.676847457885742,17.55406379699707,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.80357551574707,17.686735153198242,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.3630080223083496,8.80350399017334,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-9.407081604003906,10.386130332946777,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.73703384399414,17.753751754760742,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.790217399597168,17.719636917114258,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-27.941335678100586,16.25770378112793,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-27.99298095703125,16.309343338012695,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.819884300231934,17.67551612854004,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-1.4091808795928955,8.849676132202148,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-27.963092803955078,16.279460906982422,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.768402099609375,17.723045349121094,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-28.019481658935547,16.33585548400879,0,Computer Science & Engineering (CSE),Computer Science & Engineering (CSE)
-8.94143295288086,-5.987098693847656,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.002490997314453,-8.377762794494629,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.058180809020996,-8.323211669921875,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.636832237243652,-1.674536943435669,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.074132919311523,-6.123497486114502,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.944615364074707,-5.994063377380371,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.073002815246582,-8.3115234375,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.112388610839844,-6.163393020629883,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.80608558654785,5.522041320800781,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.761346817016602,-1.5501850843429565,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.73423957824707,5.450213432312012,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.961997985839844,-6.008360862731934,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.691600799560547,-1.6195486783981323,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.17539119720459,-6.224538803100586,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.272282600402832,-6.323780059814453,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.644732475280762,-1.6663764715194702,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.795713424682617,5.511641025543213,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.78842544555664,5.504323959350586,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.706950187683105,-1.6045705080032349,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.635767936706543,-1.6750935316085815,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.246115684509277,-6.296769618988037,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.966153144836426,-6.002684116363525,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.809958457946777,-1.496268391609192,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.884289741516113,-5.930931568145752,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.798480987548828,5.51436185836792,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.82628059387207,5.542184352874756,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-24.777915954589844,5.493770599365234,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-7.953547477722168,-8.430346488952637,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.004056930541992,-6.048020839691162,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.717286109924316,-1.594688892364502,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-8.007404327392578,-8.375601768493652,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.690533638000488,-1.6208192110061646,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-7.916164875030518,-8.466355323791504,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.542693138122559,-1.7665067911148071,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.846850395202637,-1.4643936157226562,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.348349571228027,-6.397380828857422,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-9.790558815002441,-1.520727515220642,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-7.960567951202393,-8.41740608215332,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-7.949091911315918,-8.399097442626953,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electronics & Communication (ECE)
-14.822846412658691,-6.037929534912109,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.987943649291992,-5.648374557495117,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.762256622314453,4.687790393829346,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.50313377380371,3.1133508682250977,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.599342346191406,3.017183542251587,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.4714412689209,3.1451802253723145,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.892789840698242,-6.077035903930664,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.915316581726074,6.605250358581543,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.937938690185547,6.667597770690918,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.635692596435547,4.815514087677002,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.775293350219727,-6.134059429168701,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.517316818237305,3.099120616912842,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.593351364135742,3.022390604019165,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.899760246276855,6.6313557624816895,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.937287330627441,6.661543369293213,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.529909133911133,3.0863723754882812,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.940278053283691,-5.703558444976807,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.784427642822266,4.667119026184082,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.84887409210205,-5.9610981941223145,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.72168254852295,4.727193355560303,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.825586318969727,-5.963996887207031,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.794794082641602,-5.964442729949951,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.9130859375,-5.650811672210693,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.961487770080566,-5.707609176635742,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.871757507324219,-6.036592483520508,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.706628799438477,2.9098668098449707,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.39716339111328,3.219569444656372,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.686769485473633,4.773070335388184,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.99602222442627,-5.6618266105651855,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.948309898376465,6.67070198059082,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.63673210144043,2.9794857501983643,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-14.89277172088623,-6.031107425689697,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.81994342803955,4.64522647857666,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.998013496398926,6.708648204803467,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-21.53174591064453,3.084608316421509,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
-15.695526123046875,4.751124858856201,2,Electronics & Communication (ECE) & Electrical & Electronics (EEE),Electrical & Electronics (EEE)
--11.1455717086792,8.103793144226074,5,Mechanical Engineering,Mechanical Engineering
--12.55427360534668,8.236588478088379,5,Mechanical Engineering,Mechanical Engineering
--20.704486846923828,6.49744987487793,5,Mechanical Engineering,Mechanical Engineering
--11.055248260498047,8.055630683898926,5,Mechanical Engineering,Mechanical Engineering
--20.204559326171875,6.577277183532715,5,Mechanical Engineering,Mechanical Engineering
--20.666513442993164,6.606810092926025,5,Mechanical Engineering,Mechanical Engineering
--20.53692626953125,6.5363335609436035,5,Mechanical Engineering,Mechanical Engineering
--10.999096870422363,7.96346378326416,5,Mechanical Engineering,Mechanical Engineering
--12.519474983215332,8.202960014343262,5,Mechanical Engineering,Mechanical Engineering
--9.580492973327637,0.25326666235923767,5,Mechanical Engineering,Mechanical Engineering
--20.717815399169922,6.505233287811279,5,Mechanical Engineering,Mechanical Engineering
--12.449637413024902,8.129284858703613,5,Mechanical Engineering,Mechanical Engineering
--11.087457656860352,8.052022933959961,5,Mechanical Engineering,Mechanical Engineering
--11.054840087890625,7.931393146514893,5,Mechanical Engineering,Mechanical Engineering
--11.130034446716309,8.117777824401855,5,Mechanical Engineering,Mechanical Engineering
--9.6481351852417,0.3205771744251251,5,Mechanical Engineering,Mechanical Engineering
--9.607155799865723,0.2790443003177643,5,Mechanical Engineering,Mechanical Engineering
--11.192429542541504,8.125777244567871,5,Mechanical Engineering,Mechanical Engineering
--12.493731498718262,8.174599647521973,5,Mechanical Engineering,Mechanical Engineering
--9.732660293579102,0.4016629755496979,5,Mechanical Engineering,Mechanical Engineering
--20.666244506835938,6.487192630767822,5,Mechanical Engineering,Mechanical Engineering
--20.7999267578125,6.607049942016602,5,Mechanical Engineering,Mechanical Engineering
--20.23758888244629,6.640316009521484,5,Mechanical Engineering,Mechanical Engineering
--20.621915817260742,6.506721496582031,5,Mechanical Engineering,Mechanical Engineering
--9.666112899780273,0.3391771614551544,5,Mechanical Engineering,Mechanical Engineering
--11.066983222961426,8.023690223693848,5,Mechanical Engineering,Mechanical Engineering
--20.547752380371094,6.630684852600098,5,Mechanical Engineering,Mechanical Engineering
--11.153301239013672,7.923459529876709,5,Mechanical Engineering,Mechanical Engineering
--12.448500633239746,8.129186630249023,5,Mechanical Engineering,Mechanical Engineering
--11.181056022644043,8.101950645446777,5,Mechanical Engineering,Mechanical Engineering
--20.759790420532227,6.541414737701416,5,Mechanical Engineering,Mechanical Engineering
--20.176464080810547,6.59292459487915,5,Mechanical Engineering,Mechanical Engineering
--20.697778701782227,6.478542327880859,5,Mechanical Engineering,Mechanical Engineering
--12.38472843170166,8.069387435913086,5,Mechanical Engineering,Mechanical Engineering
--20.141084671020508,6.577685832977295,5,Mechanical Engineering,Mechanical Engineering
--9.760320663452148,0.4337133467197418,5,Mechanical Engineering,Mechanical Engineering
--12.355995178222656,8.052767753601074,5,Mechanical Engineering,Mechanical Engineering
--10.994051933288574,7.869511127471924,5,Mechanical Engineering,Mechanical Engineering
-3.4144763946533203,15.632881164550781,3,Civil Engineering,Civil Engineering
-3.0730438232421875,15.204254150390625,3,Civil Engineering,Civil Engineering
--1.6371873617172241,19.629465103149414,3,Civil Engineering,Civil Engineering
--1.6608182191848755,19.604766845703125,3,Civil Engineering,Civil Engineering
-3.416667938232422,15.61763858795166,3,Civil Engineering,Civil Engineering
-7.580991268157959,13.293906211853027,3,Civil Engineering,Civil Engineering
--1.834972620010376,19.72664451599121,3,Civil Engineering,Civil Engineering
-7.32514762878418,13.549516677856445,3,Civil Engineering,Civil Engineering
-3.3460886478424072,15.55671501159668,3,Civil Engineering,Civil Engineering
-7.428934574127197,13.361729621887207,3,Civil Engineering,Civil Engineering
-3.4563097953796387,15.546219825744629,3,Civil Engineering,Civil Engineering
-7.490217685699463,13.393022537231445,3,Civil Engineering,Civil Engineering
-3.294039487838745,15.71829605102539,3,Civil Engineering,Civil Engineering
--1.7538275718688965,19.676130294799805,3,Civil Engineering,Civil Engineering
-3.4751343727111816,15.707589149475098,3,Civil Engineering,Civil Engineering
--1.7424589395523071,19.679222106933594,3,Civil Engineering,Civil Engineering
-7.393364906311035,13.479897499084473,3,Civil Engineering,Civil Engineering
--1.6328564882278442,19.573577880859375,3,Civil Engineering,Civil Engineering
--1.9437379837036133,19.842395782470703,3,Civil Engineering,Civil Engineering
-3.4194159507751465,15.691095352172852,3,Civil Engineering,Civil Engineering
-7.624756813049316,13.481229782104492,3,Civil Engineering,Civil Engineering
--1.6287975311279297,19.583202362060547,3,Civil Engineering,Civil Engineering
-7.570703983306885,13.283687591552734,3,Civil Engineering,Civil Engineering
-3.1796183586120605,15.301969528198242,3,Civil Engineering,Civil Engineering
--1.838571548461914,19.73879623413086,3,Civil Engineering,Civil Engineering
-3.420325994491577,15.632631301879883,3,Civil Engineering,Civil Engineering
-7.494236946105957,13.408712387084961,3,Civil Engineering,Civil Engineering
--1.5114469528198242,19.542356491088867,3,Civil Engineering,Civil Engineering
-7.443216323852539,13.371199607849121,3,Civil Engineering,Civil Engineering
-7.525612831115723,13.3748197555542,3,Civil Engineering,Civil Engineering
-3.0946531295776367,15.229706764221191,3,Civil Engineering,Civil Engineering
-3.3453822135925293,15.532855987548828,3,Civil Engineering,Civil Engineering
-7.306195259094238,13.558782577514648,3,Civil Engineering,Civil Engineering
-3.143705368041992,15.282731056213379,3,Civil Engineering,Civil Engineering
-3.37920880317688,15.60629940032959,3,Civil Engineering,Civil Engineering
--1.7633399963378906,19.694814682006836,3,Civil Engineering,Civil Engineering
--1.9021086692810059,19.794824600219727,3,Civil Engineering,Civil Engineering
--10.821268081665039,-5.183212757110596,4,Chemical Engineering,Chemical Engineering
--10.742681503295898,-5.209953308105469,4,Chemical Engineering,Chemical Engineering
-1.50165855884552,-4.544033527374268,4,Chemical Engineering,Chemical Engineering
-1.5730425119400024,-4.4700422286987305,4,Chemical Engineering,Chemical Engineering
--8.466421127319336,-6.719227313995361,4,Chemical Engineering,Chemical Engineering
-1.6646097898483276,-4.379894256591797,4,Chemical Engineering,Chemical Engineering
-1.9231586456298828,-4.225573539733887,4,Chemical Engineering,Chemical Engineering
-1.5619382858276367,-4.482668399810791,4,Chemical Engineering,Chemical Engineering
--10.763436317443848,-5.2333784103393555,4,Chemical Engineering,Chemical Engineering
--10.770268440246582,-5.225788593292236,4,Chemical Engineering,Chemical Engineering
--8.377425193786621,-6.633829593658447,4,Chemical Engineering,Chemical Engineering
--8.449763298034668,-6.714174270629883,4,Chemical Engineering,Chemical Engineering
-1.984655737876892,-4.164930820465088,4,Chemical Engineering,Chemical Engineering
-4.664174556732178,-4.294929027557373,4,Chemical Engineering,Chemical Engineering
-4.870733261108398,-4.097555160522461,4,Chemical Engineering,Chemical Engineering
--8.450752258300781,-6.710525035858154,4,Chemical Engineering,Chemical Engineering
--10.769814491271973,-5.231818199157715,4,Chemical Engineering,Chemical Engineering
-1.9299613237380981,-4.2115044593811035,4,Chemical Engineering,Chemical Engineering
--8.463706970214844,-6.716608047485352,4,Chemical Engineering,Chemical Engineering
--10.794507026672363,-5.208252906799316,4,Chemical Engineering,Chemical Engineering
-1.6071960926055908,-4.433047771453857,4,Chemical Engineering,Chemical Engineering
-4.796736240386963,-4.136802673339844,4,Chemical Engineering,Chemical Engineering
--10.827319145202637,-5.147401809692383,4,Chemical Engineering,Chemical Engineering
--10.725964546203613,-5.27929162979126,4,Chemical Engineering,Chemical Engineering
-1.6396712064743042,-4.408762454986572,4,Chemical Engineering,Chemical Engineering
-4.848483562469482,-4.2113800048828125,4,Chemical Engineering,Chemical Engineering
-1.5077104568481445,-4.535209655761719,4,Chemical Engineering,Chemical Engineering
-4.828698635101318,-4.14154052734375,4,Chemical Engineering,Chemical Engineering
--8.432696342468262,-6.69197416305542,4,Chemical Engineering,Chemical Engineering
-4.76192569732666,-4.187693119049072,4,Chemical Engineering,Chemical Engineering
-4.829046726226807,-4.151756286621094,4,Chemical Engineering,Chemical Engineering
-1.616518259048462,-4.428234100341797,4,Chemical Engineering,Chemical Engineering
--10.920196533203125,-5.083189487457275,4,Chemical Engineering,Chemical Engineering
-1.9576948881149292,-4.191755771636963,4,Chemical Engineering,Chemical Engineering
--8.38636589050293,-6.651681900024414,4,Chemical Engineering,Chemical Engineering
--10.95008659362793,-5.056641578674316,4,Chemical Engineering,Chemical Engineering
-8.801521301269531,2.2688028812408447,1,Non-Technical,Non-Technical
--1.9127839803695679,0.9429731965065002,1,Non-Technical,Non-Technical
--10.890458106994629,-9.184394836425781,1,Non-Technical,Non-Technical
--2.038681745529175,0.8172861933708191,1,Non-Technical,Non-Technical
--4.455112934112549,-2.6999597549438477,1,Non-Technical,Non-Technical
-8.671029090881348,2.3987224102020264,1,Non-Technical,Non-Technical
-6.008132457733154,-11.705804824829102,1,Non-Technical,Non-Technical
-5.95646333694458,-11.75747299194336,1,Non-Technical,Non-Technical
--10.875964164733887,-9.179670333862305,1,Non-Technical,Non-Technical
--10.9775390625,-9.271143913269043,1,Non-Technical,Non-Technical
--4.394479274749756,-2.639401435852051,1,Non-Technical,Non-Technical
-8.731253623962402,2.339291572570801,1,Non-Technical,Non-Technical
-8.743147850036621,2.327324151992798,1,Non-Technical,Non-Technical
-6.021750450134277,-11.692138671875,1,Non-Technical,Non-Technical
--1.9428627490997314,0.9133241176605225,1,Non-Technical,Non-Technical
--10.946510314941406,-9.238412857055664,1,Non-Technical,Non-Technical
-8.705546379089355,2.3674325942993164,1,Non-Technical,Non-Technical
-6.014776229858398,-11.69930362701416,1,Non-Technical,Non-Technical
--1.9036567211151123,0.9524387717247009,1,Non-Technical,Non-Technical
--4.434788703918457,-2.679694175720215,1,Non-Technical,Non-Technical
--10.952361106872559,-9.202898979187012,1,Non-Technical,Non-Technical
-5.953502178192139,-11.760637283325195,1,Non-Technical,Non-Technical
--1.9736840724945068,0.8825522661209106,1,Non-Technical,Non-Technical
-8.68145751953125,2.389024019241333,1,Non-Technical,Non-Technical
--4.430044651031494,-2.6747469902038574,1,Non-Technical,Non-Technical
--2.0549354553222656,0.800086498260498,1,Non-Technical,Non-Technical
--2.115011215209961,0.7402716875076294,1,Non-Technical,Non-Technical
--4.446926116943359,-2.690945863723755,1,Non-Technical,Non-Technical
-8.674013137817383,2.393630027770996,1,Non-Technical,Non-Technical
--1.9511168003082275,0.9049944877624512,1,Non-Technical,Non-Technical
--4.4690375328063965,-2.713914632797241,1,Non-Technical,Non-Technical
--2.0369718074798584,0.8192998170852661,1,Non-Technical,Non-Technical
--2.033318281173706,0.8230963945388794,1,Non-Technical,Non-Technical
-6.027073860168457,-11.687073707580566,1,Non-Technical,Non-Technical
--10.964363098144531,-9.25685977935791,1,Non-Technical,Non-Technical
-8.735269546508789,2.3353397846221924,1,Non-Technical,Non-Technical
--4.34565544128418,-2.590467929840088,1,Non-Technical,Non-Technical
--10.907139778137207,-9.25644588470459,1,Non-Technical,Non-Technical
+resume_id,cluster_id,cluster_name,umap_x,umap_y
+3f2dcf93,0,Problem Solving Specialists,-19.689758,-17.619867
+67749193,5,Problem Solving Specialists,3.4024172,-9.976574
+8d8ae744,2,React Specialists,14.451598,27.183985
+949481a0,2,React Specialists,14.425882,27.207619
+1b092a97,5,Problem Solving Specialists,3.2216756,-10.12004
+833f0f04,2,React Specialists,14.081839,27.331448
+27bfb17c,2,React Specialists,14.30784,27.24483
+eeaadd01,0,Problem Solving Specialists,-19.208998,-17.715855
+90b07c13,0,Problem Solving Specialists,-19.630608,-17.571465
+e7bd033f,2,React Specialists,14.200382,27.47572
+621a0029,0,Problem Solving Specialists,-19.246603,-17.786695
+2314f841,2,React Specialists,14.326328,27.427273
+6ee0e1be,2,React Specialists,14.05234,27.40814
+44adb8ed,5,Problem Solving Specialists,3.1552022,-9.929571
+875957ca,2,React Specialists,14.574059,27.086952
+ea72d3b7,0,Problem Solving Specialists,-19.749493,-17.566414
+95913906,2,React Specialists,14.460671,27.31884
+f2db1ba9,5,Problem Solving Specialists,3.3733604,-9.935702
+817685f7,5,Problem Solving Specialists,3.2479198,-10.03789
+49012ed8,2,React Specialists,14.079204,27.51507
+271923b8,0,Problem Solving Specialists,-19.765465,-17.788485
+85864c39,2,React Specialists,14.117932,27.521948
+8967b47f,2,React Specialists,14.297679,27.13633
+fd7aaa0a,2,React Specialists,14.235966,27.310276
+3d319f0b,2,React Specialists,14.112769,27.49105
+0029808b,2,React Specialists,14.2297535,27.44035
+31be14ab,2,React Specialists,14.53682,27.132874
+96ec4fe8,5,Problem Solving Specialists,3.2363672,-9.798249
+771b835b,2,React Specialists,13.967534,27.36526
+ba580ee4,2,React Specialists,14.6066475,27.05612
+ea805a4c,2,React Specialists,14.536016,27.296125
+d0a38ba9,0,Problem Solving Specialists,-19.714056,-17.48015
+d3fa5b3a,0,Problem Solving Specialists,-19.728722,-17.510979
+34f7eda6,5,Problem Solving Specialists,3.2053325,-9.970544
+a15cc447,2,React Specialists,14.498181,27.166357
+5285b565,0,Problem Solving Specialists,-19.116875,-17.596611
+ee628874,0,Problem Solving Specialists,-19.82461,-17.655329
+6746802c,2,React Specialists,14.545938,27.129036
+bfe93d53,0,Problem Solving Specialists,-19.82393,-17.41255
+ebb0c0b3,0,Problem Solving Specialists,-19.767397,-17.53088
+e4d6752c,4,Communication Specialists,0.28412896,8.704501
+867b2480,4,Communication Specialists,0.0970717,8.894507
+45a0a193,4,Communication Specialists,0.098779835,8.673632
+f9491b97,4,Communication Specialists,0.39161903,8.718393
+1f98d16b,4,Communication Specialists,0.4325315,8.640832
+956b521b,4,Communication Specialists,0.3506768,8.636286
+7c5f6ae8,4,Communication Specialists,-0.034999292,8.708589
+fbf6b6a9,4,Communication Specialists,0.4229815,8.515296
+8beaf9ca,4,Communication Specialists,0.5670271,9.084972
+ec2e5af2,4,Communication Specialists,0.27250355,8.85458
+62bc771c,4,Communication Specialists,0.4715623,9.156575
+cf8b119b,4,Communication Specialists,0.575463,8.801763
+db882e9a,4,Communication Specialists,0.7758503,8.696054
+6f214cda,4,Communication Specialists,0.5537632,8.559199
+41702efd,4,Communication Specialists,0.6779573,8.5137825
+41501589,4,Communication Specialists,0.57723075,8.367251
+9d2186e0,4,Communication Specialists,0.67094326,8.981309
+f28021a2,4,Communication Specialists,0.51835525,9.025922
+b8bcea94,4,Communication Specialists,0.5176237,8.374572
+6ab90dd6,4,Communication Specialists,0.66849726,8.516028
+3fb33870,4,Communication Specialists,0.6154908,8.326129
+278fcb2d,4,Communication Specialists,0.6377192,8.260922
+ab32870d,4,Communication Specialists,0.33964783,8.237246
+8a340d12,4,Communication Specialists,0.6421156,8.625726
+bc354d29,4,Communication Specialists,0.32044902,8.600703
+1a6f065c,4,Communication Specialists,0.5367213,9.177117
+6c3a7a0a,4,Communication Specialists,0.69978124,9.1812725
+e8449e79,4,Communication Specialists,0.6073137,9.136508
+bb2c511c,4,Communication Specialists,-0.056363296,8.764407
+be7ac5e1,4,Communication Specialists,0.96663904,8.577063
+15f29a66,4,Communication Specialists,0.70447826,8.365312
+9a12a7b4,4,Communication Specialists,-0.014890273,8.84572
+5f64fc29,4,Communication Specialists,0.49105912,8.276714
+3ce47570,4,Communication Specialists,0.006453028,8.838496
+ec979530,4,Communication Specialists,0.7489266,8.434346
+f8405e5d,4,Communication Specialists,0.8296789,8.424449
+253576a9,4,Communication Specialists,0.59889704,8.154162
+78de2040,4,Communication Specialists,0.44119093,8.629891
+e6689316,4,Communication Specialists,0.013072403,8.690819
+a112af46,4,Communication Specialists,-0.03815419,8.767111
+4c52aff8,6,Problem Solving Specialists,-8.422268,3.704985
+8102f433,6,Problem Solving Specialists,-8.507313,3.7796402
+9cce1755,6,Problem Solving Specialists,-8.422011,4.65155
+319d395e,6,Problem Solving Specialists,-8.689694,4.905097
+3cde7fa3,6,Problem Solving Specialists,-8.763921,4.863455
+3f8e6f44,6,Problem Solving Specialists,-8.734995,4.8644595
+bfea40ad,6,Problem Solving Specialists,-8.298002,3.7101529
+b8a9bdb1,6,Problem Solving Specialists,-8.21736,5.3709373
+491f67ee,6,Problem Solving Specialists,-8.732186,4.799694
+5b2f70f3,6,Problem Solving Specialists,-8.345432,5.5030413
+e00b2171,6,Problem Solving Specialists,-8.528647,5.1976967
+acdf1f75,6,Problem Solving Specialists,-8.406968,3.7482622
+5d8110d9,6,Problem Solving Specialists,-8.750531,4.8813868
+805bc472,6,Problem Solving Specialists,-8.797923,4.9471545
+3159c451,6,Problem Solving Specialists,-8.34076,5.394153
+1ba2b66a,6,Problem Solving Specialists,-8.408476,5.4955525
+3929e131,6,Problem Solving Specialists,-8.818484,5.011266
+63008222,6,Problem Solving Specialists,-8.375347,3.8193016
+f6c71b7e,6,Problem Solving Specialists,-8.560226,5.1102757
+e06ce633,6,Problem Solving Specialists,-8.502029,3.8983736
+7451414d,6,Problem Solving Specialists,-8.390383,5.3906336
+6a00ddbf,6,Problem Solving Specialists,-8.214904,3.9118044
+701b469d,6,Problem Solving Specialists,-8.361376,5.4302607
+8e27345f,6,Problem Solving Specialists,-8.416623,3.917193
+d6d1812d,6,Problem Solving Specialists,-8.430769,3.8686397
+1d1dca64,6,Problem Solving Specialists,-8.596993,3.860091
+9f699405,6,Problem Solving Specialists,-8.466999,3.813282
+ef33be11,6,Problem Solving Specialists,-8.769437,4.9583597
+5e77bf18,6,Problem Solving Specialists,-8.822203,4.926399
+a5909ae0,6,Problem Solving Specialists,-8.328555,5.3317604
+dd564b52,6,Problem Solving Specialists,-8.438685,3.8257551
+d858885a,6,Problem Solving Specialists,-8.249715,3.8177857
+26e87727,6,Problem Solving Specialists,-8.443033,5.501025
+a0e83d66,6,Problem Solving Specialists,-8.95622,5.0468297
+657d9e2a,6,Problem Solving Specialists,-8.8791275,4.955462
+f7cc98e8,6,Problem Solving Specialists,-8.438786,3.7125735
+a4edf455,6,Problem Solving Specialists,-8.249853,5.449113
+1e5eb03a,6,Problem Solving Specialists,-8.362392,5.3976855
+de5cdd7b,6,Problem Solving Specialists,-8.949156,4.914367
+608960a8,6,Problem Solving Specialists,-8.256615,5.4333906
+e1a9592a,1,Autocad Specialists,10.803275,0.23064655
+8c5b3f10,1,Autocad Specialists,10.737685,0.113747954
+1b608f6f,0,Problem Solving Specialists,17.698954,2.7546072
+57b491a7,1,Autocad Specialists,10.783768,-0.039261296
+b1a051f2,1,Autocad Specialists,10.744538,-0.092529185
+c234a5db,1,Autocad Specialists,10.437781,0.223266
+94041990,0,Problem Solving Specialists,17.719292,2.73394
+1c128da6,0,Problem Solving Specialists,17.768711,2.6849625
+50f61c38,1,Autocad Specialists,10.668141,0.20666708
+98830dc0,1,Autocad Specialists,10.679344,0.051151626
+13a940ea,1,Autocad Specialists,10.6535,-0.15104179
+9419c862,0,Problem Solving Specialists,17.802708,2.651001
+f6bca518,1,Autocad Specialists,10.713588,-0.22811137
+2e104cec,1,Autocad Specialists,10.696431,-0.23097269
+80bab839,1,Autocad Specialists,10.945903,0.08434797
+394a5809,1,Autocad Specialists,10.943549,-0.20616499
+066cb674,1,Autocad Specialists,10.919465,-0.09570384
+74365e16,1,Autocad Specialists,11.049896,-0.041060254
+b8625251,1,Autocad Specialists,11.095575,-0.21157853
+52b80f89,1,Autocad Specialists,10.97239,-0.30141774
+55133571,1,Autocad Specialists,11.170294,-0.12228963
+01e25cc5,0,Problem Solving Specialists,17.681942,2.7717032
+18ca0cb1,0,Problem Solving Specialists,17.642601,2.81105
+bb4160c8,1,Autocad Specialists,10.318096,0.16989852
+1c92a6f7,0,Problem Solving Specialists,17.717009,2.7366471
+db6dcea4,1,Autocad Specialists,11.042467,-0.18230651
+6659b80c,1,Autocad Specialists,10.543906,0.06074548
+8b6cdb11,0,Problem Solving Specialists,17.709667,2.7441304
+a1d17c96,1,Autocad Specialists,10.434619,0.0072213234
+2ba35c71,1,Autocad Specialists,10.319492,0.14617327
+38382f13,1,Autocad Specialists,10.326691,0.21583827
+382b167b,0,Problem Solving Specialists,17.686728,2.7658613
+511d38f6,1,Autocad Specialists,10.431489,0.18275036
+ac4ce4bb,0,Problem Solving Specialists,17.554262,2.899449
+4c8ad922,1,Autocad Specialists,10.527213,0.31836075
+a8b0a305,1,Autocad Specialists,10.302416,0.37833884
+8807e8af,1,Autocad Specialists,11.040505,-0.008406882
+6c437d3d,1,Autocad Specialists,10.885467,-0.024433045
+92578629,1,Autocad Specialists,10.954863,-0.3535905
+cc4f574f,1,Autocad Specialists,10.653586,-0.15242739
+0223ebc9,3,Staad.Pro Specialists,14.176931,14.252322
+b171e5b1,3,Staad.Pro Specialists,14.651518,14.00643
+bc3f872b,3,Staad.Pro Specialists,15.4719305,14.79676
+8eb54d37,3,Staad.Pro Specialists,15.427728,14.78615
+03a383c8,3,Staad.Pro Specialists,14.154336,14.300358
+fe7df1a3,3,Staad.Pro Specialists,14.867473,14.418338
+2c3f6fa2,3,Staad.Pro Specialists,15.42875,14.800413
+43274a53,3,Staad.Pro Specialists,14.55819,14.223664
+673eef18,3,Staad.Pro Specialists,14.077985,14.195814
+ac08e843,3,Staad.Pro Specialists,14.509851,14.18337
+d37d889d,3,Staad.Pro Specialists,14.132946,14.382537
+cc35ea46,3,Staad.Pro Specialists,14.296146,14.1102495
+3427f5f5,3,Staad.Pro Specialists,14.126366,14.544518
+83944575,3,Staad.Pro Specialists,15.407585,14.710852
+e518242c,3,Staad.Pro Specialists,14.053425,14.558231
+001da176,3,Staad.Pro Specialists,15.505446,14.864322
+2a552486,3,Staad.Pro Specialists,14.458858,14.222005
+3f400fa8,3,Staad.Pro Specialists,15.581276,14.9090185
+b809ea2f,3,Staad.Pro Specialists,15.575248,14.904729
+728cc029,3,Staad.Pro Specialists,14.392612,14.607252
+e9ee82c0,3,Staad.Pro Specialists,14.398932,13.907138
+78e33478,3,Staad.Pro Specialists,15.424204,14.787049
+2797b5f9,3,Staad.Pro Specialists,14.31144,13.922972
+f416d1b8,3,Staad.Pro Specialists,14.567298,13.849537
+36b09ac0,3,Staad.Pro Specialists,15.548334,14.901454
+a72a54a1,3,Staad.Pro Specialists,15.467599,14.806057
+91499e78,3,Staad.Pro Specialists,14.500583,14.488347
+cf08f0c6,3,Staad.Pro Specialists,14.467401,13.911429
+87c0fedb,3,Staad.Pro Specialists,15.603161,14.934817
+cbfcef4a,3,Staad.Pro Specialists,15.6474495,15.002987
+c9f31169,3,Staad.Pro Specialists,14.358917,14.015226
+760c11a4,3,Staad.Pro Specialists,14.4088125,13.803433
+4f2f7a38,3,Staad.Pro Specialists,14.714884,13.859898
+8e401c66,3,Staad.Pro Specialists,14.540491,14.468553
+920f30f5,3,Staad.Pro Specialists,14.345023,13.900922
+69beaa00,3,Staad.Pro Specialists,14.66195,13.903277
+74cb397f,3,Staad.Pro Specialists,14.605859,13.84704
+1e981aba,3,Staad.Pro Specialists,14.368484,14.65623
+4bc651c6,3,Staad.Pro Specialists,15.517456,14.773619
+22dbcc98,3,Staad.Pro Specialists,15.685333,15.020436
+7dce65d6,0,Problem Solving Specialists,-19.22477,-17.699488
+e9d7b49b,0,Problem Solving Specialists,-19.313135,-18.059208
+c1437a7d,0,Problem Solving Specialists,-19.19973,-17.847277
+e4cbcc80,0,Problem Solving Specialists,-18.94946,-17.765654
+7fad425b,0,Problem Solving Specialists,-18.780058,-17.716154
+823f0567,0,Problem Solving Specialists,-18.91894,-18.1855
+72f96a3d,0,Problem Solving Specialists,-18.8872,-18.006912
+af948401,0,Problem Solving Specialists,-18.888084,-18.31978
+82866f42,0,Problem Solving Specialists,-18.608643,-18.068024
+8e4edb28,0,Problem Solving Specialists,-18.921322,-18.100845
+4507e516,0,Problem Solving Specialists,-19.026972,-18.310427
+e6580c3d,0,Problem Solving Specialists,-18.62351,-18.410702
+380d6c28,0,Problem Solving Specialists,-19.154581,-17.67313
+e6f8c684,0,Problem Solving Specialists,-18.771147,-18.147924
+8fc19b2b,0,Problem Solving Specialists,-19.201555,-18.464912
+639b1640,0,Problem Solving Specialists,-19.489988,-18.136984
+18f34e0c,0,Problem Solving Specialists,-18.903389,-17.82202
+b4d3a694,0,Problem Solving Specialists,-19.27318,-18.290756
+1fc59d35,0,Problem Solving Specialists,-18.848583,-18.087873
+d0cb7149,0,Problem Solving Specialists,-18.846882,-18.146917
+43649994,0,Problem Solving Specialists,-18.908787,-17.620337
+76b2f035,0,Problem Solving Specialists,-19.05489,-18.617102
+316534e8,0,Problem Solving Specialists,-18.975275,-17.698483
+8b70f493,0,Problem Solving Specialists,-18.779207,-17.758963
+fb1db003,0,Problem Solving Specialists,-18.607452,-17.679462
+fca8e1a4,0,Problem Solving Specialists,-18.980616,-17.953554
+e280ee48,0,Problem Solving Specialists,-19.187658,-17.8833
+e0fee96d,0,Problem Solving Specialists,-18.928492,-18.409397
+52ed4b51,0,Problem Solving Specialists,-18.48912,-18.431248
+391cacfb,0,Problem Solving Specialists,-19.362228,-18.193813
+73ac7061,0,Problem Solving Specialists,-18.516048,-18.22448
+63d84ec2,0,Problem Solving Specialists,-18.87369,-18.509243
+26ca3df2,0,Problem Solving Specialists,-19.527023,-18.344639
+e4fa2430,0,Problem Solving Specialists,-18.98059,-17.884783
+0d3a3475,0,Problem Solving Specialists,-19.179035,-18.098223
+2c2dc03b,0,Problem Solving Specialists,-19.309153,-17.911638
+a14aa17e,0,Problem Solving Specialists,-19.195858,-17.97692
+9b13f594,0,Problem Solving Specialists,-18.312416,-17.980824
+97094582,0,Problem Solving Specialists,-18.917221,-18.46161
+b87d4eeb,0,Problem Solving Specialists,-18.414053,-17.673967
+40e019d0,3,Staad.Pro Specialists,13.878104,14.429763
+4b4b36d5,0,Problem Solving Specialists,-18.539545,-18.082296
+d886dc5f,0,Problem Solving Specialists,-19.222494,-17.18903
+541d4295,5,Problem Solving Specialists,3.2732632,-10.052537
+864f131d,5,Problem Solving Specialists,3.1080172,-9.997722
+fdaca12e,3,Staad.Pro Specialists,13.810523,14.465181
+a34d7caa,5,Problem Solving Specialists,3.4819326,-9.771618
+406f050a,5,Problem Solving Specialists,3.5204394,-9.901137
+9f223f1d,0,Problem Solving Specialists,-19.253618,-17.185118
+0acf55e6,0,Problem Solving Specialists,-19.188831,-17.209057
+82af1d7f,5,Problem Solving Specialists,3.4180079,-9.851404
+800f80bb,3,Staad.Pro Specialists,13.936493,14.367315
+ef7fa690,3,Staad.Pro Specialists,13.826882,14.439158
+43c88866,3,Staad.Pro Specialists,13.907101,14.547155
+1b44503d,5,Problem Solving Specialists,3.0975971,-9.820448
+be1f606d,5,Problem Solving Specialists,3.3054512,-9.78712
+97c41d8a,0,Problem Solving Specialists,-19.111277,-17.05709
+d2bd6dc5,3,Staad.Pro Specialists,13.76877,14.460259
+72f77e7b,5,Problem Solving Specialists,3.29963,-9.9787855
+61be5a3c,0,Problem Solving Specialists,-19.21625,-18.352655
+c3d35547,5,Problem Solving Specialists,3.4354546,-9.737549
+7f7e9f2d,0,Problem Solving Specialists,-19.243643,-17.15916
+6bf34b59,0,Problem Solving Specialists,-18.35437,-17.933681
+1ef282f3,0,Problem Solving Specialists,-18.605919,-17.860712
+a0f623a8,3,Staad.Pro Specialists,13.690433,14.339818
+dedd9884,0,Problem Solving Specialists,-18.91143,-17.539986
+6dc51c8f,0,Problem Solving Specialists,-18.472878,-18.21241
+c688bab1,0,Problem Solving Specialists,-19.139849,-18.174957
+385884d3,5,Problem Solving Specialists,3.1564467,-9.98037
+1ddd0898,3,Staad.Pro Specialists,13.830513,14.551037
+86ebbd70,0,Problem Solving Specialists,-19.434479,-18.140228
+3c9f4ca2,0,Problem Solving Specialists,-18.785229,-17.89115
+e93b31a8,0,Problem Solving Specialists,-18.733267,-17.425573
+f4027fee,0,Problem Solving Specialists,-18.74361,-18.447376
+af5545cf,0,Problem Solving Specialists,-18.59128,-17.708668
+109257e4,5,Problem Solving Specialists,3.515269,-9.864848
+e1ebddf1,0,Problem Solving Specialists,-19.286932,-17.275017
+5e8b53ee,3,Staad.Pro Specialists,13.855419,14.401417
+95d7c8f2,0,Problem Solving Specialists,-18.591982,-18.25452
+f16b75b2,0,Problem Solving Specialists,-19.305326,-17.083172

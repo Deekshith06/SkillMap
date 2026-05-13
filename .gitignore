@@ -13,3 +13,7 @@ dist-ssr
 .gemini/
 *.log
 uploaded_files/
+.venv/
+temp_pipeline
+add_clusters.py
+fix_eee.py

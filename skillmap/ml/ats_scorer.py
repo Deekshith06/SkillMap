@@ -317,6 +317,30 @@ def detect_domains_nlp(
             if best_match[1] > 0: sub_domain = best_match[0]
             else: sub_domain = "Electronics Engineer"
 
+        # EEE Sub-domains
+        elif domain_key == "Electrical_Engineering_EEE":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Power Systems Engineer": len({"power systems", "smart grid", "renewable energy", "electrical machines"}.intersection(s_set)),
+                "Power Electronics Specialist": len({"power electronics", "inverters", "converters", "motor drives"}.intersection(s_set)),
+                "Automation & Control Engineer": len({"control systems", "plc", "scada", "instrumentation", "embedded systems", "iot"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Electrical Engineer"
+
+        # Mechanical Sub-domains
+        elif domain_key == "Mechanical_Engineering":
+            s_set = set([s.lower() for s in matched_terms])
+            scores = {
+                "Design Engineer": len({"autocad", "solidworks", "catia", "ansys", "cad", "cam"}.intersection(s_set)),
+                "Manufacturing Engineer": len({"cnc", "gd&t", "lean manufacturing", "six sigma"}.intersection(s_set)),
+                "Thermal Engineer": len({"thermodynamics", "fluid mechanics", "heat transfer", "hvac"}.intersection(s_set)),
+            }
+            best_match = max(scores.items(), key=lambda x: x[1])
+            if best_match[1] > 0: sub_domain = best_match[0]
+            else: sub_domain = "Mechanical Engineer"
+
         # Civil Sub-domains
         elif domain_key == "Civil_Engineering":
             s_set = set([s.lower() for s in matched_terms])
