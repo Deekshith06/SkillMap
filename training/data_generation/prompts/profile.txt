@@ -1,0 +1,1 @@
+Write one anonymous synthetic resume profile using only the supplied taxonomy concepts. Preserve every concept label exactly. Do not include names, contact details, protected attributes, employers, locations, or unexplained suitability scores.

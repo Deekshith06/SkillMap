@@ -1,0 +1,9 @@
+{
+  "evaluation_approved": false,
+  "hard_negatives": 32,
+  "jobs": 64,
+  "pairs": 64,
+  "profiles": 32,
+  "provider": "template",
+  "real_records": 0
+}

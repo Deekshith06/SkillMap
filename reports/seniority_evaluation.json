@@ -1,0 +1,7 @@
+{
+  "adjacent_level_accuracy": 0.65625,
+  "evaluation_scope": "synthetic_smoke",
+  "exact_accuracy": 0.46875,
+  "macro_f1": null,
+  "records": 32
+}

@@ -556,7 +556,7 @@ def result_panel() -> rx.Component:
                                 rx.heading(
                                     rx.cond(
                                         AnalyzeState.result_has_match,
-                                        AnalyzeState.match_score_str + "%",
+                                        AnalyzeState.match_score_str,
                                         "N/A",
                                     ),
                                     size="7",

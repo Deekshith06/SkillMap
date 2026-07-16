@@ -65,7 +65,8 @@ class AnalyzeState(AppState):
 
     @rx.var
     def match_score_str(self) -> str:
-        return str(self.match_result.get("score", 0))
+        score = self.match_result.get("score")
+        return f"{score}%" if score is not None else "Insufficient evidence for a reliable score"
 
     @rx.var
     def matched_keywords(self) -> list[str]:
@@ -207,7 +208,13 @@ class AnalyzeState(AppState):
                 self.step = "result"
                 self.add_to_history(
                     {
-                        "score": round(match.score if match else prediction.confidence * 100),
+                        "score": (
+                            round(match.score)
+                            if match and match.score is not None
+                            else None
+                            if match
+                            else round(prediction.confidence * 100)
+                        ),
                         "name": filename or "Resume",
                         "type": "Match" if match else "Analyze",
                     }

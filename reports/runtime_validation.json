@@ -1,0 +1,15 @@
+{
+  "artifact_hashes_verified": true,
+  "artifact_size_bytes": 206304,
+  "local_artifacts_only": true,
+  "model_version": "skillmap-lite-1.0.0",
+  "p50_latency_ms": 2.818,
+  "p95_latency_ms": 2.931,
+  "passed": true,
+  "peak_process_memory_mb": 118.59,
+  "score_bounded": true,
+  "score_explained": true,
+  "stderr": "",
+  "taxonomy_version": "2026.07",
+  "torch_imported_in_isolated_lite_process": false
+}

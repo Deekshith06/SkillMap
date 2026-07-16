@@ -22,10 +22,17 @@ document bytes, names, email addresses, and phone numbers must never be logged.
 
 ## Personal information
 
-Common email addresses, phone numbers, and URLs are removed before runtime inference. The
+Common email addresses, phone numbers, URLs, labelled names/addresses, dates of birth,
+government identifiers, and labelled protected attributes are masked before runtime
+inference. Job-relevant employment dates are retained. The
 runtime vocabulary does not score name, gender, photograph, age, nationality, address,
 religion, marital status, or other unrelated personal characteristics. Automated redaction
-is not perfect, so users should provide only documents they are authorized to process.
+is not perfect—especially for unlabelled names and free-form addresses—so users should
+provide only documents they are authorized to process. Processed training data fails when
+supported PII patterns remain; high-risk data still requires human privacy review.
+
+Downloaded and private training data stay outside Git. External synthetic providers accept
+only records explicitly marked synthetic; real resumes must never be sent to them.
 
 ## User controls
 

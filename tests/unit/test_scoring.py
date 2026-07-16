@@ -63,6 +63,14 @@ def test_no_artificial_fifty_percent_fallback() -> None:
     assert result.evidence
 
 
+def test_no_score_when_job_has_no_supported_requirement_evidence() -> None:
+    result = match_job("Experienced professional", "Bring curiosity and do great work")
+
+    assert result.score is None
+    assert "Insufficient evidence" in result.evidence[0]
+    assert "not a probability" in result.score_meaning
+
+
 def test_empty_inputs_are_rejected() -> None:
     with pytest.raises(Exception, match="Resume text is empty"):
         analyze_resume("   ")

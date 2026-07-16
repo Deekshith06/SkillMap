@@ -52,6 +52,14 @@ module = [
     "sentence_transformers.*",
     "umap.*",
     "hdbscan.*",
+    "torch",
+    "torch.*",
+    "transformers",
+    "transformers.*",
+    "onnxruntime",
+    "onnxruntime.*",
+    "skl2onnx",
+    "skl2onnx.*",
 ]
 ignore_missing_imports = true
 

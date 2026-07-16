@@ -1,0 +1,7 @@
+ablation,precision,recall,f1,accuracy,tp,tn,fp,fn
+all_features,1.0,1.0,1.0,1.0,2.0,2.0,0.0,0.0
+without_required_skills,1.0,1.0,1.0,1.0,2.0,2.0,0.0,0.0
+without_preferred_skills,1.0,1.0,1.0,1.0,2.0,2.0,0.0,0.0
+without_experience,1.0,1.0,1.0,1.0,2.0,2.0,0.0,0.0
+without_occupation_alignment,1.0,1.0,1.0,1.0,2.0,2.0,0.0,0.0
+without_critical_missing,1.0,1.0,1.0,1.0,2.0,2.0,0.0,0.0

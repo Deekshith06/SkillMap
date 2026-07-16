@@ -1,0 +1,71 @@
+{
+  "best": {
+    "C": 3.611662782147248,
+    "validation": {
+      "accuracy": 1.0,
+      "f1": 1.0,
+      "fn": 0.0,
+      "fp": 0.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tn": 2.0,
+      "tp": 2.0
+    }
+  },
+  "objective": "validation_f1",
+  "test_set_used": false,
+  "trials": [
+    {
+      "C": 3.611662782147248,
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "fn": 0.0,
+        "fp": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tn": 2.0,
+        "tp": 2.0
+      }
+    },
+    {
+      "C": 0.012590501261927482,
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "fn": 0.0,
+        "fp": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tn": 2.0,
+        "tp": 2.0
+      }
+    },
+    {
+      "C": 0.12592654080437007,
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "fn": 0.0,
+        "fp": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tn": 2.0,
+        "tp": 2.0
+      }
+    },
+    {
+      "C": 0.07813452073384143,
+      "validation": {
+        "accuracy": 1.0,
+        "f1": 1.0,
+        "fn": 0.0,
+        "fp": 0.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "tn": 2.0,
+        "tp": 2.0
+      }
+    }
+  ]
+}

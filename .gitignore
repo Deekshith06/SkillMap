@@ -19,6 +19,18 @@ build/
 *.egg-info/
 mlruns/
 data/private/
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/synthetic/*
+!data/synthetic/.gitkeep
+data/annotations/*.jsonl
+data/evaluation/*.jsonl
+models/candidates/
+reports/runs/
 uploads/
 uploaded_files/
 tmp/
@@ -29,4 +41,5 @@ node_modules/
 .DS_Store
 .gemini/
 graphify-out/cache/
+graphify-out/20??-??-??/
 docs/screenshots/*.png

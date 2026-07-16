@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "test": 12,
+    "train": 48,
+    "validation": 4
+  },
+  "document_leaks": {},
+  "group_leaks": {},
+  "note": "Synthetic test rows validate pipeline mechanics only and are not a production accuracy test.",
+  "passed": true,
+  "real_gold_test_count": 0,
+  "synthetic_counts": {
+    "test": 12,
+    "train": 48,
+    "validation": 4
+  }
+}

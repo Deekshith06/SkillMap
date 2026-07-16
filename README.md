@@ -122,6 +122,24 @@ This creates `model_manifest.json`, the safe aggregate cluster catalogue, taxono
 vectorizer, and classifier in `models/runtime/`. The manifest contains SHA-256 checksums.
 No resume body is written to the runtime catalogue.
 
+### Accuracy-first training pipeline
+
+The offline `training/` package adds licensed-dataset registration, typed PII masking,
+SkillSpan conversion, ESCO/O*NET preparation, MinHash/LSH deduplication before grouped
+splitting, deterministic taxonomy-backed augmentation, hard negatives, compact and neural
+candidate lanes, calibration, ablations, active learning, error analysis, candidate-only
+export, and promotion gates.
+
+```bash
+python -m training.pipeline --config configs/training/smoke_test.yaml
+python -m training.pipeline --config configs/training/accuracy_first.yaml
+```
+
+The measured smoke run is synthetic only and did not promote a model. The existing lite
+runtime remains production because no immutable real gold test or outcome fairness
+evaluation exists. See [Datasets](docs/DATASETS.md), [Training](docs/TRAINING.md), and
+[Evaluation](docs/EVALUATION.md); do not report smoke metrics as real-world accuracy.
+
 For optional full experiments:
 
 ```bash

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import asyncio
 import json
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -61,3 +63,19 @@ def test_health_endpoint_reports_runtime_version() -> None:
     assert response.status_code == 200
     assert body["status"] == "ready"
     assert body["model_version"] == "skillmap-lite-1.0.0"
+
+
+def test_lite_runtime_does_not_import_torch() -> None:
+    result = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import sys; from skillmap.ml_runtime import get_engine; get_engine(); assert 'torch' not in sys.modules",
+        ],
+        capture_output=True,
+        text=True,
+        check=False,
+        env={"SKILLMAP_MODE": "lite", "PATH": ""},
+    )
+
+    assert result.returncode == 0, result.stderr

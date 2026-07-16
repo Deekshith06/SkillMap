@@ -1,0 +1,6 @@
+model,skill_f1,occupation_macro_f1,seniority_macro_f1,recall_at_10,ndcg_at_10,mrr,calibration_error,peak_memory_mb,p95_latency_ms,artifact_size_bytes
+current_baseline,not measured on real gold,not measured on real gold,not measured on real gold,not measured on real gold,not measured on real gold,not measured on real gold,not calibrated to hiring outcomes,118.56,2.918,206304
+strong_lexical_baseline_synthetic_smoke,0.9768637532133675,0.09090909090909091,not measured,1.0,1.0,1.0,0.0,not production-benchmarked,not production-benchmarked,not production-benchmarked
+best_teacher_model,not executed,not executed,not executed,not executed,not executed,not executed,not executed,not executed,not executed,not executed
+best_compact_student,not executed,not executed,not executed,not executed,not executed,not executed,not executed,not executed,not executed,not executed
+quantized_production_model,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed,not exported; promotion gates failed

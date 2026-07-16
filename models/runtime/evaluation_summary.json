@@ -1,0 +1,22 @@
+{
+  "evaluation_scope": "current production structural checks only",
+  "promotion_status": "retained pending real gold evaluation",
+  "real_gold_test_count": 0,
+  "measured": {
+    "artifact_size_bytes": 206304,
+    "p50_latency_ms": 2.842,
+    "p95_latency_ms": 2.931,
+    "peak_process_memory_mb": 118.58,
+    "torch_imported_in_lite_mode": false
+  },
+  "not_measured": [
+    "real-world entity F1",
+    "occupation macro F1",
+    "seniority macro F1",
+    "Recall@10",
+    "nDCG@10",
+    "MRR",
+    "outcome calibration",
+    "demographic fairness"
+  ]
+}

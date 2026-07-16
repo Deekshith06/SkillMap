@@ -1,0 +1,10 @@
+{
+  "candidate_dir": "models/candidates/smoke_test",
+  "failed_gates": [
+    "no immutable real gold test evaluation",
+    "fairness outcome evaluation not passed"
+  ],
+  "onnx_exports": [],
+  "production_runtime_changed": false,
+  "promotion_status": "not_promoted"
+}

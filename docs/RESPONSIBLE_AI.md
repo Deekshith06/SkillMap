@@ -24,8 +24,16 @@ Review the matched and missing evidence, not only the aggregate score. Confirm p
 and allow candidates to correct inaccurate or incomplete information. Apply the same job
 criteria consistently and provide an alternative review process when needed.
 
+When required-skill evidence is insufficient, the matching output is `Insufficient
+evidence for a reliable score` rather than a percentage. Scores describe supplied-text
+evidence alignment and are not calibrated probabilities of suitability, performance, or a
+hiring decision.
+
 ## Limitations and monitoring
 
 Taxonomy gaps, formatting, language, acronyms, and indirect experience can change results.
 Before organizational use, evaluate performance across relevant roles and groups, document
 acceptance criteria, review errors, and suspend use when the evidence is insufficient.
+Changing names, email addresses, or other irrelevant identifiers must not materially change
+results. Counterfactual tests cover supported direct identifiers, but demographic outcome
+fairness remains unmeasured until an authorized real evaluation is completed.

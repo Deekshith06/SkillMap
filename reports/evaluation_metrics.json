@@ -1,0 +1,124 @@
+{
+  "calibration": {
+    "after": {
+      "brier_score": 0.0,
+      "expected_calibration_error": 0.0
+    },
+    "before": {
+      "brier_score": 5.8726858938169885e-09,
+      "expected_calibration_error": 7.340248274921137e-05
+    },
+    "fit_scope": "validation_only",
+    "method": "isotonic",
+    "status": "trained"
+  },
+  "evaluation_scope": "synthetic_smoke_only",
+  "fairness": {
+    "status": "counterfactual_tests_only; no demographic outcome evaluation"
+  },
+  "matching": {
+    "best_neural_candidate": null,
+    "evaluation_scope": "synthetic_smoke",
+    "executed_neural_candidates": [],
+    "metrics": {
+      "map": 1.0,
+      "mrr": 1.0,
+      "ndcg@1": 1.0,
+      "ndcg@10": 1.0,
+      "ndcg@5": 1.0,
+      "recall@1": 1.0,
+      "recall@10": 1.0,
+      "recall@5": 1.0
+    },
+    "model": "tfidf_cosine",
+    "requested_neural_candidates": [],
+    "test_records": 12
+  },
+  "occupation": {
+    "evaluation_scope": "synthetic_smoke",
+    "metrics": {
+      "macro_f1": 0.09090909090909091,
+      "per_domain_recall": {
+        "Aerospace Engineering": 1.0,
+        "Culinary": 0.0,
+        "Electronics Communication ECE": 0.0,
+        "Legal": 0.0,
+        "Revenue Operations Revops": 0.0,
+        "Soft Skills": 0.0
+      },
+      "top_1_accuracy": 0.16666666666666666,
+      "top_3_accuracy_known_classes": 1.0,
+      "unseen_occupation_rate": 0.8333333333333334,
+      "weighted_f1": 0.16666666666666666
+    },
+    "status": "trained",
+    "test_records": 6
+  },
+  "promotion_eligible": false,
+  "real_gold_test_count": 0,
+  "reranker": {
+    "classification": {
+      "accuracy": 1.0,
+      "f1": 1.0,
+      "fn": 0.0,
+      "fp": 0.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "tn": 6.0,
+      "tp": 6.0
+    },
+    "coefficients": {
+      "critical_missing": -0.002236272102487383,
+      "experience": -0.10757362008759767,
+      "occupation_alignment": 0.0601467875989558,
+      "preferred_skills": 0.06029268299909582,
+      "required_skills": 0.11605359016114047
+    },
+    "evaluation_scope": "synthetic_smoke",
+    "feature_names": [
+      "required_skills",
+      "preferred_skills",
+      "experience",
+      "occupation_alignment",
+      "critical_missing"
+    ],
+    "model": "logistic_feature_reranker",
+    "ranking": {
+      "map": 1.0,
+      "mrr": 1.0,
+      "ndcg@1": 1.0,
+      "ndcg@10": 1.0,
+      "ndcg@5": 1.0,
+      "recall@1": 1.0,
+      "recall@10": 1.0,
+      "recall@5": 1.0
+    },
+    "test_records": 12
+  },
+  "seniority": {
+    "adjacent_level_accuracy": 0.65625,
+    "evaluation_scope": "synthetic_smoke",
+    "exact_accuracy": 0.46875,
+    "macro_f1": null,
+    "records": 32,
+    "status": "synthetic_smoke_only"
+  },
+  "skill_extraction": {
+    "best_neural_candidate": null,
+    "evaluation_scope": "synthetic_smoke",
+    "metrics": {
+      "entity_f1": 0.9768637532133675,
+      "entity_precision": 0.9644670050761421,
+      "entity_recall": 0.9895833333333334,
+      "false_negatives": 2.0,
+      "false_positives": 7.0,
+      "true_positives": 190.0
+    },
+    "model": "longest_span_taxonomy_baseline",
+    "neural_candidates_executed": [],
+    "neural_candidates_requested": [],
+    "note": "SkillSpan labels SKILL and KNOWLEDGE; it does not directly provide reliable hard-versus-soft labels.",
+    "records": 32
+  },
+  "warning": "Synthetic smoke metrics test mechanics and must not be described as real-world accuracy."
+}

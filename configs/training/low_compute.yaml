@@ -1,0 +1,27 @@
+{
+  "name": "low_compute",
+  "mode": "training",
+  "seed": 42,
+  "resume": true,
+  "download_public": true,
+  "prepare_public": true,
+  "allow_legacy_taxonomy_for_smoke": false,
+  "synthetic_profiles": 2000,
+  "synthetic_max_training_ratio": 0.4,
+  "near_duplicate_threshold": 0.9,
+  "model_revisions": {
+    "distilbert/distilroberta-base": "fb53ab8",
+    "sentence-transformers/all-MiniLM-L6-v2": "1110a24"
+  },
+  "split": {"train": 0.75, "validation": 0.125, "test": 0.125},
+  "models": {
+    "skill_extractor": "distilbert/distilroberta-base",
+    "canonicalizer": "exact_alias_char_embedding",
+    "occupation_classifier": "tfidf_logistic_regression",
+    "matcher": "sentence-transformers/all-MiniLM-L6-v2",
+    "reranker": "logistic_regression",
+    "calibrator": "isotonic"
+  },
+  "training": {"epochs": 4, "batch_size": 8, "max_length": 384, "stride": 96, "trials": 8},
+  "promotion_gates": {"requires_real_gold_test": true, "max_peak_memory_mb": 450, "max_p95_latency_ms": 500}
+}

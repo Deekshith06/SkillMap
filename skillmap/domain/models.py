@@ -17,6 +17,24 @@ class RuntimeManifest(StrictModel):
     generated_at: str
     scoring_modes: list[str]
     artifacts: dict[str, str]
+    training_code_commit: str | None = None
+    datasets: list[str] = Field(default_factory=list)
+    metrics: dict[str, Any] = Field(default_factory=dict)
+    thresholds: dict[str, Any] = Field(default_factory=dict)
+    runtime: str | None = None
+    quantization: str | None = None
+    known_limitations: list[str] = Field(default_factory=list)
+
+
+class SkillEvidence(StrictModel):
+    raw_text: str
+    canonical_name: str | None = None
+    taxonomy: str
+    taxonomy_id: str | None = None
+    category: str
+    confidence: float = Field(ge=0.0, le=1.0)
+    mapping_method: str
+    evidence: str
 
 
 class ParsedDocument(StrictModel):
@@ -42,10 +60,12 @@ class PredictionResult(StrictModel):
     model_version: str
     taxonomy_version: str
     scoring_mode: str
+    normalized_skills: list[SkillEvidence] = Field(default_factory=list)
+    limitations: list[str] = Field(default_factory=list)
 
 
 class MatchResult(StrictModel):
-    score: float = Field(ge=0.0, le=100.0)
+    score: float | None = Field(default=None, ge=0.0, le=100.0)
     scoring_mode: Literal["lexical", "semantic"]
     model_version: str
     taxonomy_version: str
@@ -54,6 +74,11 @@ class MatchResult(StrictModel):
     missing_skills: list[str]
     score_breakdown: dict[str, float]
     evidence: list[str]
+    matched_requirements: list[str] = Field(default_factory=list)
+    missing_requirements: list[str] = Field(default_factory=list)
+    transferable_skills: list[str] = Field(default_factory=list)
+    limitations: list[str] = Field(default_factory=list)
+    score_meaning: str = "Evidence alignment heuristic; not a probability of hiring suitability."
 
 
 class ClusterSummary(StrictModel):

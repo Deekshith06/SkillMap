@@ -1,0 +1,98 @@
+{
+  "datasets": [
+    {
+      "approved": {
+        "testing": true,
+        "training": true,
+        "validation": true
+      },
+      "exists": false,
+      "name": "skillspan"
+    },
+    {
+      "approved": {
+        "testing": false,
+        "training": true,
+        "validation": false
+      },
+      "exists": false,
+      "name": "esco"
+    },
+    {
+      "approved": {
+        "testing": false,
+        "training": true,
+        "validation": false
+      },
+      "exists": false,
+      "name": "onet"
+    },
+    {
+      "approved": {
+        "testing": false,
+        "training": false,
+        "validation": false
+      },
+      "exact_duplicate_clusters": 18,
+      "exact_duplicate_records": 18,
+      "exists": true,
+      "fields": [
+        "ID",
+        "Resume_str",
+        "Category",
+        "Sub_domain",
+        "Degree_level",
+        "Experience",
+        "Skills",
+        "Sector"
+      ],
+      "hash_matches": true,
+      "name": "skillmap_resume_csv",
+      "near_duplicate_pairs": {
+        "word_5gram_jaccard_gte_0_8": 386,
+        "word_5gram_jaccard_gte_0_9": 18
+      },
+      "pii_pattern_counts": {},
+      "record_count": 280,
+      "sha256": "c96d8b308453004586ed486d4ce4921cf4ad8842ba751758c9ca30aa5ed743e3",
+      "text_field": "Resume_str",
+      "text_length": {
+        "max": 724,
+        "mean": 644.86,
+        "min": 596
+      }
+    },
+    {
+      "approved": {
+        "testing": false,
+        "training": true,
+        "validation": false
+      },
+      "exists": true,
+      "name": "skillmap_template_synthetic"
+    },
+    {
+      "approved": {
+        "testing": true,
+        "training": false,
+        "validation": true
+      },
+      "exists": false,
+      "name": "skillmap_gold_local"
+    },
+    {
+      "approved": {
+        "testing": false,
+        "training": false,
+        "validation": false
+      },
+      "exists": false,
+      "name": "confit_intellipro_and_aliyun"
+    }
+  ],
+  "issues": [],
+  "production_training_approved": false,
+  "reason": "No immutable, independently reviewed real gold evaluation set is registered.",
+  "registry": "data/manifests/dataset_registry.yaml",
+  "registry_complete": true
+}

@@ -71,19 +71,40 @@ class LiteEngine:
     @staticmethod
     def _seniority(text: str) -> str:
         lowered = text.lower()
-        if re.search(r"\b(chief|vice president|vp|director|head of)\b", lowered):
+        years = [int(value) for value in _YEARS_RE.findall(lowered)]
+        maximum = max(years, default=None)
+        academic_lead = bool(
+            re.search(
+                r"\b(?:university|college|student|academic|capstone)\b.{0,60}\b(?:team )?lead\b|"
+                r"\b(?:team )?lead\b.{0,60}\b(?:university|college|student|academic|capstone)\b",
+                lowered,
+            )
+        )
+        executive_evidence = bool(
+            re.search(
+                r"\b(strategy|department|organization|portfolio|budget|executive team)\b", lowered
+            )
+        )
+        if re.search(r"\b(chief|vice president|vp|director|head of)\b", lowered) and (
+            (maximum is not None and maximum >= 8) or executive_evidence
+        ):
             return "Director / Executive"
-        if re.search(r"\b(principal|staff|architect)\b", lowered):
+        if re.search(r"\b(principal|staff|architect)\b", lowered) and (maximum or 0) >= 5:
             return "Principal / Architect"
-        if re.search(r"\b(lead|manager)\b", lowered):
+        if (
+            re.search(r"\b(lead|manager)\b", lowered)
+            and not academic_lead
+            and (
+                (maximum or 0) >= 3
+                or re.search(r"\b(managed|mentored|owned|stakeholder)\b", lowered)
+            )
+        ):
             return "Lead / Manager"
         if re.search(r"\b(senior|sr\.)\b", lowered):
             return "Senior"
         if re.search(r"\b(junior|jr\.|intern|graduate)\b", lowered):
             return "Junior / Entry-level"
-        years = [int(value) for value in _YEARS_RE.findall(lowered)]
-        if years:
-            maximum = max(years)
+        if maximum is not None:
             if maximum >= 8:
                 return "Senior"
             if maximum >= 3:
@@ -109,6 +130,7 @@ class LiteEngine:
                 model_version=self.assets.manifest.model_version,
                 taxonomy_version=self.assets.manifest.taxonomy_version,
                 scoring_mode="taxonomy",
+                limitations=["No supported taxonomy evidence was found."],
             )
 
         primary = domains[0]
@@ -133,6 +155,7 @@ class LiteEngine:
             model_version=self.assets.manifest.model_version,
             taxonomy_version=self.assets.manifest.taxonomy_version,
             scoring_mode="taxonomy",
+            limitations=["Exact taxonomy matching may miss aliases and implicit skills."],
         )
 
     def match(self, resume_text: str, job_text: str) -> MatchResult:

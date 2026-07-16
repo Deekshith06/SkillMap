@@ -1,0 +1,27 @@
+{
+  "name": "smoke_test",
+  "mode": "smoke",
+  "seed": 42,
+  "resume": true,
+  "download_public": false,
+  "prepare_public": false,
+  "allow_legacy_taxonomy_for_smoke": true,
+  "synthetic_profiles": 32,
+  "near_duplicate_threshold": 0.9,
+  "split": {"train": 0.7, "validation": 0.15, "test": 0.15},
+  "models": {
+    "skill_extractor": "taxonomy_baseline",
+    "canonicalizer": "exact_alias",
+    "occupation_classifier": "tfidf_logistic_regression",
+    "matcher": "tfidf",
+    "reranker": "logistic_regression",
+    "calibrator": "isotonic"
+  },
+  "promotion_gates": {
+    "requires_real_gold_test": true,
+    "requires_fairness_pass": true,
+    "requires_no_critical_regression": true,
+    "max_peak_memory_mb": 450,
+    "max_p95_latency_ms": 500
+  }
+}

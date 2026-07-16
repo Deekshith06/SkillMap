@@ -107,8 +107,8 @@ def score_match(
             "role_alignment": (role_alignment, 0.05),
         }
 
-    score = round(max(0.0, min(1.0, _weighted_score(components))) * 100, 1)
     word_count = len(_tokens(job_text))
+    score = round(max(0.0, min(1.0, _weighted_score(components))) * 100, 1) if required else None
     if len(required) >= 5 and word_count >= 100:
         confidence: Literal["low", "medium", "high"] = "high"
     elif len(required) >= 2 and word_count >= 40:
@@ -119,7 +119,7 @@ def score_match(
     evidence = [
         f"{len(matched)} of {len(required)} taxonomy skills matched."
         if required
-        else "No taxonomy skills were explicit; the score uses lexical evidence only.",
+        else "Insufficient evidence for a reliable score: no supported required skills were explicit.",
         f"TF-IDF similarity: {tfidf * 100:.1f}%.",
         f"BM25 similarity: {bm25 * 100:.1f}%.",
     ]
@@ -145,4 +145,11 @@ def score_match(
         missing_skills=missing,
         score_breakdown=breakdown,
         evidence=evidence,
+        matched_requirements=matched,
+        missing_requirements=missing,
+        transferable_skills=[],
+        limitations=[
+            "The score measures supplied-text evidence, not candidate quality or hiring suitability.",
+            "Implicit and out-of-taxonomy skills may be missed.",
+        ],
     )

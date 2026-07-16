@@ -1,0 +1,1 @@
+Write one location-neutral synthetic job description using only the supplied taxonomy concepts. Separate required and preferred skills. Do not include protected attributes or unexplained suitability scores.

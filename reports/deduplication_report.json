@@ -1,0 +1,8 @@
+{
+  "algorithm": "normalized_sha256_plus_minhash_lsh_char_5gram_jaccard",
+  "clusters": 96,
+  "duplicate_clusters": 0,
+  "duplicates_removed": 0,
+  "records": 96,
+  "threshold": 0.9
+}

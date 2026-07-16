@@ -44,18 +44,28 @@ curated taxonomy phrases, not employment outcomes.
 ## Evaluation status
 
 Automated tests cover normalization, evidence monotonicity, unsupported-text behavior,
-contract validation, and the absence of a fixed 50% fallback. This release has not been
+contract validation, typed PII masking, group leakage, counterfactual identifiers, and the
+absence of a fixed 50% fallback. The retained runtime measured 2.931 ms p95 latency,
+118.58 MB peak process memory, and 206,304 artifact bytes in a 25-call local smoke run on
+2026-07-17. This release has not been
 validated for hiring outcomes, fairness across demographic groups, multilingual use, or
 cross-industry generalization.
+
+The new training pipeline completed a synthetic-only smoke run. Its metrics are documented
+in `docs/EVALUATION.md`; they are not real-world accuracy. The candidate was not promoted
+because there are zero immutable real gold test records and no outcome fairness evaluation.
 
 ## Known limitations
 
 - Exact taxonomy matching misses synonyms and implicit experience.
+- The project taxonomy is not yet normalized to downloaded ESCO/O*NET concepts.
 - Parsed layout and reading order can differ from the original document.
 - Years-of-experience rules cannot determine whether experience applies to a specific skill.
 - The domain catalogue is incomplete and its aggregate counts are not market statistics.
 - Semantic mode depends on the provenance and limitations of the separately provisioned
   embedding model.
+- A score is withheld when the job text contains no supported required-skill evidence.
+- Displayed scores are evidence-alignment heuristics, not probabilities of hiring success.
 
 ## Privacy
 

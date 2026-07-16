@@ -61,13 +61,22 @@ def extract_taxonomy_skills(text: str, skills: Iterable[str], limit: int = 30) -
 
 
 def redact_pii(text: str) -> str:
-    """Remove common direct identifiers before matching or classification."""
+    """Mask common direct identifiers and labelled protected attributes."""
 
-    text = re.sub(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", " ", text)
+    text = re.sub(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", " [EMAIL] ", text)
     text = re.sub(
-        r"(?<!\w)(?:\+?\d[\d().\s-]{7,}\d)(?!\w)",
-        " ",
+        r"(?<!\w)(?:\+?\d(?:[().\s-]*\d){8,14})(?!\w)",
+        " [PHONE] ",
         text,
     )
-    text = re.sub(r"https?://\S+|www\.\S+", " ", text, flags=re.IGNORECASE)
+    text = re.sub(r"https?://\S+|www\.\S+", " [URL] ", text, flags=re.IGNORECASE)
+    labelled = (
+        (r"(?:full\s+)?name", "[NAME]"),
+        (r"(?:home|street|postal|mailing\s+)?address", "[ADDRESS]"),
+        (r"(?:date of birth|dob|born)", "[DATE_OF_BIRTH]"),
+        (r"(?:age|gender|sex|nationality|religion|marital status)", "[PROTECTED_ATTRIBUTE]"),
+        (r"(?:passport|aadhaar|aadhar|ssn|social security|government id)", "[GOVERNMENT_ID]"),
+    )
+    for label, replacement in labelled:
+        text = re.sub(rf"(?im)^\s*{label}\s*[:#-]\s*[^\n]+$", replacement, text)
     return re.sub(r"\s+", " ", text).strip()
