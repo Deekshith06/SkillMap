@@ -1,8 +1,13 @@
 """ats_state.py — ATS editor state + score history."""
+
 from __future__ import annotations
+
+import asyncio
+
 import reflex as rx
 from reflex_base.components.props import PropsBase
 
+from skillmap.core.exceptions import UserFacingError
 from skillmap.state.app_state import AppState
 
 
@@ -13,7 +18,7 @@ class ATSSuggestion(PropsBase):
 
 
 class ATSState(AppState):
-    resume_text: str = ""
+    _resume_text: str = ""
     jd_text: str = ""
     jd_mode: str = "text"
     jd_filename: str = ""
@@ -22,14 +27,11 @@ class ATSState(AppState):
     ats_error: str = ""
     ats_filename: str = ""
 
-    def set_resume_text(self, t: str):
-        self.resume_text = t
-
     def set_jd_text(self, t: str):
         self.jd_text = t
 
     def reset_ats(self):
-        self.resume_text = ""
+        self._resume_text = ""
         self.jd_text = ""
         self.jd_filename = ""
         self.ats_result = {}
@@ -41,7 +43,7 @@ class ATSState(AppState):
 
     def clear_resume_file(self):
         self.ats_filename = ""
-        self.resume_text = ""
+        self._resume_text = ""
 
     def clear_jd_file(self):
         self.jd_filename = ""
@@ -100,6 +102,14 @@ class ATSState(AppState):
             return "Good — Some improvements needed"
         return "Needs work — Major gaps found"
 
+    @rx.var
+    def ats_scoring_mode(self) -> str:
+        return self.ats_result.get("scoring_mode", "")
+
+    @rx.var
+    def ats_model_version(self) -> str:
+        return self.ats_result.get("model_version", "")
+
     # Per-category sub-scores
     @rx.var
     def cat_keywords(self) -> int:
@@ -147,74 +157,101 @@ class ATSState(AppState):
         cats = self.ats_result.get("categories", {})
         return cats.get("length", {}).get("score", 0) if cats else 0
 
-    async def handle_ats_upload(self, files: list[rx.UploadFile]):
-        if not files:
+    async def handle_ats_upload(self, files: list[rx.UploadFile]) -> None:
+        if not files or self.ats_loading:
             return
         self.ats_loading = True
         self.ats_error = ""
         try:
-            f = files[0]
-            data = await f.read()
-            filename = f.filename or "resume.txt"
-            from skillmap.ml.extractors import extract_and_clean
-            text = extract_and_clean(data, filename)
-            self.resume_text = text
-            self.ats_filename = filename
-        except Exception as e:
-            self.ats_error = str(e)
+            from skillmap.services.resume_service import parse_upload
+
+            document = await parse_upload(files[0])
+            self._resume_text = document.text
+            self.ats_filename = document.filename
+        except Exception as exc:
+            self.ats_error = (
+                exc.public_message
+                if isinstance(exc, UserFacingError)
+                else UserFacingError(
+                    "Resume upload failed.", category="ats_upload_failure"
+                ).public_message
+            )
         finally:
             self.ats_loading = False
-        
-        if self.resume_text.strip():
-            yield ATSState.score_resume()
-            import asyncio
-            await asyncio.sleep(0.1)
 
     async def handle_jd_upload(self, files: list[rx.UploadFile]):
-        if not files:
+        if not files or self.ats_loading:
             return
         self.ats_loading = True
         self.ats_error = ""
         try:
-            f = files[0]
-            data = await f.read()
-            filename = f.filename or "jd.txt"
-            from skillmap.ml.extractors import extract_and_clean
-            text = extract_and_clean(data, filename)
-            self.jd_text = text
-            self.jd_filename = filename
-        except Exception as e:
-            self.ats_error = f"JD Error: {str(e)}"
+            from skillmap.services.resume_service import parse_upload
+
+            document = await parse_upload(files[0])
+            self.jd_text = document.text
+            self.jd_filename = document.filename
+        except Exception as exc:
+            self.ats_error = (
+                exc.public_message
+                if isinstance(exc, UserFacingError)
+                else UserFacingError(
+                    "Job description upload failed.", category="ats_jd_upload_failure"
+                ).public_message
+            )
         finally:
             self.ats_loading = False
 
-    @rx.event(background=True)
+    @rx.event(background=True)  # type: ignore[operator]
     async def score_resume(self):
-        if not self.resume_text.strip():
-            return
         async with self:
+            if self.ats_loading or not self._resume_text.strip():
+                return
             self.ats_loading = True
             self.ats_error = ""
+            resume_text = self._resume_text
+            job_description = self.jd_text
+            filename = self.ats_filename
         try:
-            from skillmap.ml.skills import extract_skill_names
-            from skillmap.ml.extractors import clean_text
-            from skillmap.ml.ats_scorer import score_resume as _score
-            spacy_skills = extract_skill_names(self.resume_text, max_skills=30)
-            result = _score(
-                text=self.resume_text,
-                job_description=self.jd_text,
-                spacy_skills=spacy_skills,
-            )
+
+            def run_score() -> dict:
+                from skillmap.adapters.artifact_repository import load_runtime_assets
+                from skillmap.ml.ats_scorer import score_resume as compute_ats_score
+                from skillmap.ml.skills import extract_skill_names
+
+                assets = load_runtime_assets()
+                result = compute_ats_score(
+                    text=resume_text,
+                    job_description=job_description,
+                    spacy_skills=extract_skill_names(resume_text, max_skills=30),
+                )
+                result.update(
+                    {
+                        "scoring_mode": "document-quality+taxonomy",
+                        "model_version": assets.manifest.model_version,
+                        "taxonomy_version": assets.manifest.taxonomy_version,
+                    }
+                )
+                return result
+
+            result = await asyncio.to_thread(run_score)
             async with self:
                 self.ats_result = result
-                self.add_to_history({
-                    "score": result.get("total", 0),
-                    "name": self.ats_filename or "Resume",
-                    "type": "ATS",
-                })
-        except Exception as e:
+                self.add_to_history(
+                    {
+                        "score": result.get("total", 0),
+                        "name": filename or "Resume",
+                        "type": "ATS",
+                    }
+                )
+        except Exception as exc:
             async with self:
-                self.ats_error = str(e)
+                self.ats_error = (
+                    exc.public_message
+                    if isinstance(exc, UserFacingError)
+                    else UserFacingError(
+                        "ATS scoring failed.", category="ats_scoring_failure"
+                    ).public_message
+                )
         finally:
             async with self:
                 self.ats_loading = False

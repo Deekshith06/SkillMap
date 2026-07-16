@@ -1,5 +1,7 @@
 """skill_badge.py — Skill tag/badge component."""
+
 import reflex as rx
+
 from skillmap.styles import theme as t
 
 SKILL_COLORS = [t.PRIMARY, "#3a7ca5", "#6b8f71", "#8e7cc3", "#546877"]

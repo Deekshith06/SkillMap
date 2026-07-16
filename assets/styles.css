@@ -1,42 +1,42 @@
 :root {
   /* backgrounds */
-  --bg-page:     #F7EFE6;   /* warm cream — entire page background */
+  --bg-page:     #F4F7F6;
   --bg-card:     #FFFFFF;   /* white — all card surfaces */
   --bg-input:    #FFFFFF;   /* form inputs */
-  --bg-tag:      #FFF1E9;   /* skill chip / badge fill */
-  --bg-icon:     #FFF1E9;   /* stat icon container */
-  --bg-upload:   #F7EFE6;   /* drag-drop zone fill */
+  --bg-tag:      #FBECE9;
+  --bg-icon:     #FBECE9;
+  --bg-upload:   #F9FBFA;
 
   /* orange brand */
-  --orange:      #E85C04;   /* primary CTA, active states, progress fills */
-  --orange-hover:#C94E03;   /* button hover darken */
-  --orange-mid:  #F47B50;   /* secondary accents, chart segments */
-  --orange-pale: #F9A07A;   /* lighter chart / donut segments */
-  --orange-lt:   #FFF1E9;   /* tag background, icon bg, hover bg */
+  --orange:      #CC4535;
+  --orange-hover:#A93428;
+  --orange-mid:  #E47A6B;
+  --orange-pale: #F1AAA0;
+  --orange-lt:   #FBECE9;
 
   /* text */
-  --text-primary:  #1C1908;  /* headings, body, labels */
-  --text-secondary:#7A6E65;  /* subtitles, metadata, placeholder */
-  --text-orange:   #854F0B;  /* text on orange-lt tags */
-  --text-success:  #22a05a;  /* "Healthy" status */
+  --text-primary:  #172426;
+  --text-secondary:#50676F;
+  --text-orange:   #9E3529;
+  --text-success:  #2E7D68;
 
   /* borders */
-  --border:        #EDE5DC;  /* default card/input border */
-  --border-strong: #DDD5CC;  /* upload zone dashes, stronger dividers */
-  --border-orange: #FBDACC;  /* tag/chip border on orange-lt bg */
+  --border:        #DDE6E3;
+  --border-strong: #BCCBC7;
+  --border-orange: #F2C9C3;
 
   /* radius */
   --r-sm:  6px;    /* buttons, tags, small elements */
   --r-md:  8px;    /* inputs, badges, rows */
-  --r-lg:  12px;   /* cards, panels, dropzones */
-  --r-xl:  16px;   /* hero stat cards */
+  --r-lg:  8px;
+  --r-xl:  8px;
   --r-pill: 9999px;
 
   /* Focus */
-  --focus-ring: 0 0 0 3px rgba(232, 92, 4, 0.15);
+  --focus-ring: 0 0 0 3px rgba(204, 69, 53, 0.22);
 
   /* typography */
-  --font: 'Sora', system-ui, -apple-system, sans-serif;
+  --font: 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --text-xs:   11px;
   --text-sm:   12px;
   --text-base: 13px;
@@ -53,7 +53,6 @@
 
   /* elevation — flat design, no drop shadows */
   --shadow-none: none;
-  --focus-ring: 0 0 0 2px #E85C04;
 }
 
 body {
@@ -161,8 +160,8 @@ body {
 }
 
 *:focus-visible {
-    outline: none !important;
-    box-shadow: var(--focus-ring) !important;
+    outline: 2px solid var(--orange) !important;
+    outline-offset: 2px !important;
 }
 
 .upload-zone {

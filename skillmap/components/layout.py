@@ -1,5 +1,7 @@
 import reflex as rx
+
 from .navbar import navbar
+
 
 def page_layout(*children, **kwargs) -> rx.Component:
     """A layout component that wraps the page with the navbar."""

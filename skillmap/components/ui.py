@@ -3,21 +3,23 @@ components/ui.py — Reusable UI component library matching the design spec.
 Covers: StatusBadge, StatsCard, SectionHeader, TimelineItem, PipelineStep,
         SidebarMeta, ProgressRing, TabBar, SkeletonCard, Footer.
 """
-from __future__ import annotations
-import reflex as rx
-from skillmap.styles import theme as t
 
+from __future__ import annotations
+
+import reflex as rx
+
+from skillmap.styles import theme as t
 
 # ─────────────────────────────────────────────────────────────────────────────
 # StatusBadge
 # ─────────────────────────────────────────────────────────────────────────────
 
 _BADGE_STYLES: dict[str, dict] = {
-    "active":   {"bg": f"rgba(45,19,95,0.10)",  "color": t.BRAND,     "border": f"rgba(45,19,95,0.20)"},
-    "success":  {"bg": f"rgba(22,163,74,0.10)",  "color": t.SUCCESS,       "border": f"rgba(22,163,74,0.20)"},
-    "error":    {"bg": f"rgba(236,41,56,0.10)",  "color": t.ERROR,  "border": f"rgba(236,41,56,0.20)"},
-    "warning":  {"bg": f"rgba(234,179,8,0.10)",  "color": t.WARNING,       "border": f"rgba(234,179,8,0.20)"},
-    "neutral":  {"bg": t.BORDER,         "color": t.TEXT_PRIMARY, "border": t.BORDER},
+    "active": {"bg": "rgba(45,19,95,0.10)", "color": t.BRAND, "border": "rgba(45,19,95,0.20)"},
+    "success": {"bg": "rgba(22,163,74,0.10)", "color": t.SUCCESS, "border": "rgba(22,163,74,0.20)"},
+    "error": {"bg": "rgba(236,41,56,0.10)", "color": t.ERROR, "border": "rgba(236,41,56,0.20)"},
+    "warning": {"bg": "rgba(234,179,8,0.10)", "color": t.WARNING, "border": "rgba(234,179,8,0.20)"},
+    "neutral": {"bg": t.BORDER, "color": t.TEXT_PRIMARY, "border": t.BORDER},
 }
 
 
@@ -29,7 +31,7 @@ def status_badge(label: str, variant: str = "active") -> rx.Component:
         color=s["color"],
         border=f"1px solid {s['border']}",
         border_radius=t.RADIUS_PILL,
-        padding=f"2px 10px",
+        padding="2px 10px",
         font_size=t.TEXT_CAPTION,
         font_weight=t.W_MEDIUM,
         font_family=t.FONT_SANS,
@@ -43,6 +45,7 @@ def status_badge(label: str, variant: str = "active") -> rx.Component:
 # Tag chip
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def tag_chip(label: str) -> rx.Component:
     return rx.box(
         label,
@@ -50,7 +53,7 @@ def tag_chip(label: str) -> rx.Component:
         color=t.BRAND,
         border=f"1px solid {t.BORDER}",
         border_radius=t.RADIUS_PILL,
-        padding=f"3px 12px",
+        padding="3px 12px",
         font_size=t.TEXT_CAPTION,
         font_weight=t.W_MEDIUM,
         font_family=t.FONT_SANS,
@@ -60,6 +63,7 @@ def tag_chip(label: str) -> rx.Component:
 # ─────────────────────────────────────────────────────────────────────────────
 # StatsCard
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def stats_card(
     icon: str,
@@ -72,9 +76,12 @@ def stats_card(
             rx.hstack(
                 rx.center(
                     rx.icon(icon, size=18),
-                    width="36px", height="36px", border_radius="8px",
-                    background_color=t.PRIMARY_LIGHT, color=t.PRIMARY,
-                    margin_bottom="8px"
+                    width="36px",
+                    height="36px",
+                    border_radius="8px",
+                    background_color=t.PRIMARY_LIGHT,
+                    color=t.PRIMARY,
+                    margin_bottom="8px",
                 ),
                 rx.spacer(),
                 align="center",
@@ -86,7 +93,7 @@ def stats_card(
                 font_weight=t.W_BOLD,
                 color=value_color,
                 font_family=t.FONT_HEADING,
-                letter_spacing="-0.02em",
+                letter_spacing="0",
                 line_height="1",
             ),
             rx.text(
@@ -100,7 +107,6 @@ def stats_card(
             align_items="start",
         ),
         **t.card_style(),
-        _hover=t.card_hover_style(),
         cursor="default",
         flex="1",
         min_width="160px",
@@ -110,6 +116,7 @@ def stats_card(
 # ─────────────────────────────────────────────────────────────────────────────
 # Section header
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def section_header(title: str, subtitle: str = "") -> rx.Component:
     children = [
@@ -137,6 +144,7 @@ def section_header(title: str, subtitle: str = "") -> rx.Component:
 # ─────────────────────────────────────────────────────────────────────────────
 # PipelineStep
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def pipeline_step(label: str, progress: int, done: bool = True) -> rx.Component:
     bar_color = t.SUCCESS if done else t.BRAND
@@ -192,8 +200,8 @@ def pipeline_step(label: str, progress: int, done: bool = True) -> rx.Component:
 
 _DOT_COLORS = {
     "success": t.SUCCESS,
-    "error":   t.ERROR,
-    "info":    t.BRAND,
+    "error": t.ERROR,
+    "info": t.BRAND,
     "neutral": t.BORDER,
 }
 
@@ -261,6 +269,7 @@ def timeline_item(
 # SidebarMeta row
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def meta_row(label: str, value: str) -> rx.Component:
     return rx.hstack(
         rx.text(
@@ -287,7 +296,14 @@ def meta_row(label: str, value: str) -> rx.Component:
 # Skeleton loader card
 # ─────────────────────────────────────────────────────────────────────────────
 
-def skeleton_bar(width: str = "100%", height: str = "12px", margin_bottom: str = "0", margin_top: str = "0", **kwargs) -> rx.Component:
+
+def skeleton_bar(
+    width: str = "100%",
+    height: str = "12px",
+    margin_bottom: str = "0",
+    margin_top: str = "0",
+    **kwargs,
+) -> rx.Component:
     return rx.box(
         width=width,
         height=height,
@@ -297,7 +313,7 @@ def skeleton_bar(width: str = "100%", height: str = "12px", margin_bottom: str =
         margin_top=margin_top,
         animation="pulse 1.5s ease-in-out infinite",
         opacity="0.6",
-        **kwargs
+        **kwargs,
     )
 
 
@@ -324,7 +340,7 @@ def error_alert(message: str) -> rx.Component:
             align="center",
         ),
         background_color=t.ERROR_LIGHT,
-        border=f"1px solid rgba(199, 81, 70, 0.2)",
+        border="1px solid rgba(199, 81, 70, 0.2)",
         border_radius=t.RADIUS_MD,
         padding=f"{t.SPACE_3} {t.SPACE_4}",
         margin_top=t.SPACE_4,
@@ -335,6 +351,7 @@ def error_alert(message: str) -> rx.Component:
 # ─────────────────────────────────────────────────────────────────────────────
 # Divider
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def divider() -> rx.Component:
     return rx.box(
@@ -349,13 +366,15 @@ def divider() -> rx.Component:
 # Footer
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 def footer() -> rx.Component:
     return rx.box(
-        rx.hstack(
+        rx.flex(
             rx.hstack(
                 *[
                     rx.link(
-                        lbl, href=href,
+                        lbl,
+                        href=href,
                         font_size=t.TEXT_SMALL,
                         color=t.TEXT_SECONDARY,
                         font_family=t.FONT_SANS,
@@ -371,20 +390,31 @@ def footer() -> rx.Component:
                 spacing="5",
             ),
             rx.text(
-                "SkillMap v2.0 · HDBSCAN",
+                "SkillMap lite · Explainable matching",
                 font_size=t.TEXT_SMALL,
                 color=t.TEXT_MUTED,
                 font_family=t.FONT_MONO,
             ),
-            justify="between",
+            justify_content="space-between",
             align="center",
+            flex_direction=rx.breakpoints(initial="column", sm="row"),
+            gap=t.SPACE_3,
             width="100%",
             max_width=t.CONTENT_MAX_W,
             margin="0 auto",
-            padding=f"0 {t.CONTENT_PADDING}",
+            padding=rx.breakpoints(initial="0 1rem", md=f"0 {t.CONTENT_PADDING}"),
         ),
-        background_color=t.BORDER,
+        rx.text(
+            "SkillMap provides decision support. It does not make automatic hiring, rejection or employment decisions.",
+            font_size=t.TEXT_SMALL,
+            color=t.TEXT_SECONDARY,
+            text_align="center",
+            padding="0 1rem 0.75rem",
+        ),
+        background_color=t.SURFACE,
         border_top=f"1px solid {t.BORDER}",
-        height="52px",
+        min_height="72px",
+        padding_top="0.75rem",
+        padding_bottom=rx.breakpoints(initial="4.5rem", md="0"),
         margin_top=t.SPACE_8,
     )

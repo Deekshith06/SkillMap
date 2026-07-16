@@ -1,0 +1,34 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: pip install -r requirements-runtime.txt -r requirements-dev.in
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: mypy skillmap
+      - run: pytest -q
+      - run: bandit -r skillmap -c pyproject.toml
+      - run: pip-audit -r requirements-runtime.txt
+      - run: reflex export --frontend-only --no-zip
+        env:
+          SKILLMAP_MODE: lite
+          API_URL: https://skillmap-api.onrender.com
+          DEPLOY_URL: https://example.vercel.app
+          CORS_ALLOWED_ORIGINS: https://example.vercel.app

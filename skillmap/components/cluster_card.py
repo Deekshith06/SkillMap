@@ -1,5 +1,7 @@
 """cluster_card.py — Cluster summary card using new design tokens."""
+
 import reflex as rx
+
 from skillmap.styles import theme as t
 
 
@@ -11,17 +13,32 @@ def cluster_card(cluster) -> rx.Component:
             height="3px",
             background_color=t.BRAND,
             position="absolute",
-            top="0", left="0", right="0",
+            top="0",
+            left="0",
+            right="0",
             border_radius=f"{t.RADIUS_LG} {t.RADIUS_LG} 0 0",
         ),
         # Header row: dot + "Cluster" label
         rx.hstack(
-            rx.box(width="8px", height="8px", border_radius="50%",
-                   background_color=t.BRAND, flex_shrink="0"),
-            rx.text("Cluster", font_size=t.TEXT_CAPTION, font_weight=t.W_BOLD,
-                    color=t.TEXT_SECONDARY, font_family=t.FONT_SANS,
-                    text_transform="uppercase", letter_spacing="0.06em"),
-            spacing="2", align="center", margin_bottom=t.SPACE_3,
+            rx.box(
+                width="8px",
+                height="8px",
+                border_radius="50%",
+                background_color=t.BRAND,
+                flex_shrink="0",
+            ),
+            rx.text(
+                "Cluster",
+                font_size=t.TEXT_CAPTION,
+                font_weight=t.W_BOLD,
+                color=t.TEXT_SECONDARY,
+                font_family=t.FONT_SANS,
+                text_transform="uppercase",
+                letter_spacing="0.06em",
+            ),
+            spacing="2",
+            align="center",
+            margin_bottom=t.SPACE_3,
         ),
         # Cluster name
         rx.text(
@@ -48,7 +65,7 @@ def cluster_card(cluster) -> rx.Component:
                 lambda s: rx.box(
                     s,
                     display="inline-flex",
-                    padding=f"3px 10px",
+                    padding="3px 10px",
                     background_color=t.BORDER,
                     color=t.BRAND,
                     font_size=t.TEXT_CAPTION,
@@ -66,8 +83,12 @@ def cluster_card(cluster) -> rx.Component:
         # Confidence bar
         rx.vstack(
             rx.hstack(
-                rx.text("Confidence", font_size=t.TEXT_SMALL,
-                        color=t.TEXT_SECONDARY, font_family=t.FONT_SANS),
+                rx.text(
+                    "Confidence",
+                    font_size=t.TEXT_SMALL,
+                    color=t.TEXT_SECONDARY,
+                    font_family=t.FONT_SANS,
+                ),
                 rx.text(
                     rx.cond(
                         cluster.avg_confidence > 1,
@@ -79,7 +100,8 @@ def cluster_card(cluster) -> rx.Component:
                     color=t.BRAND,
                     font_family=t.FONT_MONO,
                 ),
-                justify="between", width="100%",
+                justify="between",
+                width="100%",
             ),
             rx.box(
                 rx.box(
@@ -99,7 +121,8 @@ def cluster_card(cluster) -> rx.Component:
                 border_radius=t.RADIUS_PILL,
                 overflow="hidden",
             ),
-            spacing="1", width="100%",
+            spacing="1",
+            width="100%",
         ),
         # Card container
         position="relative",

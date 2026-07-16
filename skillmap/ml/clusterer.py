@@ -12,13 +12,14 @@ Algorithm chain (from Phase 2 research):
 
 Source: community proj_006 pattern; HDBSCAN params validated across resume corpora.
 """
+
 from __future__ import annotations
 
 import json
 import logging
 from collections import Counter
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 import joblib
 import numpy as np
@@ -38,6 +39,7 @@ _MIN_RESUMES_REQUIRED = 30
 # ─────────────────────────────────────────────────────────────────────────────
 # Training pipeline
 # ─────────────────────────────────────────────────────────────────────────────
+
 
 def build_cluster_pipeline(
     embeddings: np.ndarray,
@@ -65,8 +67,8 @@ def build_cluster_pipeline(
     Raises:
         InsufficientDataError: if fewer than _MIN_RESUMES_REQUIRED embeddings.
     """
-    import umap as umap_lib
     import hdbscan
+    import umap as umap_lib
     from sklearn.metrics import silhouette_score
 
     n = len(embeddings)
@@ -99,7 +101,7 @@ def build_cluster_pipeline(
         min_cluster_size=min_cluster_size,
         metric="euclidean",
         cluster_selection_method="eom",
-        prediction_data=True,   # enables approximate_predict for new points
+        prediction_data=True,  # enables approximate_predict for new points
     )
     labels: np.ndarray = clusterer.fit_predict(X_5d)
 
@@ -116,7 +118,9 @@ def build_cluster_pipeline(
 
     logger.info(
         "Clustering done → clusters=%d  noise=%d  silhouette=%.4f",
-        n_clusters, noise_count, sil,
+        n_clusters,
+        noise_count,
+        sil,
     )
 
     return {
@@ -135,7 +139,7 @@ def build_cluster_pipeline(
 def label_clusters(
     labels: np.ndarray,
     skill_lists: list[list[str]],
-    existing_names: Optional[dict[int, str]] = None,
+    existing_names: dict[int, str] | None = None,
 ) -> dict[int, str]:
     """
     Auto-label each cluster by its most frequent skill term.
@@ -178,19 +182,17 @@ def save_cluster_models(
     """Persist all cluster artefacts to MODEL_DIR."""
     MODEL_DIR.mkdir(parents=True, exist_ok=True)
 
-    joblib.dump(result["clusterer"],  MODEL_DIR / "hdbscan_model.pkl")
+    joblib.dump(result["clusterer"], MODEL_DIR / "hdbscan_model.pkl")
     joblib.dump(result["reducer_5d"], MODEL_DIR / "umap_5d_model.pkl")
     joblib.dump(result["reducer_2d"], MODEL_DIR / "umap_2d_model.pkl")
-    joblib.dump(cluster_names,        MODEL_DIR / "cluster_names.pkl")
+    joblib.dump(cluster_names, MODEL_DIR / "cluster_names.pkl")
 
     metrics = {
         "n_clusters": result["n_clusters"],
         "noise_count": result["noise_count"],
         "silhouette_score": round(result["silhouette_score"], 6),
     }
-    (MODEL_DIR / "cluster_metrics.json").write_text(
-        json.dumps(metrics, indent=2), encoding="utf-8"
-    )
+    (MODEL_DIR / "cluster_metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
     logger.info("Cluster artefacts saved to %s", MODEL_DIR)
 
 
@@ -209,9 +211,9 @@ def _load_inference_models() -> None:
     hdbscan_path = MODEL_DIR / "hdbscan_model.pkl"
     if not hdbscan_path.exists():
         raise ModelNotFoundError(str(hdbscan_path))
-    _hdbscan_model        = joblib.load(hdbscan_path)
-    _umap_5d_model        = joblib.load(MODEL_DIR / "umap_5d_model.pkl")
-    _umap_2d_model        = joblib.load(MODEL_DIR / "umap_2d_model.pkl")
+    _hdbscan_model = joblib.load(hdbscan_path)
+    _umap_5d_model = joblib.load(MODEL_DIR / "umap_5d_model.pkl")
+    _umap_2d_model = joblib.load(MODEL_DIR / "umap_2d_model.pkl")
     _cluster_names_loaded = joblib.load(MODEL_DIR / "cluster_names.pkl")
     logger.info("HDBSCAN inference models loaded from %s", MODEL_DIR)
 
@@ -232,12 +234,8 @@ def predict_cluster(embedding: np.ndarray) -> tuple[int, float]:
     if _hdbscan_model is None:
         _load_inference_models()
 
-    emb_2d: np.ndarray = _umap_5d_model.transform(  # type: ignore[union-attr]
-        embedding.reshape(1, -1)
-    )
-    labels, strengths = hdbscan_lib.approximate_predict(
-        _hdbscan_model, emb_2d
-    )
+    emb_2d: np.ndarray = _umap_5d_model.transform(embedding.reshape(1, -1))
+    labels, strengths = hdbscan_lib.approximate_predict(_hdbscan_model, emb_2d)
     return int(labels[0]), float(strengths[0])
 
 
@@ -279,13 +277,10 @@ def should_retrain(current_n: int, last_trained_n: int) -> tuple[bool, str]:
     sil = metrics.get("silhouette_score", 1.0)
 
     if sil < RETRAIN_SILHOUETTE_FLOOR:
-        return True, (
-            f"Silhouette score {sil:.3f} < floor {RETRAIN_SILHOUETTE_FLOOR}"
-        )
+        return True, (f"Silhouette score {sil:.3f} < floor {RETRAIN_SILHOUETTE_FLOOR}")
     new_count = current_n - last_trained_n
     if new_count >= RETRAIN_MIN_NEW_RESUMES:
         return True, (
-            f"{new_count} new resumes since last training "
-            f"(threshold={RETRAIN_MIN_NEW_RESUMES})"
+            f"{new_count} new resumes since last training (threshold={RETRAIN_MIN_NEW_RESUMES})"
         )
     return False, "No retraining needed"

@@ -7,12 +7,29 @@ Routes:
   /bulk      → Bulk Upload
   /ats       → ATS Editor
 """
+
+import logging
+
 import reflex as rx
 
-from skillmap.pages.dashboard import dashboard_page
+from skillmap.api import backend_api
+from skillmap.config.logging import configure_logging
 from skillmap.pages.analyze import analyze_page
-from skillmap.pages.bulk_upload import bulk_upload_page
 from skillmap.pages.ats_editor import ats_editor_page
+from skillmap.pages.bulk_upload import bulk_upload_page
+from skillmap.pages.dashboard import dashboard_page
+from skillmap.state.app_state import AppState
+from skillmap.styles import theme as t
+
+configure_logging()
+logger = logging.getLogger("skillmap.app")
+
+
+def backend_exception_handler(exception: Exception) -> None:
+    logger.error(
+        "unhandled_backend_exception",
+        extra={"event": {"error_category": type(exception).__name__}},
+    )
 
 
 # Dashboard manages its own navbar — wrap others with shared shell
@@ -20,13 +37,19 @@ def _page_shell(content_fn) -> rx.Component:
     from skillmap.components.navbar import navbar
     from skillmap.components.ui import footer
     from skillmap.styles import theme as t
+
     return rx.box(
         navbar(),
         rx.box(
             content_fn(),
             max_width=t.CONTENT_MAX_W,
+            width="100%",
+            min_width="0",
             margin="0 auto",
-            padding=f"{t.SPACE_6} {t.CONTENT_PADDING}",
+            padding=rx.breakpoints(
+                initial=f"{t.SPACE_4} {t.SPACE_4} 6rem",
+                md=f"{t.SPACE_6} {t.CONTENT_PADDING}",
+            ),
             flex="1",
         ),
         footer(),
@@ -58,8 +81,10 @@ def ats() -> rx.Component:
 # ── App ──────────────────────────────────────────────────────────
 
 app = rx.App(
+    api_transformer=backend_api,
+    backend_exception_handler=backend_exception_handler,
     stylesheets=[
-        "https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Syne:wght@700;800&display=swap",
+        "https://fonts.googleapis.com/css2?family=Lexend:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap",
     ],
     style={
         "*": {
@@ -71,31 +96,31 @@ app = rx.App(
             "overflow_x": "hidden",
             "-webkit-font-smoothing": "antialiased",
             "-moz-osx-font-smoothing": "grayscale",
-            "font_family": "'DM Sans', sans-serif",
-            "font_size": "15px",
+            "font_family": "'Source Sans 3', sans-serif",
+            "font_size": "16px",
             "line_height": "1.6",
-            "background_color": "#f5ede0",
-            "color": "#161311",
+            "background_color": t.BG,
+            "color": t.DARK,
         },
         "h1, h2, h3, h4, h5, h6": {
-            "font_family": "'Syne', sans-serif",
+            "font_family": "'Lexend', sans-serif",
             "font_weight": "700",
-            "color": "#161311",
-            "line_height": "1.2",
+            "line_height": "1.25",
+            "letter_spacing": "0",
         },
         # Focus-visible ring
         "*:focus-visible": {
-            "outline": "3px solid rgba(255, 119, 28, 0.12)",
+            "outline": f"3px solid {t.PRIMARY_LIGHT}",
             "outline_offset": "2px",
         },
         # Scrollbar styling
         "::-webkit-scrollbar": {"width": "6px", "height": "6px"},
-        "::-webkit-scrollbar-track": {"background": "rgba(84, 104, 119, 0.15)"},
+        "::-webkit-scrollbar-track": {"background": t.SECONDARY_LIGHT},
         "::-webkit-scrollbar-thumb": {
-            "background": "#546877",
+            "background": t.SECONDARY,
             "border_radius": "9999px",
         },
-        "::-webkit-scrollbar-thumb:hover": {"background": "#161311"},
+        "::-webkit-scrollbar-thumb:hover": {"background": t.DARK},
         # Skeleton pulse animation
         "@keyframes pulse": {
             "0%, 100%": {"opacity": "1"},
@@ -107,7 +132,7 @@ app = rx.App(
     },
 )
 
-app.add_page(index,    route="/")
-app.add_page(analyze,  route="/analyze")
-app.add_page(bulk,     route="/bulk")
-app.add_page(ats,      route="/ats")
+app.add_page(index, route="/", on_load=AppState.load_data)
+app.add_page(analyze, route="/analyze")
+app.add_page(bulk, route="/bulk")
+app.add_page(ats, route="/ats")

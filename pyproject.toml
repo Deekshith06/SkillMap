@@ -1,26 +1,64 @@
-[tool.poetry]
-name = "resume-intelligence"
-version = "0.1.0"
-description = "AI Resume Intelligence Platform"
-authors = ["AI Architect <ai@example.com>"]
-
-[tool.poetry.dependencies]
-python = ">=3.11,<3.13"
-reflex = "==0.9.1"
-spacy = "==3.7.4"
-sentence-transformers = "==2.7.0"
-umap-learn = "==0.5.6"
-hdbscan = "==0.8.33"
-rank-bm25 = "==0.2.2"
-scikit-learn = "==1.4.2"
-mlflow = "==2.12.1"
-dvc = "==3.50.0"
-pydantic = "==2.7.1"
-pandas = "==2.2.2"
-nltk = "^3.9.4"
-pdfminer-six = "^20260107"
-python-docx = "^1.2.0"
-
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "skillmap"
+version = "1.0.0"
+description = "Explainable resume skill mapping and job matching"
+readme = "README.md"
+requires-python = ">=3.11,<3.13"
+
+[tool.setuptools.packages.find]
+include = ["skillmap*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "--strict-markers --strict-config"
+markers = ["evaluation: deterministic scoring quality checks"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+exclude = [".venv", ".web", "models"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"skillmap/pages/*.py" = ["E501"]
+"skillmap/styles/*.py" = ["E501"]
+"skillmap/state/*.py" = ["RUF012"]
+"skillmap/ml/ats_scorer.py" = ["RUF001"]
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+disallow_untyped_defs = false
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+exclude = "^skillmap/(pages|components|styles)/"
+
+[[tool.mypy.overrides]]
+module = [
+    "rank_bm25",
+    "joblib",
+    "sklearn.*",
+    "pdfminer.*",
+    "docx.*",
+    "sentence_transformers.*",
+    "umap.*",
+    "hdbscan.*",
+]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["skillmap.pages.*", "skillmap.components.*", "skillmap.styles.*"]
+ignore_errors = true
+
+[tool.bandit]
+exclude_dirs = ["tests", ".venv"]
+skips = ["B403", "B301"]

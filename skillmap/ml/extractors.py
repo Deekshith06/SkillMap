@@ -1,23 +1,13 @@
-"""
-extractors.py — PDF / DOCX / TXT text extraction pipeline.
-Relocated from backend/extractors.py with no logic changes.
-"""
+"""Compatibility wrappers for the secured document parser."""
+
 from __future__ import annotations
 
-import io
 import re
 import unicodedata
 
-import nltk
-
-try:
-    nltk.data.find("tokenizers/punkt_tab")
-except LookupError:
-    nltk.download("punkt_tab", quiet=True)
-
-from nltk.tokenize import sent_tokenize
-from pdfminer.high_level import extract_text as pdfminer_extract
-from docx import Document as DocxDocument
+from skillmap.adapters.document_parser import ALLOWED_TYPES, parse_document
+from skillmap.config.settings import get_settings
+from skillmap.core.exceptions import UserFacingError
 
 _URL_RE = re.compile(r"https?://\S+|www\.\S+", re.IGNORECASE)
 _EMAIL_RE = re.compile(r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", re.IGNORECASE)
@@ -26,23 +16,18 @@ _HTML_RE = re.compile(r"<[^>]+>")
 _CTRL_RE = re.compile(r"[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\x9f]")
 _NON_ASCII_PUNCT_RE = re.compile(r"[^\x00-\x7F\s]")
 _MULTI_WS_RE = re.compile(r"\s+")
-_BOM = "\ufeff"
 
 
 def extract_pdf(file_bytes: bytes) -> str:
-    return pdfminer_extract(io.BytesIO(file_bytes))
+    return parse_document(file_bytes, "upload.pdf", ALLOWED_TYPES[".pdf"]).text
 
 
 def extract_docx(file_bytes: bytes) -> str:
-    doc = DocxDocument(io.BytesIO(file_bytes))
-    return "\n".join(para.text for para in doc.paragraphs)
+    return parse_document(file_bytes, "upload.docx", ALLOWED_TYPES[".docx"]).text
 
 
 def extract_txt(file_bytes: bytes) -> str:
-    text = file_bytes.decode("utf-8", errors="replace")
-    if text.startswith(_BOM):
-        text = text[len(_BOM):]
-    return text
+    return parse_document(file_bytes, "upload.txt", ALLOWED_TYPES[".txt"]).text
 
 
 def clean_text(raw: str) -> str:
@@ -59,51 +44,26 @@ def clean_text(raw: str) -> str:
 
 
 def sentence_split(text: str) -> list[str]:
-    return sent_tokenize(text) if text else []
+    return [part.strip() for part in re.split(r"(?<=[.!?])\s+", text) if part.strip()]
 
 
 def extract_and_clean(file_bytes: bytes, filename: str) -> str:
-    lower = filename.lower()
-    if lower.endswith(".pdf"):
-        raw = extract_pdf(file_bytes)
-    elif lower.endswith(".docx"):
-        raw = extract_docx(file_bytes)
-    elif lower.endswith(".txt"):
-        raw = extract_txt(file_bytes)
-    else:
-        raise ValueError(f"Unsupported file type: {filename}")
-    return clean_text(raw)
-
-
-_ALLOWED_MIME = {
-    "application/pdf",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    "text/plain",
-}
-
-_MAGIC_SIGNATURES: list[tuple[bytes, str]] = [
-    (b"%PDF", "pdf"),
-    (b"PK\x03\x04", "docx"),
-]
+    extension = "." + filename.lower().rsplit(".", 1)[-1]
+    mime = ALLOWED_TYPES.get(extension, "application/octet-stream")
+    return clean_text(parse_document(file_bytes, filename, mime).text)
 
 
 def validate_upload(
     file_bytes: bytes,
     filename: str,
     content_type: str,
-    max_bytes: int = 5 * 1024 * 1024,
+    max_bytes: int = 2 * 1024 * 1024,
 ) -> str | None:
-    if len(file_bytes) > max_bytes:
-        return f"File too large ({len(file_bytes)} bytes); max is {max_bytes}."
-    if content_type not in _ALLOWED_MIME:
-        return f"Unsupported MIME type: {content_type}"
-    lower = filename.lower()
-    if lower.endswith(".pdf"):
-        if not file_bytes[:4].startswith(b"%PDF"):
-            return "File extension is .pdf but magic bytes do not match."
-    elif lower.endswith(".docx"):
-        if not file_bytes[:4].startswith(b"PK"):
-            return "File extension is .docx but magic bytes do not match."
-    elif not lower.endswith(".txt"):
-        return f"Unsupported extension: {filename}"
+    settings = get_settings().model_copy(
+        update={"max_resume_size_mb": max(1, max_bytes // (1024 * 1024))}
+    )
+    try:
+        parse_document(file_bytes, filename, content_type, settings)
+    except UserFacingError as exc:
+        return exc.public_message
     return None

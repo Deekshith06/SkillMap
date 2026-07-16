@@ -1,0 +1,15 @@
+{
+  "artifacts": {
+    "classifier.joblib": "e0ee1604756872cfb30bc373823b143e00824eb41320c374b152a8337f4c9a6f",
+    "cluster_catalog.json": "32b56e945302005a4f8c9e969b429d3726e2fb89e59fd182291521addc9d9f5d",
+    "skill_taxonomy.json": "5d7549a5f06074412d3df7ef53a5a47f30971ec57f75ad50175486d072071e04",
+    "vectorizer.joblib": "2b93463b7b92d044ec3c2e5f26ae7d02f846b08ce43b044182f0be8f0374d574"
+  },
+  "generated_at": "2026-07-16T14:40:13.340331+00:00",
+  "model_version": "skillmap-lite-1.0.0",
+  "scoring_modes": [
+    "taxonomy",
+    "lexical"
+  ],
+  "taxonomy_version": "2026.07"
+}

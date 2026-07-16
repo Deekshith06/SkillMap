@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: skillmap-api
+    runtime: python
+    plan: free
+    region: singapore
+    buildCommand: pip install --no-cache-dir -r requirements-runtime.txt
+    startCommand: reflex run --env prod --backend-only --backend-host 0.0.0.0 --backend-port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.13
+      - key: SKILLMAP_MODE
+        value: lite
+      - key: API_URL
+        sync: false
+      - key: DEPLOY_URL
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: MAX_RESUME_SIZE_MB
+        value: "2"
+      - key: MAX_BATCH_SIZE_MB
+        value: "10"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: MKL_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"
+      - key: TOKENIZERS_PARALLELISM
+        value: "false"
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: REFLEX_DOES_BACKEND_COLD_START
+        value: "true"
+      - key: REFLEX_CHECK_LATEST_VERSION
+        value: "false"

@@ -1,0 +1,624 @@
+[
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Computer Science CSE",
+    "example_roles": [
+      "Cloud Computing",
+      "Cybersecurity",
+      "Full Stack Development",
+      "AI/Machine Learning",
+      "Data Science"
+    ],
+    "id": 0,
+    "name": "Computer Science CSE",
+    "resume_count": 40,
+    "top_skills": [
+      "python",
+      "java",
+      "c++",
+      "c",
+      "c#",
+      "data structures",
+      "algorithms",
+      "oop"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Electronics Communication ECE",
+    "example_roles": [
+      "Telecommunications",
+      "Digital Signal Processing",
+      "VLSI Design",
+      "Embedded Systems"
+    ],
+    "id": 1,
+    "name": "Electronics Communication ECE",
+    "resume_count": 40,
+    "top_skills": [
+      "circuit design",
+      "signals and systems",
+      "digital electronics",
+      "microprocessors",
+      "dsp",
+      "communication systems",
+      "embedded systems",
+      "vlsi design"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Electrical Engineering EEE",
+    "example_roles": [
+      "Electrical Machines",
+      "Control Systems",
+      "Power Systems",
+      "Renewable Energy"
+    ],
+    "id": 2,
+    "name": "Electrical Engineering EEE",
+    "resume_count": 40,
+    "top_skills": [
+      "power systems",
+      "control systems",
+      "electrical machines",
+      "network analysis",
+      "electromagnetics",
+      "electrical engineering",
+      "circuit design",
+      "circuit analysis"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Mechanical Engineering",
+    "example_roles": [
+      "Automotive Design",
+      "Thermodynamics",
+      "Manufacturing",
+      "Robotics",
+      "HVAC"
+    ],
+    "id": 3,
+    "name": "Mechanical Engineering",
+    "resume_count": 40,
+    "top_skills": [
+      "autocad",
+      "solidworks",
+      "catia",
+      "ansys",
+      "cfd",
+      "fea",
+      "3d modeling",
+      "cad"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Healthcare",
+    "example_roles": [
+      "Healthcare Professionals"
+    ],
+    "id": 4,
+    "name": "Healthcare",
+    "resume_count": 6,
+    "top_skills": [
+      "patient care",
+      "clinical trials",
+      "ehr",
+      "emr",
+      "icd-10",
+      "cpt codes",
+      "hipaa",
+      "nursing"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Finance",
+    "example_roles": [
+      "Accounting Specialist",
+      "Analysis Specialist",
+      "Risk Specialist"
+    ],
+    "id": 5,
+    "name": "Finance",
+    "resume_count": 0,
+    "top_skills": [
+      "gaap",
+      "ifrs",
+      "financial statements",
+      "accounts payable",
+      "accounts receivable",
+      "auditing",
+      "tax",
+      "balance sheet"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Marketing",
+    "example_roles": [
+      "Digital Specialist",
+      "Analytics Specialist"
+    ],
+    "id": 6,
+    "name": "Marketing",
+    "resume_count": 0,
+    "top_skills": [
+      "seo",
+      "sem",
+      "google ads",
+      "facebook ads",
+      "social media",
+      "content marketing",
+      "email marketing",
+      "crm"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Project Management",
+    "example_roles": [
+      "Business/Management Roles"
+    ],
+    "id": 7,
+    "name": "Project Management",
+    "resume_count": 11,
+    "top_skills": [
+      "pmp",
+      "agile",
+      "scrum",
+      "kanban",
+      "waterfall",
+      "prince2",
+      "six sigma",
+      "lean"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Human Resources",
+    "example_roles": [
+      "Human Resources Professional"
+    ],
+    "id": 8,
+    "name": "Human Resources",
+    "resume_count": 0,
+    "top_skills": [
+      "recruitment",
+      "talent acquisition",
+      "onboarding",
+      "performance management",
+      "payroll",
+      "hris",
+      "employee relations",
+      "compensation"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Design UX",
+    "example_roles": [
+      "Creative/Design Roles"
+    ],
+    "id": 9,
+    "name": "Design UX",
+    "resume_count": 7,
+    "top_skills": [
+      "figma",
+      "sketch",
+      "adobe xd",
+      "photoshop",
+      "illustrator",
+      "invision",
+      "wireframing",
+      "prototyping"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Education",
+    "example_roles": [
+      "Teachers/Educators"
+    ],
+    "id": 10,
+    "name": "Education",
+    "resume_count": 9,
+    "top_skills": [
+      "curriculum development",
+      "lesson planning",
+      "classroom management",
+      "assessment",
+      "e-learning",
+      "lms",
+      "instructional design",
+      "pedagogy"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Culinary",
+    "example_roles": [
+      "Chef/Culinary Professionals"
+    ],
+    "id": 11,
+    "name": "Culinary",
+    "resume_count": 7,
+    "top_skills": [
+      "food preparation",
+      "culinary arts",
+      "kitchen management",
+      "menu planning",
+      "haccp",
+      "food safety",
+      "pastry",
+      "baking"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Soft Skills",
+    "example_roles": [
+      "Communication Specialist",
+      "Leadership Specialist",
+      "Collaboration Specialist",
+      "Problem Solving Specialist"
+    ],
+    "id": 12,
+    "name": "Soft Skills",
+    "resume_count": 0,
+    "top_skills": [
+      "communication",
+      "presentation",
+      "public speaking",
+      "writing",
+      "negotiation",
+      "leadership",
+      "team management",
+      "mentoring"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Civil Engineering",
+    "example_roles": [
+      "Geotechnical Engineering",
+      "Transportation",
+      "Construction Management",
+      "Structural Analysis"
+    ],
+    "id": 13,
+    "name": "Civil Engineering",
+    "resume_count": 40,
+    "top_skills": [
+      "fluid mechanics",
+      "geotechnical engineering",
+      "structural analysis",
+      "surveying",
+      "transportation engineering",
+      "autocad",
+      "bim",
+      "civil 3d"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Chemical Engineering",
+    "example_roles": [
+      "Petrochemicals",
+      "Pharmaceutical Manufacturing",
+      "Process Optimization",
+      "Biotechnology"
+    ],
+    "id": 14,
+    "name": "Chemical Engineering",
+    "resume_count": 40,
+    "top_skills": [
+      "chemical kinetics",
+      "fluid dynamics",
+      "heat transfer",
+      "mass transfer",
+      "thermodynamics",
+      "ansys fluent",
+      "aspen hysys",
+      "aspen plus"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Legal",
+    "example_roles": [
+      "Legal Professional"
+    ],
+    "id": 15,
+    "name": "Legal",
+    "resume_count": 0,
+    "top_skills": [
+      "compliance",
+      "contract law",
+      "corporate law",
+      "intellectual property",
+      "legal research",
+      "litigation",
+      "arbitration",
+      "case analysis"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Logistics Supply Chain",
+    "example_roles": [
+      "Operations Specialist"
+    ],
+    "id": 16,
+    "name": "Logistics Supply Chain",
+    "resume_count": 0,
+    "top_skills": [
+      "distribution",
+      "inventory management",
+      "logistics",
+      "procurement",
+      "supply chain management",
+      "warehousing",
+      "demand forecasting",
+      "erp"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Sales",
+    "example_roles": [
+      "Sales Professional"
+    ],
+    "id": 17,
+    "name": "Sales",
+    "resume_count": 0,
+    "top_skills": [
+      "account management",
+      "business development",
+      "closings",
+      "lead generation",
+      "negotiation",
+      "sales strategy",
+      "cold calling",
+      "market expansion"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Aerospace Engineering",
+    "example_roles": [
+      "Aerospace Engineering Professional"
+    ],
+    "id": 18,
+    "name": "Aerospace Engineering",
+    "resume_count": 0,
+    "top_skills": [
+      "aerodynamics",
+      "avionics",
+      "flight mechanics",
+      "orbital mechanics",
+      "propulsion",
+      "structural mechanics",
+      "ansys",
+      "catia"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Biomedical Engineering",
+    "example_roles": [
+      "Biomedical Engineering Professional"
+    ],
+    "id": 19,
+    "name": "Biomedical Engineering",
+    "resume_count": 0,
+    "top_skills": [
+      "biomaterials",
+      "biomechanics",
+      "biosensors",
+      "medical imaging",
+      "rehabilitation engineering",
+      "tissue engineering",
+      "comsol",
+      "labview"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Industrial Engineering",
+    "example_roles": [
+      "Industrial Engineering Professional"
+    ],
+    "id": 20,
+    "name": "Industrial Engineering",
+    "resume_count": 0,
+    "top_skills": [
+      "ergonomics",
+      "facilities design",
+      "operations research",
+      "production planning",
+      "quality control",
+      "supply chain optimization",
+      "arena",
+      "flexsim"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Product Experience Design",
+    "example_roles": [
+      "Design Specialist",
+      "Ux Specialist",
+      "Product Specialist"
+    ],
+    "id": 21,
+    "name": "Product Experience Design",
+    "resume_count": 0,
+    "top_skills": [
+      "figma",
+      "sketch",
+      "invision",
+      "adobe xd",
+      "wireframing",
+      "user research",
+      "a/b testing",
+      "hci"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Cloud DevOps Infrastructure",
+    "example_roles": [
+      "Cloud Specialist",
+      "Devops Specialist",
+      "Sre Specialist"
+    ],
+    "id": 22,
+    "name": "Cloud DevOps Infrastructure",
+    "resume_count": 0,
+    "top_skills": [
+      "aws",
+      "azure",
+      "gcp",
+      "cloud architecture",
+      "serverless",
+      "docker",
+      "kubernetes",
+      "terraform"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Cybersecurity GRC",
+    "example_roles": [
+      "Offensive Specialist",
+      "Defensive Specialist",
+      "Compliance Specialist"
+    ],
+    "id": 23,
+    "name": "Cybersecurity GRC",
+    "resume_count": 0,
+    "top_skills": [
+      "penetration testing",
+      "ethical hacking",
+      "metasploit",
+      "red team",
+      "soc",
+      "incident response",
+      "firewalls",
+      "siem"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Data Science MLOps",
+    "example_roles": [
+      "Ai Specialist",
+      "Data Specialist",
+      "Mlops Specialist"
+    ],
+    "id": 24,
+    "name": "Data Science MLOps",
+    "resume_count": 0,
+    "top_skills": [
+      "deep learning",
+      "neural networks",
+      "transformers",
+      "llms",
+      "huggingface",
+      "data engineering",
+      "etl",
+      "spark"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Revenue Operations Revops",
+    "example_roles": [
+      "Marketing Specialist",
+      "Sales Tech Specialist",
+      "Analytics Specialist"
+    ],
+    "id": 25,
+    "name": "Revenue Operations Revops",
+    "resume_count": 0,
+    "top_skills": [
+      "performance marketing",
+      "seo",
+      "sem",
+      "growth hacking",
+      "salesforce",
+      "hubspot",
+      "crm administration",
+      "outreach"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Supply Chain Logistics Tech",
+    "example_roles": [
+      "Systems Specialist",
+      "Analytics Specialist",
+      "Operations Specialist"
+    ],
+    "id": 26,
+    "name": "Supply Chain Logistics Tech",
+    "resume_count": 0,
+    "top_skills": [
+      "sap erp",
+      "oracle scm",
+      "wms",
+      "tms",
+      "netsuite",
+      "inventory forecasting",
+      "demand planning",
+      "vendor management"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Human Capital People Analytics",
+    "example_roles": [
+      "Acquisition Specialist",
+      "Analytics Specialist",
+      "Culture Specialist"
+    ],
+    "id": 27,
+    "name": "Human Capital People Analytics",
+    "resume_count": 0,
+    "top_skills": [
+      "talent acquisition",
+      "sourcing",
+      "greenhouse",
+      "lever",
+      "workday",
+      "retention metrics",
+      "dei metrics",
+      "headcount planning"
+    ]
+  },
+  {
+    "avg_confidence": 0.0,
+    "domain_label": "Executive Leadership Strategy",
+    "example_roles": [
+      "Management Specialist",
+      "Strategy Specialist",
+      "Operations Specialist"
+    ],
+    "id": 28,
+    "name": "Executive Leadership Strategy",
+    "resume_count": 0,
+    "top_skills": [
+      "p&l management",
+      "cross-functional leadership",
+      "board reporting",
+      "m&a integration",
+      "business strategy",
+      "corporate development",
+      "scaling",
+      "change management"
+    ]
+  }
+]

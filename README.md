@@ -1,245 +1,243 @@
-# 🗺️ SkillMap
+# SkillMap
 
-### **AI-Powered Talent Intelligence & Skill Mapping Engine**
+SkillMap is an explainable talent-intelligence application for resume skill mapping,
+job-description comparison, ATS feedback, and bounded batch analysis. It is built with
+Reflex and defaults to a low-memory inference path suitable for a demonstration service.
 
-[![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![Reflex](https://img.shields.io/badge/Reflex-Web_App-52525b?style=for-the-badge&logo=react&logoColor=61DAFB)](https://reflex.dev/)
-[![Pandas](https://img.shields.io/badge/Pandas-Data_Analysis-150458?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](https://opensource.org/licenses/MIT)
+SkillMap provides decision support. It does not make automatic hiring, rejection, or
+employment decisions.
 
----
+## Screenshots
 
-## 🔭 Overview
+![SkillMap dashboard](docs/screenshots/dashboard.jpg)
 
-**SkillMap** is a modern, high-fidelity talent intelligence platform designed to bridge the gap between raw resume data and actionable professional insights. By leveraging state-of-the-art transformer embeddings and unsupervised clustering techniques (UMAP/HDBSCAN), SkillMap automatically categorizes talent into granular professional domains, providing recruiters and hiring managers with a bird's-eye view of their talent pool.
+![SkillMap mobile dashboard](docs/screenshots/dashboard-mobile.jpg)
 
-Built with a focus on visual excellence and data-driven precision, SkillMap transforms static resumes into a dynamic, interactive "Skill Map" that highlights core competencies, domain clusters, and career trajectories.
+The dashboard reports only values available from the compact runtime catalogue. Analysis
+results identify the active scoring mode, artifact version, matched evidence, and missing
+skills.
 
----
+## Implemented features
 
-## ⚙️ How It Works
+- PDF, DOCX, and UTF-8 TXT resume parsing with file, archive, page, and text limits
+- Taxonomy-based domain analysis with deterministic seniority evidence
+- Explainable resume-to-job scoring using skill overlap, TF-IDF, BM25, and experience
+- Optional locally provisioned sentence-transformer similarity in full mode
+- ATS feedback, single analysis, and duplicate-aware batch analysis for up to 50 files
+- Typed Pydantic result contracts and checksum-verified runtime artifacts
+- Request IDs, safe user errors, structured metadata-only logs, and a readiness endpoint
+- Responsive Reflex views with non-blocking cold-start and cancellation states
 
-SkillMap operates as a multi-layered intelligence system. Below is the end-to-end technical architecture and data flow:
+## Architecture
 
 ```mermaid
-graph TD
-    subgraph Frontend ["REFLEX FRONTEND"]
-        direction TB
-        P1["/ (Dashboard)"]
-        P2["/analyze (Analyze)"]
-        P3["/bulk (Bulk Upload)"]
-        P4["/ats (ATS Editor)"]
-        
-        State["Reflex State (rx.State subclasses)"]
-        StateData["AppState | AnalyzeState | BulkState | ATSState"]
-        
-        P1 & P2 & P3 & P4 --> State
-        State --- StateData
-    end
-
-    State -->|"Async Event Handlers"| Service["FASTAPI SERVICE LAYER"]
-
-    subgraph ServiceLayer ["FASTAPI SERVICE LAYER"]
-        direction LR
-        S1["POST /resume/upload"]
-        S2["GET /resume/{id}/score"]
-        S3["POST /cluster"]
-    end
-
-    Service --- S1 & S2 & S3
-    S1 & S2 & S3 --> Engine
-
-    subgraph Engine ["INTELLIGENCE ENGINES"]
-        direction TB
-        subgraph Ingestion ["INGESTION LAYER"]
-            I1["PDF/DOCX/TXT Parser"]
-            I2["Section Detector"]
-            I3["Text Normalizer"]
-        end
-        
-        subgraph ATS ["ATS ENGINE"]
-            A1["KeywordScorer (TF-IDF)"]
-            A2["Format Checker"]
-            A3["Section Scorer"]
-        end
-        
-        subgraph Skill ["SKILL ENGINE"]
-            K1["NER Extractor (spaCy)"]
-            K2["Skill Embedder"]
-            K3["UMAP-HDBSCAN"]
-        end
-    end
-
-    Engine --> Infra["ML INFRASTRUCTURE"]
-
-    subgraph InfraLayer ["ML INFRASTRUCTURE"]
-        direction LR
-        M1["DVC Data Versioning"]
-        M2["MLflow Tracking"]
-        M3["Feature Store"]
-    end
-
-    %% Styling
-    style Frontend fill:#fff5f0,stroke:#ff7043,stroke-width:2px
-    style ServiceLayer fill:#f0f7ff,stroke:#2196f3,stroke-width:2px
-    style Engine fill:#f6fff0,stroke:#4caf50,stroke-width:2px
-    style InfraLayer fill:#fffbf0,stroke:#ffc107,stroke-width:2px
+flowchart LR
+    V[Vercel Hobby\nstatic Reflex client] -->|HTTPS and WebSocket| R[Render Free\nReflex backend]
+    R --> S[State coordinators]
+    S --> P[Bounded in-memory parsers]
+    S --> M[Lite or full runtime]
+    M --> A[Checksum-verified artifacts]
 ```
 
----
+Reflex state events are the application API. The only additional FastAPI route is
+`GET /health` for deployment readiness. There is no Flask service, database, object
+storage, feature store, DVC service, or MLflow service in the runtime.
 
-## 🚀 Key Features
+## Lite and full modes
 
-*   **🧬 Intelligent Domain Clustering**: Automatically groups resumes into professional clusters using advanced NLP and machine learning pipelines.
-*   **📊 Talent Intelligence Dashboard**: A premium, high-fidelity interface for visualizing talent distribution and top-tier skill metrics.
-*   **📝 ATS Optimization**: A specialized editor to analyze and align resume content with specific job descriptions for maximum compatibility.
-*   **⚡ Real-time Analysis**: Instant feedback loops for individual resume uploads or job description comparisons.
-*   **📦 Bulk Ingestion Pipeline**: Efficiently process and categorize large-scale resume datasets (CSV/PDF/DOCX support).
-*   **🎨 Premium UI/UX**: A "Cocoa & Amber" inspired design system built on the Reflex framework for a smooth, SaaS-like experience.
+`SKILLMAP_MODE=lite` is the default. It loads the compact files under `models/runtime/`
+and uses taxonomy evidence, TF-IDF, BM25, and deterministic rules. It does not import
+Torch, Transformers, UMAP, HDBSCAN, pandas, or the training CSV during startup.
 
----
+`SKILLMAP_MODE=full` is an optional local or paid-infrastructure mode. Install
+`requirements-ml.in` and provision a sentence-transformer directory at
+`SKILLMAP_FULL_MODEL_PATH`. Full mode will not download a model from a live request. It
+fails with a safe, explicit error when the dependency or local model is unavailable.
 
-## 🛠️ Tech Stack
+## Local installation
 
-SkillMap is engineered using a robust stack of modern data science and web technologies:
+Python 3.12 is the supported production version.
 
-| Category | Tools |
-| :--- | :--- |
-| **Core Language** | Python 3.9+ |
-| **Web Framework** | Reflex (Full-stack Python Web) |
-| **Data Orchestration** | Pandas, NumPy |
-| **Machine Learning** | Scikit-learn, UMAP-learn, HDBSCAN |
-| **NLP & LLM** | Sentence-Transformers, Spacy, HuggingFace |
-| **Visualization** | Recharts, Plotly, Lucide Icons |
-| **Database/Storage** | SQLAlchemy, Local File System |
-
----
-
-## ⚙️ Installation & Setup
-
-Ensure you have Python 3.9 or higher installed on your system.
-
-1.  **Clone the Repository**
-    ```bash
-    git clone https://github.com/Deekshith06/SkillMap.git
-    cd SkillMap
-    ```
-
-2.  **Initialize Virtual Environment**
-    ```bash
-    python3 -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
-
-3.  **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4.  **Initialize & Run Application**
-    ```bash
-    reflex init
-    reflex run
-    ```
-
----
-
-## 📖 Usage
-
-SkillMap provides both a web interface and a modular backend for data processing.
-
-### **Python Integration (Data Pipeline)**
-You can use the core mapping logic within your own data pipelines:
-
-```python
-import pandas as pd
-from skillmap.ml.pipeline import SkillAnalyzer
-
-# Load candidate data
-df = pd.read_csv("candidates.csv")
-
-# Initialize the analyzer
-analyzer = SkillAnalyzer(model_path="models/v1")
-
-# Generate skill clusters and embeddings
-df_processed = analyzer.process_dataframe(
-    df, 
-    text_column="resume_text",
-    target_column="domain_cluster"
-)
-
-# Preview the intelligence mapping
-print(df_processed[['candidate_name', 'domain_cluster', 'top_skills']].head())
+```bash
+git clone https://github.com/Deekshith06/SkillMap.git
+cd SkillMap
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -r requirements-runtime.txt
+cp .env.example .env
+reflex run
 ```
 
----
+Open `http://localhost:3000`; the backend listens on `http://localhost:8000`.
 
-## 📁 Project Structure
+## Environment variables
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `SKILLMAP_MODE` | `lite` | Select `lite` or `full` inference |
+| `API_URL` | `http://localhost:8000` | Backend URL baked into the Reflex client |
+| `DEPLOY_URL` | `http://localhost:3000` | Public frontend origin |
+| `CORS_ALLOWED_ORIGINS` | `http://localhost:3000` | Comma-separated exact frontend origins |
+| `MAX_RESUME_SIZE_MB` | `2` | Per-document upload limit |
+| `MAX_BATCH_SIZE_MB` | `10` | Total accepted batch size |
+| `MAX_EXTRACTED_TEXT_CHARS` | `100000` | Post-parse text limit |
+| `MAX_PDF_PAGES` | `20` | PDF page limit |
+| `PARSER_TIMEOUT_SECONDS` | `10` | Parser timeout |
+| `LOG_LEVEL` | `INFO` | Structured logging threshold |
+| `SKILLMAP_ARTIFACT_DIR` | `models/runtime` | Lite artifact directory |
+| `SKILLMAP_FULL_MODEL_PATH` | `models/full/all-MiniLM-L6-v2` | Local full-mode model |
+
+Origins must be absolute HTTP(S) origins. Wildcards and origins containing paths are
+rejected. Do not put secrets in Vercel client environment variables.
+
+## Development commands
+
+```bash
+python -m pip install -r requirements-dev.in
+ruff check .
+ruff format --check .
+mypy skillmap
+pytest -q
+bandit -r skillmap -c pyproject.toml
+pip-audit -r requirements-runtime.txt
+```
+
+`requirements-runtime.in` is the direct production dependency specification and
+`requirements-runtime.txt` is the authoritative transitive lock. Regenerate it with:
+
+```bash
+uv pip compile requirements-runtime.in -o requirements-runtime.txt
+```
+
+## Training and artifact export
+
+The normal export is lightweight and reads the training CSV only from the offline script:
+
+```bash
+python train_model.py
+```
+
+This creates `model_manifest.json`, the safe aggregate cluster catalogue, taxonomy, TF-IDF
+vectorizer, and classifier in `models/runtime/`. The manifest contains SHA-256 checksums.
+No resume body is written to the runtime catalogue.
+
+For optional full experiments:
+
+```bash
+python -m pip install -r requirements-ml.in
+python train_model.py --full
+```
+
+Full training may download the configured open-source embedding model and runs only in an
+offline development environment. pandas, Torch, sentence-transformers, UMAP, HDBSCAN, and
+matplotlib are not Render runtime dependencies.
+
+## Render deployment
+
+1. Create a Render Blueprint from this repository; `render.yaml` defines one free Python
+   web service in Singapore.
+2. Replace `API_URL` with the assigned Render HTTPS URL.
+3. Set `DEPLOY_URL` and `CORS_ALLOWED_ORIGINS` to the exact Vercel production URL.
+4. Deploy and verify `https://<service>.onrender.com/health` returns `status: ready`.
+
+The service installs `requirements-runtime.txt` and runs:
+
+```bash
+reflex run --env prod --backend-only --backend-host 0.0.0.0 --backend-port $PORT
+```
+
+It uses no persistent disk. Free Render services can sleep after inactivity, so the UI
+shows a reconnecting state rather than fake progress.
+
+## Vercel deployment
+
+1. Import the repository into Vercel as an unrecognized framework project.
+2. Set `API_URL` to the Render HTTPS URL.
+3. Set `DEPLOY_URL` and `CORS_ALLOWED_ORIGINS` to the Vercel production URL.
+4. Deploy using `vercel.json`.
+
+Vercel installs only `requirements-frontend.txt`, runs
+`reflex export --frontend-only --no-zip`, and publishes `.web/build/client`. It never
+starts or deploys the Python backend. After either public URL changes, update both
+projects and redeploy the frontend because `API_URL` is a build-time setting.
+
+## Free-tier limitations
+
+- The Render backend may need time to wake after inactivity.
+- In-memory state and uploads are lost on restart and are not shared across instances.
+- The service is intended for demonstrations and small batches, not high-throughput ATS
+  processing.
+- The included catalogue is an aggregate of a small research dataset and is not an
+  employment-market benchmark.
+- Full semantic mode is outside the Render Free memory target.
+
+## Security and privacy
+
+Uploads are read in 64 KiB chunks, bounded before parsing, processed in memory, and closed
+after use. PDFs have encryption and page checks. DOCX archives reject traversal, symlinks,
+macros, excessive entries, and excessive expansion. Raw parser errors are never returned
+to users. Logs contain operational metadata only and never resume or job text.
+
+Direct email addresses, phone numbers, and URLs are removed before matching. The scoring
+taxonomy does not contain name, gender, photograph, age, nationality, address, religion,
+or marital-status features. See [Privacy](docs/PRIVACY.md) and
+[Responsible AI](docs/RESPONSIBLE_AI.md).
+
+## Responsible AI
+
+SkillMap results require human review. Scores describe evidence overlap with supplied text,
+not candidate quality, future performance, identity, or eligibility. Do not use SkillMap
+as the sole basis for hiring or rejection. Model details are in
+[the model card](docs/MODEL_CARD.md).
+
+## Testing
+
+Tests are grouped into `tests/unit`, `tests/integration`, `tests/security`, and
+`tests/evaluation`. Fixtures are generated and contain no real resumes.
+
+```bash
+pytest -q
+reflex export --frontend-only --no-zip
+SKILLMAP_MODE=lite reflex run
+```
+
+## Troubleshooting
+
+- `status: not_ready`: run `python train_model.py`, then verify checksums in the manifest.
+- `Full ML mode is not installed`: install ML dependencies and provision the local model
+  directory, or set `SKILLMAP_MODE=lite`.
+- Browser cannot connect: verify `API_URL`, exact CORS origin, HTTPS, and Render health.
+- Upload rejected: use a valid PDF, DOCX, or UTF-8 TXT file under 2 MB and within page/text
+  limits. Macro-enabled Office files are intentionally unsupported.
+
+## Project structure
 
 ```text
-SkillMap/
-├── skillmap/               # Main application package
-│   ├── components/         # Reusable UI components (Nav, Sidebar, Charts)
-│   ├── core/               # App configuration and state management
-│   ├── ml/                 # Machine learning models and NLP pipelines
-│   ├── pages/              # Reflex page definitions (Dashboard, Analyze, ATS)
-│   ├── styles/             # CSS and Design System tokens
-│   └── skillmap.py         # App entry point
-├── assets/                 # Static assets (images, fonts, custom CSS)
-├── data/                   # Raw and processed datasets
-├── models/                 # Serialized ML models and embeddings
-├── rxconfig.py             # Reflex configuration file
-├── requirements.txt        # Project dependencies
-└── README.md               # Documentation
+skillmap/
+  adapters/      Artifact loading and secure document parsing
+  config/        Typed environment settings and structured logging
+  domain/        Pydantic contracts, taxonomy, and scoring
+  ml_runtime/    Explicit lite and optional full inference engines
+  services/      Resume, analysis, matching, and reporting operations
+  state/         Reflex workflow coordination
+  pages/         Reflex page composition
+  components/    Reusable interface components
+models/runtime/  Compact versioned production artifacts
+tests/           Unit, integration, security, and evaluation checks
 ```
 
----
+## Contributing
 
-## 🐼 Data Structures & Pandas Usage
+1. Create a focused branch.
+2. Add tests for behavior changes.
+3. Run the development commands and frontend export.
+4. Do not commit resumes, private data, secrets, generated caches, or full-mode models.
+5. Open a pull request describing behavior and deployment impact.
 
-The core of SkillMap's intelligence relies on sophisticated `pandas` transformations to handle multi-dimensional talent data.
+CI runs lint, formatting, typing, tests, Bandit, pip-audit, and a static Reflex export on
+pushes and pull requests to `main`.
 
-*   **Grouping & Aggregation**: We use `.groupby()` to calculate skill density across different professional clusters and experience levels.
-*   **Vectorized Text Processing**: Applying NLP transformations efficiently across large DataFrames to extract keywords and entities.
-*   **Feature Normalization**: Using pandas for scaling and transforming numerical skill scores before clustering.
-*   **Data Validation**: Strict filtering and cleaning of resume data to ensure high-fidelity analytical outputs.
+## License
 
----
-
-## 🏛️ Architecture & Philosophy
-
-SkillMap is built on a modular, 4-layered architecture designed for high performance, maintainability, and scalability:
-
-1.  **Reflex Frontend**: A state-driven UI composed of specialized modules for uploading, scoring, and clustering. It utilizes `rx.State` subclasses to manage asynchronous event handlers and real-time updates.
-2.  **FastAPI Service Layer**: Acts as the central orchestrator, providing RESTful endpoints for resume ingestion, scoring, and clustering requests.
-3.  **Intelligence Engines**:
-    *   **ATS Engine**: Implements specialized keyword and section scoring using TF-IDF and BM25.
-    *   **Skill Engine**: Handles NER extraction, transformer-based embeddings (all-MiniLM-L6-v2), and unsupervised clustering (UMAP-HDBSCAN).
-4.  **ML Infrastructure**: A robust backbone using **DVC** for data versioning, **MLflow** for experiment tracking and model registry, and a **Feature Store** for caching embeddings and cluster results.
-
----
-
-## 🤝 Contributing
-
-Contributions are what make the open-source community such an amazing place to learn, inspire, and create.
-
-1.  **Fork** the Project
-2.  Create your **Feature Branch** (`git checkout -b feature/AmazingFeature`)
-3.  **Commit** your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  **Push** to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a **Pull Request**
-
----
-
-## 📜 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-## 🔮 Future Enhancements
-
-*   **🌐 Multi-Language Support**: Expanding NLP pipelines to support non-English resumes.
-*   **🤖 LLM-Powered Feedback**: Integrating GPT-4/Claude for personalized resume improvement suggestions.
-*   **📈 Historical Trend Analysis**: Tracking skill demand shifts over time within the dashboard.
-*   **🔗 LinkedIn Integration**: Automated profile ingestion and synchronization.
+SkillMap is available under the [MIT License](LICENSE).
