@@ -855,6 +855,9 @@ def score_resume(
     embedding: Any = None,
     sentence_model: Any = None,
 ) -> dict[str, Any]:
+    text = text or ""
+    job_description = job_description or ""
+    spacy_skills = [str(skill) for skill in (spacy_skills or []) if skill]
     if not text or len(text.strip()) < 10:
         return {
             "total": 0,
